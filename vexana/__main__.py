@@ -791,7 +791,7 @@ def main():
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
-    about_callback_handler = CallbackQueryHandler(vexana_about_callback, pattern=r"vexana_")
+    about_callback_handler = CallbackQueryHandler(Shoko_about_callback, pattern=r"aboutmanu_")
     source_callback_handler = CallbackQueryHandler(Source_about_callback, pattern=r"source_")
 
     donate_handler = CommandHandler("donate", donate)
