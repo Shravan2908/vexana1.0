@@ -199,7 +199,6 @@ def test(update, context):
 
 
 @run_async
-@typing_action
 def start(update, context):
     if update.effective_chat.type == "private":
         args = context.args
@@ -479,7 +478,6 @@ def Shoko_about_callback(update, context):
         )
         
 @run_async
-@typing_action
 def get_help(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
@@ -687,7 +685,6 @@ def settings_button(update, context):
 
 
 @run_async
-@typing_action
 def get_settings(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
