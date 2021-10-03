@@ -21,8 +21,6 @@ from vexana import (
     telethn,
     pbot,
     updater,
-    BLACKLIST_CHATS,
-    WHITELIST_CHATS,
 )
 
 # needed to dynamically load modules
