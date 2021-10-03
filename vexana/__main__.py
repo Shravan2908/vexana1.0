@@ -782,20 +782,22 @@ def main():
         except BadRequest as e:
             LOGGER.warning(e.message)
 
-    test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start)
+    # test_handler = CommandHandler("test", test)
+    start_handler = CommandHandler("start", start, pass_args=True)
+    start_p_handler = CallbackQueryHandler(start_p, pattern=r"start_")
 
     help_handler = CommandHandler("help", get_help)
-    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_.*")
-
+    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
+    
+    gethelp_callback_handler = CallbackQueryHandler(gethelp, pattern=r"gethelp_")
+    
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
     about_callback_handler = CallbackQueryHandler(Shoko_about_callback, pattern=r"aboutmanu_")
-    source_callback_handler = CallbackQueryHandler(Source_about_callback, pattern=r"source_")
-
-    donate_handler = CommandHandler("donate", donate)
+    
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+    is_chat_allowed_handler = MessageHandler(Filters.group, is_chat_allowed)
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
