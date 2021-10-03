@@ -811,12 +811,12 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-            client.run_until_disconnected()
+            telethn.run_until_disconnected()
 
     else:
         LOGGER.info("Using long polling.")
         updater.start_polling(timeout=15, read_latency=4)
-        client.run_until_disconnected()
+        telethn.run_until_disconnected()
 
     updater.idle()
 
@@ -824,5 +824,6 @@ def main():
 
 if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
-    client.start(bot_token=TOKEN)
+    telethn.start(bot_token=TOKEN)
+    pbot.start()
     main()
