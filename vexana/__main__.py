@@ -1,3 +1,4 @@
+import html
 import importlib
 import time
 import re
@@ -127,7 +128,7 @@ CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
 for module_name in ALL_MODULES:
-    imported_module = importlib.import_module("innexiaBot.modules." + module_name)
+    imported_module = importlib.import_module("vexana.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
 
@@ -228,7 +229,7 @@ def start(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                text="UMMONE ME ⚡️",
+                                text="SUMMONE ME ⚡️",
                                 url="t.me/{}?startgroup=true".format(
                                     context.bot.username
                                 ),
@@ -256,7 +257,7 @@ def start(update: Update, context: CallbackContext):
             
     else:
         update.effective_message.reply_photo(
-            INNEXIA_IMG, caption= "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
+            vexana_IMG, caption= "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
                 uptime
             ),
             parse_mode=ParseMode.HTML,
@@ -389,9 +390,9 @@ def help_button(update, context):
 
 
 @run_async
-def innexia_about_callback(update, context):
+def vexana_about_callback(update, context):
     query = update.callback_query
-    if query.data == "innexia_":
+    if query.data == "vexana_":
         query.message.edit_text(
             text=""" Vexana - A bot to manage your groups with additional features!
             \nHere's the basic help regarding use of Innexia.
@@ -410,11 +411,11 @@ def innexia_about_callback(update, context):
                             text="spam protection", url="t.me/VexanaFanClub"
                         ),
                     ],
-                    [InlineKeyboardButton(text="Back", callback_data="innexia_back")],
+                    [InlineKeyboardButton(text="Back", callback_data="vexana_back")],
                 ]
             ),
         )
-    elif query.data == "innexia_back":
+    elif query.data == "vexana_back":
         query.message.edit_text(
                 PM_START_TEXT,
                 reply_markup=InlineKeyboardMarkup(buttons),
@@ -423,12 +424,12 @@ def innexia_about_callback(update, context):
                 disable_web_page_preview=False,
         )
 
-    elif query.data == "innexia_basichelp":
+    elif query.data == "vexana_basichelp":
         query.message.edit_text(
             text=f"*Here's basic Help regarding* *How to use Me?*"
             f"\n\n• Firstly Add {dispatcher.bot.first_name} to your group by pressing [here](http://t.me/{dispatcher.bot.username}?startgroup=true)\n"
             f"\n• After adding promote me manually with full rights for faster experience.\n"
-            f"\n• Than send `/admincache@InnexiaBot` in that chat to refresh admin list in My database.\n"
+            f"\n• Than send `/admincache@Vexana_robot` in that chat to refresh admin list in My database.\n"
             f"\n\n*All done now use below given button's to know about use!*\n"
             f"",
             parse_mode=ParseMode.MARKDOWN,
@@ -436,24 +437,24 @@ def innexia_about_callback(update, context):
             reply_markup=InlineKeyboardMarkup(
                 [
                  [
-                    InlineKeyboardButton(text="Aᴅᴍɪɴ", callback_data="innexia_admin"),
-                    InlineKeyboardButton(text="Nᴏᴛᴇꜱ", callback_data="innexia_notes"),
+                    InlineKeyboardButton(text="Aᴅᴍɪɴ", callback_data="vexana_admin"),
+                    InlineKeyboardButton(text="Nᴏᴛᴇꜱ", callback_data="vexana_notes"),
                  ],
                  [
-                    InlineKeyboardButton(text="Sᴜᴘᴘᴏʀᴛ", callback_data="innexia_support"),
-                    InlineKeyboardButton(text="Cʀᴇᴅɪᴛ", callback_data="innexia_credit"),
+                    InlineKeyboardButton(text="Sᴜᴘᴘᴏʀᴛ", callback_data="vexana_support"),
+                    InlineKeyboardButton(text="Cʀᴇᴅɪᴛ", callback_data="vexana_credit"),
                  ],
                  [
-                    InlineKeyboardButton(text="Back", callback_data="innexia_back"),
+                    InlineKeyboardButton(text="Back", callback_data="vexana_back"),
                  
                  ]
                 ]
             ),
         )
-    elif query.data == "innexia_admin":
+    elif query.data == "vexana_admin":
         query.message.edit_text(
             text=f"*Let's make your group bit effective now*"
-            f"\nCongragulations, Innexia now ready to manage your group."
+            f"\nCongragulations, vexana now ready to manage your group."
             f"\n\n*Admin Tools*"
             f"\nBasic Admin tools help you to protect and powerup your group."
             f"\nYou can ban members, Kick members, Promote someone as admin through commands of bot."
@@ -463,11 +464,11 @@ def innexia_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="innexia_basichelp")]]
+                [[InlineKeyboardButton(text="Back", callback_data="vexana_basichelp")]]
             ),
         )
 
-    elif query.data == "innexia_notes":
+    elif query.data == "vexana_notes":
         query.message.edit_text(
             text=f"<b> Setting up notes</b>"
             f"\nYou can save message/media/audio or anything as notes"
@@ -475,10 +476,10 @@ def innexia_about_callback(update, context):
             f"\n\nYou can also set buttons for notes and filters (refer help menu)",
             parse_mode=ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="innexia_basichelp")]]
+                [[InlineKeyboardButton(text="Back", callback_data="vexana_basichelp")]]
             ),
         )
-    elif query.data == "innexia_support":
+    elif query.data == "vexana_support":
         query.message.edit_text(
             text="* Vexana support chats*"
             "\nJoin Support Group/Channel",
@@ -500,7 +501,7 @@ def innexia_about_callback(update, context):
                 ]
             ),
         )
-    elif query.data == "innexia_credit":
+    elif query.data == "vexana_credit":
         query.message.edit_text(
             text=f"<b> CREDIT FOR Vexana DEV'S</b>\n"
             f"\nHere Some Developers Helping in Making The vexana Bot",
@@ -512,7 +513,7 @@ def innexia_about_callback(update, context):
                     InlineKeyboardButton(text="Uᴘᴅᴀᴛᴇꜱ", url="https://t.me/Vexana_updates"),
                  ]
                 [
-                    InlineKeyboardButton(text="Back", callback_data="innexia_basichelp"),
+                    InlineKeyboardButton(text="Back", callback_data="vexana_basichelp"),
                  
                  ]
                 ]
@@ -844,7 +845,7 @@ def main():
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
-    about_callback_handler = CallbackQueryHandler(innexia_about_callback, pattern=r"innexia_")
+    about_callback_handler = CallbackQueryHandler(vexana_about_callback, pattern=r"vexana_")
     source_callback_handler = CallbackQueryHandler(Source_about_callback, pattern=r"source_")
 
     donate_handler = CommandHandler("donate", donate)
