@@ -305,6 +305,35 @@ def error_handler(update, context):
     context.bot.send_message(chat_id=OWNER_ID, text=message, parse_mode=ParseMode.HTML)
 
 
+# for test purposes
+def error_callback(update: Update, context: CallbackContext):
+    error = context.error
+    try:
+        raise error
+    except Unauthorized:
+        print("no nono1")
+        print(error)
+        # remove update.message.chat_id from conversation list
+    except BadRequest:
+        print("no nono2")
+        print("BadRequest caught")
+        print(error)
+
+        # handle malformed requests - read more below!
+    except TimedOut:
+        print("no nono3")
+        # handle slow connection problems
+    except NetworkError:
+        print("no nono4")
+        # handle other connection problems
+    except ChatMigrated as err:
+        print("no nono5")
+        print(err)
+        # the chat_id of a group has changed, use e.new_chat_id instead
+    except TelegramError:
+        print(error)
+        # handle all other telegram related errors
+
 @run_async
 def help_button(update, context):
     query = update.callback_query
@@ -810,7 +839,6 @@ def main():
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
     dispatcher.add_handler(is_chat_allowed_handler)
-
     dispatcher.add_error_handler(error_callback)
 
     if WEBHOOK:
