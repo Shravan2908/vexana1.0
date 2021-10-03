@@ -20,7 +20,7 @@ from vexana import (
     StartTime,
     telethn,
     pbot,
-    updater
+    updater,
     BLACKLIST_CHATS,
     WHITELIST_CHATS,
 )
