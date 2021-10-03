@@ -772,36 +772,43 @@ def is_chat_allowed(update, context):
 
 
 def main():
-    # test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start, pass_args=True)
-    start_p_handler = CallbackQueryHandler(start_p, pattern=r"start_")
+    if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
+        try:
+            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "I Aᴍ Aʟɪᴠᴇ �")
+        except Unauthorized:
+            LOGGER.warning(
+                "Bot isnt able to send message to support_chat, go and check!"
+            )
+        except BadRequest as e:
+            LOGGER.warning(e.message)
+
+    test_handler = CommandHandler("test", test)
+    start_handler = CommandHandler("start", start)
 
     help_handler = CommandHandler("help", get_help)
-    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
-    
-    gethelp_callback_handler = CallbackQueryHandler(gethelp, pattern=r"gethelp_")
-    
+    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_.*")
+
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
-    about_callback_handler = CallbackQueryHandler(Shoko_about_callback, pattern=r"aboutmanu_")
-    
-    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
-    is_chat_allowed_handler = MessageHandler(Filters.group, is_chat_allowed)
+    about_callback_handler = CallbackQueryHandler(vexana_about_callback, pattern=r"vexana_")
+    source_callback_handler = CallbackQueryHandler(Source_about_callback, pattern=r"source_")
 
-    dispatcher.add_handler(test_handler)
+    donate_handler = CommandHandler("donate", donate)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+
+    # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(start_p_handler)
-    dispatcher.add_handler(about_callback_handler)
     dispatcher.add_handler(help_handler)
-    dispatcher.add_handler(gethelp_callback_handler)
+    dispatcher.add_handler(about_callback_handler)
+    dispatcher.add_handler(source_callback_handler)
     dispatcher.add_handler(settings_handler)
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
-    dispatcher.add_handler(is_chat_allowed_handler)
+    dispatcher.add_handler(donate_handler)
 
-    dispatcher.add_error_handler(error_handler)
+    dispatcher.add_error_handler(error_callback)
 
     if WEBHOOK:
         LOGGER.info("Using webhooks.")
@@ -811,15 +818,17 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-            telethn.run_until_disconnected()
 
     else:
         LOGGER.info("Using long polling.")
-        updater.start_polling(timeout=15, read_latency=4)
+        updater.start_polling(timeout=15, read_latency=4, clean=True)
+
+    if len(argv) not in (1, 3, 4):
+        telethn.disconnect()
+    else:
         telethn.run_until_disconnected()
 
     updater.idle()
-
 
 
 if __name__ == "__main__":
