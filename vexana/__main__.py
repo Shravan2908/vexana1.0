@@ -4,7 +4,7 @@ import re
 from sys import argv
 from typing import Optional
 
-from innexiaBot import (
+from vexana import (
     ALLOW_EXCL,
     CERT_PATH,
     DONATION_LINK,
@@ -25,9 +25,9 @@ from innexiaBot import (
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from innexiaBot.modules import ALL_MODULES
-from innexiaBot.modules.helper_funcs.chat_status import is_user_admin
-from innexiaBot.modules.helper_funcs.misc import paginate_modules
+from vexana.modules import ALL_MODULES
+from vexana.modules.helper_funcs.chat_status import is_user_admin
+from vexana.modules.helper_funcs.misc import paginate_modules
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
