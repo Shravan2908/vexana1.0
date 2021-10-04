@@ -58,16 +58,16 @@ async def hmm(_, message):
     global innexia_chats
     if len(message.command) != 2:
         await message.reply_text(
-            "I only recognize `/chatbot on` and /chatbot `off only`"
+            "vexana only recognize `/chatbot on` and /chatbot `off only`"
         )
         message.continue_propagation()
     status = message.text.split(None, 1)[1]
     chat_id = message.chat.id
     if status == "ON" or status == "on" or status == "On":
-        lel = await edit_or_reply(message, "`Processing...`")
+        lel = await edit_or_reply(message, "`vexana Processing...`")
         lol = add_chat(int(message.chat.id))
         if not lol:
-            await lel.edit("innexia AI Already Activated In This Chat")
+            await lel.edit("vexana AI Already Activated In This Chat")
             return
         await lel.edit(
             f"vexana AI Successfully Added For Users In The Chat {message.chat.id}"
@@ -77,7 +77,7 @@ async def hmm(_, message):
         lel = await edit_or_reply(message, "`Processing...`")
         Escobar = remove_chat(int(message.chat.id))
         if not Escobar:
-            await lel.edit("innexia AI Was Not Activated In This Chat")
+            await lel.edit("vexana AI Was Not Activated In This Chat")
             return
         await lel.edit(
             f"vexana AI Successfully Deactivated For Users In The Chat {message.chat.id}"
