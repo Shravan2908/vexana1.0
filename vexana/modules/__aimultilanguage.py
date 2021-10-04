@@ -2,22 +2,22 @@ import re
 
 import emoji
 
-IBM_WATSON_CRED_URL = "https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/2a7c68fc-d74d-4917-a43f-8891febf23ef"
-IBM_WATSON_CRED_PASSWORD = "I25BtqI7gpanvXBQdksDK2qYw3ISsVK5VWtoGk7nF3us"
 url = "https://acobot-brainshop-ai-v1.p.rapidapi.com/get"
 import re
-
 import aiohttp
-from google_trans_new import google_translator
+from googletrans import Translator as google_translator
 from pyrogram import filters
-
 from vexana import BOT_ID
 from vexana.helper_extra.aichat import add_chat, get_session, remove_chat
 from vexana.pyrogramee.pluginshelper import admins_only, edit_or_reply
-from vexana import pbot as innexia
+from vexana.pyrogramee.pyrogram import pbot as kaneki
 
 translator = google_translator()
-import requests
+
+
+async def lunaQuery(query: str, user_id: int):
+    luna = await arq.luna(query, user_id)
+    return luna.result
 
 
 def extract_emojis(s):
@@ -39,8 +39,10 @@ async def fetch(url):
         return
 
 
-innexia_chats = []
+kaneki_chats = []
 en_chats = []
+# AI Chat (C) 2020-2021 by @InukaAsith
+
 from Python_ARQ import ARQ   
 from aiohttp import ClientSession
 ARQ_API_URL = "https://thearq.tech"
@@ -50,31 +52,31 @@ aiohttpsession = ClientSession()
 arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 
-@innexia.on_message(
+@kaneki.on_message(
     filters.command("chatbot") & ~filters.edited & ~filters.bot & ~filters.private
 )
 @admins_only
 async def hmm(_, message):
-    global innexia_chats
+    global kaneki_chats
     if len(message.command) != 2:
         await message.reply_text(
-            "vexana only recognize `/chatbot on` and /chatbot `off only`"
-        )
+            "vexana only recognize `/chatbot on` and `/chatbot off` only" 
+        ) 
         message.continue_propagation()
     status = message.text.split(None, 1)[1]
     chat_id = message.chat.id
     if status == "ON" or status == "on" or status == "On":
-        lel = await edit_or_reply(message, "`vexana Processing...`")
+        lel = await edit_or_reply(message, "`Processing...`")
         lol = add_chat(int(message.chat.id))
         if not lol:
-            await lel.edit("vexana AI Already Activated In This Chat")
+            await lel.edit("vexana AI already activated in this chat")
             return
         await lel.edit(
             f"vexana AI Successfully Added For Users In The Chat {message.chat.id}"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
-        lel = await edit_or_reply(message, "`Processing...`")
+        lel = await edit_or_reply(message, "`vexana Processing...`")
         Escobar = remove_chat(int(message.chat.id))
         if not Escobar:
             await lel.edit("vexana AI Was Not Activated In This Chat")
@@ -92,11 +94,11 @@ async def hmm(_, message):
         message.continue_propagation()
     else:
         await message.reply_text(
-            "vexana only recognize `/chatbot on` and /chatbot `off only`"
-        )
+            "vexana only recognize `/chatbot on` and `/chatbot off` only"
+       ) 
 
 
-@innexia.on_message(
+@kaneki.on_message(
     filters.text
     & filters.reply
     & ~filters.bot
@@ -122,23 +124,17 @@ async def hmm(client, message):
         message.continue_propagation()
     if chat_id in en_chats:
         test = msg
-        test = test.replace("vexana", "Aco")
-        test = test.replace("vexana", "Aco")
-        URL = "https://api.affiliateplus.xyz/api/chatbot?message=hi&botname=@vexana_robot&ownername=@itzz_axel1"
+        test = test.replace("Luna", "vexana")
+        test = test.replace("Aco", "vexana")
+        response = await lunaQuery(
+            test, message.from_user.id if message.from_user else 0
+        )
+        response = response.replace("Who made you?", "I was created by itzz_axel1")
+        response = response.replace("Where do you come from?", "I'm from @vexana_support, you have to join")
 
+        pro = response
         try:
-            r = requests.request("GET", url=URL)
-        except:
-            return
-
-        try:
-            result = r.json()
-        except:
-            return
-
-        pro = result["message"]
-        try:
-            await innexia.send_chat_action(message.chat.id, "typing")
+            await kaneki.send_chat_action(message.chat.id, "typing")
             await message.reply_text(pro)
         except CFError:
             return
@@ -174,43 +170,42 @@ async def hmm(client, message):
             # print (rm)
         try:
             lan = translator.detect(rm)
+            lan = lan.lang
         except:
             return
         test = rm
         if not "en" in lan and not lan == "":
             try:
-                test = translator.translate(test, lang_tgt="en")
+                test = translator.translate(test, dest="en")
+                test = test.text
             except:
                 return
         # test = emoji.demojize(test.strip())
 
-        # Kang with the credits bitches @InukaASiTH
-        test = test.replace("innexia", "Aco")
-        test = test.replace("innexia", "Aco")
-        URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@vexana_robot&ownername=@itzz_axel1"
-        try:
-            r = requests.request("GET", url=URL)
-        except:
-            return
-
-        try:
-            result = r.json()
-        except:
-            return
-        pro = result["message"]
+        test = test.replace("Luna", "vexana")
+        test = test.replace("Aco", "vexana")
+        response = await lunaQuery(
+            test, message.from_user.id if message.from_user else 0
+        )
+        response = response.replace("Who is your boyfriend?", "My boyfriend @itzz_axel1 i love him so much")
+        response = response.replace("Are you married?", "@itzz_axel1 he has declared marriage to me")
+        response = response.replace("Who made you?", "I was created by @itzz_axel1")
+        response = response.replace("Where do you live?", "I live with my creator at @vexana_Support you can join there.")
+        pro = response
         if not "en" in lan and not lan == "":
             try:
-                pro = translator.translate(pro, lang_tgt=lan[0])
+                pro = translator.translate(pro, dest=lan)
+                pro = pro.text
             except:
                 return
         try:
-            await innexia.send_chat_action(message.chat.id, "typing")
+            await kaneki.send_chat_action(message.chat.id, "typing")
             await message.reply_text(pro)
         except CFError:
             return
 
 
-@innexia.on_message(
+@kaneki.on_message(
     filters.text & filters.private & ~filters.edited & filters.reply & ~filters.bot
 )
 async def inuka(client, message):
@@ -247,12 +242,14 @@ async def inuka(client, message):
         # print (rm)
     try:
         lan = translator.detect(rm)
+        lan = lan.lang
     except:
         return
     test = rm
     if not "en" in lan and not lan == "":
         try:
-            test = translator.translate(test, lang_tgt="en")
+            test = translator.translate(test, dest="en")
+            test = test.text
         except:
             return
 
@@ -261,29 +258,24 @@ async def inuka(client, message):
     # Kang with the credits bitches @InukaASiTH
     test = test.replace("vexana", "Aco")
     test = test.replace("vexana", "Aco")
-    URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@vexana_robot&ownername=@itzz_axel1"
-    try:
-        r = requests.request("GET", url=URL)
-    except:
-        return
 
-    try:
-        result = r.json()
-    except:
-        return
+    response = await lunaQuery(test, message.from_user.id if message.from_user else 0)
+    response = response.replace("Aco", "vexana")
+    response = response.replace("aco", "vexana")
 
-    pro = result["message"]
+    pro = response
     if not "en" in lan and not lan == "":
-        pro = translator.translate(pro, lang_tgt=lan[0])
+        pro = translator.translate(pro, dest=lan)
+        pro = pro.text
     try:
-        await innexia.send_chat_action(message.chat.id, "typing")
+        await kaneki.send_chat_action(message.chat.id, "typing")
         await message.reply_text(pro)
     except CFError:
         return
 
 
-@innexia.on_message(
-    filters.regex("vexana|vexana|vexana|vexana|vexana")
+@kaneki.on_message(
+    filters.regex("vexana|alo|kiw|sayang|itzz_axel1|who made you?")
     & ~filters.bot
     & ~filters.via_bot
     & ~filters.forwarded
@@ -325,49 +317,46 @@ async def inuka(client, message):
         # print (rm)
     try:
         lan = translator.detect(rm)
+        lan = lan.lang
     except:
         return
     test = rm
     if not "en" in lan and not lan == "":
         try:
-            test = translator.translate(test, lang_tgt="en")
+            test = translator.translate(test, dest="en")
+            test = test.text
         except:
             return
 
     # test = emoji.demojize(test.strip())
 
-    # Kang with the credits bitches @InukaASiTH
     test = test.replace("vexana", "Aco")
     test = test.replace("vexana", "Aco")
-    URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@vexana_robot&ownername=@itzz_axel1"
-    try:
-        r = requests.request("GET", url=URL)
-    except:
-        return
+    response = await lunaQuery(test, message.from_user.id if message.from_user else 0)
+    response = response.replace("Who made you?", "I was created by @itzz_axel1")
+    response = response.replace("aco", "vexana")
 
-    try:
-        result = r.json()
-    except:
-        return
-    pro = result["message"]
+    pro = response
     if not "en" in lan and not lan == "":
         try:
-            pro = translator.translate(pro, lang_tgt=lan[0])
+            pro = translator.translate(pro, dest=lan)
+            pro = pro.text
         except Exception:
             return
     try:
-        await innexia.send_chat_action(message.chat.id, "typing")
+        await kaneki.send_chat_action(message.chat.id, "typing")
         await message.reply_text(pro)
     except CFError:
         return
 
 
 __help__ = """
-<b> Chatbot </b>
-Vexana AI 3.0 IS THE ONLY AI SYSTEM WHICH CAN DETECT & REPLY UPTO 200 LANGUAGES
- - /chatbot [ON/OFF]: Enables and disables AI Chat mode (EXCLUSIVE)
- - /chatbot EN : Enables English only chatbot
- 
+*──「 Help for the Chatbot module 」──*
+
+• vexana is the only ai system which can detect & reply upto 200 language's
+
+✪ /chatbot [ON/OFF]: Enables and disables AI Chat mode.
+✪ /chatbot EN : Enables English only chatbot.
 """
 
 __mod_name__ = "Chatbot"
