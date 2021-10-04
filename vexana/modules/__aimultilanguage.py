@@ -70,7 +70,7 @@ async def hmm(_, message):
             await lel.edit("innexia AI Already Activated In This Chat")
             return
         await lel.edit(
-            f"innexia AI Successfully Added For Users In The Chat {message.chat.id}"
+            f"vexana AI Successfully Added For Users In The Chat {message.chat.id}"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
@@ -80,7 +80,7 @@ async def hmm(_, message):
             await lel.edit("innexia AI Was Not Activated In This Chat")
             return
         await lel.edit(
-            f"innexia AI Successfully Deactivated For Users In The Chat {message.chat.id}"
+            f"vexana AI Successfully Deactivated For Users In The Chat {message.chat.id}"
         )
 
     elif status == "EN" or status == "en" or status == "english":
@@ -92,7 +92,7 @@ async def hmm(_, message):
         message.continue_propagation()
     else:
         await message.reply_text(
-            "I only recognize `/chatbot on` and /chatbot `off only`"
+            "vexana only recognize `/chatbot on` and /chatbot `off only`"
         )
 
 
@@ -122,9 +122,9 @@ async def hmm(client, message):
         message.continue_propagation()
     if chat_id in en_chats:
         test = msg
-        test = test.replace("innexia", "Aco")
-        test = test.replace("innexia", "Aco")
-        URL = "https://api.affiliateplus.xyz/api/chatbot?message=hi&botname=@innexiaBot&ownername=@useIes"
+        test = test.replace("vexana", "Aco")
+        test = test.replace("vexana", "Aco")
+        URL = "https://api.affiliateplus.xyz/api/chatbot?message=hi&botname=@vexana_robot&ownername=@itzz_axel1"
 
         try:
             r = requests.request("GET", url=URL)
@@ -187,7 +187,7 @@ async def hmm(client, message):
         # Kang with the credits bitches @InukaASiTH
         test = test.replace("innexia", "Aco")
         test = test.replace("innexia", "Aco")
-        URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@innexiaBot&ownername=@useIes"
+        URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@vexana_robot&ownername=@itzz_axel1"
         try:
             r = requests.request("GET", url=URL)
         except:
@@ -259,9 +259,9 @@ async def inuka(client, message):
     # test = emoji.demojize(test.strip())
 
     # Kang with the credits bitches @InukaASiTH
-    test = test.replace("innexia", "Aco")
-    test = test.replace("innexia", "Aco")
-    URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@innexiaBot&ownername=@useIes"
+    test = test.replace("vexana", "Aco")
+    test = test.replace("vexana", "Aco")
+    URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@vexana_robot&ownername=@itzz_axel1"
     try:
         r = requests.request("GET", url=URL)
     except:
@@ -283,7 +283,7 @@ async def inuka(client, message):
 
 
 @innexia.on_message(
-    filters.regex("innexia|innexia|innexia|innexia|innexia")
+    filters.regex("vexana|vexana|vexana|vexana|vexana")
     & ~filters.bot
     & ~filters.via_bot
     & ~filters.forwarded
@@ -337,9 +337,9 @@ async def inuka(client, message):
     # test = emoji.demojize(test.strip())
 
     # Kang with the credits bitches @InukaASiTH
-    test = test.replace("innexia", "Aco")
-    test = test.replace("innexia", "Aco")
-    URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@innexiaBot&ownername=@useIes"
+    test = test.replace("vexana", "Aco")
+    test = test.replace("vexana", "Aco")
+    URL = f"https://api.affiliateplus.xyz/api/chatbot?message={test}&botname=@vexana_robot&ownername=@itzz_axel1"
     try:
         r = requests.request("GET", url=URL)
     except:
@@ -364,7 +364,7 @@ async def inuka(client, message):
 
 __help__ = """
 <b> Chatbot </b>
-innexia AI 3.0 IS THE ONLY AI SYSTEM WHICH CAN DETECT & REPLY UPTO 200 LANGUAGES
+Vexana AI 3.0 IS THE ONLY AI SYSTEM WHICH CAN DETECT & REPLY UPTO 200 LANGUAGES
  - /chatbot [ON/OFF]: Enables and disables AI Chat mode (EXCLUSIVE)
  - /chatbot EN : Enables English only chatbot
  
