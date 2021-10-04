@@ -21,7 +21,6 @@ from googletrans import Translator as google_translator
 from pyrogram import filters
 from vexana import BOT_ID
 from vexana.helper_extra.aichat import add_chat, get_session, remove_chat
-from vexana import arq
 from vexana.pyrogramee.pluginshelper import admins_only, edit_or_reply
 from vexana.pyrogramee.pyrogram import pbot as vexana
 
@@ -55,6 +54,14 @@ async def fetch(url):
 kaneki_chats = []
 en_chats = []
 # AI Chat (C) 2020-2021 by @InukaAsith
+from Python_ARQ import ARQ   
+from aiohttp import ClientSession
+ARQ_API_URL = "https://thearq.tech"
+ARQ_API_KEY = "CYCPGY-UMYUXQ-YRRDWJ-PFFVQY-ARQ"
+
+aiohttpsession = ClientSession()
+arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
+
 
 
 @kaneki.on_message(
