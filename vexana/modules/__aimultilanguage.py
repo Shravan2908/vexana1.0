@@ -22,7 +22,7 @@ from pyrogram import filters
 from vexana import BOT_ID
 from vexana.helper_extra.aichat import add_chat, get_session, remove_chat
 from vexana.pyrogramee.pluginshelper import admins_only, edit_or_reply
-from vexana.pyrogramee.pyrogram import pbot as vexana
+from vexana import BOT_ID, pbot as asuna
 
 translator = google_translator()
 
