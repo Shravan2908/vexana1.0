@@ -51,7 +51,7 @@ async def fetch(url):
         return
 
 
-kaneki_chats = []
+vexana_chats = []
 en_chats = []
 # AI Chat (C) 2020-2021 by @InukaAsith
 from Python_ARQ import ARQ   
@@ -64,7 +64,7 @@ arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 
 
-@kaneki.on_message(
+@vexana.on_message(
     filters.command("chatbot") & ~filters.edited & ~filters.bot & ~filters.private
 )
 @admins_only
@@ -110,7 +110,7 @@ async def hmm(_, message):
        ) 
 
 
-@kaneki.on_message(
+@vexana.on_message(
     filters.text
     & filters.reply
     & ~filters.bot
@@ -211,13 +211,13 @@ async def hmm(client, message):
             except:
                 return
         try:
-            await kaneki.send_chat_action(message.chat.id, "typing")
+            await vexana.send_chat_action(message.chat.id, "typing")
             await message.reply_text(pro)
         except CFError:
             return
 
 
-@kaneki.on_message(
+@vexana.on_message(
     filters.text & filters.private & ~filters.edited & filters.reply & ~filters.bot
 )
 async def inuka(client, message):
@@ -280,14 +280,14 @@ async def inuka(client, message):
         pro = translator.translate(pro, dest=lan)
         pro = pro.text
     try:
-        await kaneki.send_chat_action(message.chat.id, "typing")
+        await vexana.send_chat_action(message.chat.id, "typing")
         await message.reply_text(pro)
     except CFError:
         return
 
 
-@kaneki.on_message(
-    filters.regex("alina|alo|kiw|sayang|itzz_axel1|who made you?")
+@vexana.on_message(
+    filters.regex("vexana|alo|kiw|sayang|itzz_axel1|who made you?")
     & ~filters.bot
     & ~filters.via_bot
     & ~filters.forwarded
@@ -356,7 +356,7 @@ async def inuka(client, message):
         except Exception:
             return
     try:
-        await kaneki.send_chat_action(message.chat.id, "typing")
+        await vexana.send_chat_action(message.chat.id, "typing")
         await message.reply_text(pro)
     except CFError:
         return
