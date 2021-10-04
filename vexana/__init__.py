@@ -195,8 +195,6 @@ telethn = TelegramClient("vexana", API_ID, API_HASH)
 pbot = Client("vexana", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 pgram = Client("vexanapyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
-aiohttpsession = ClientSession()
-arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
