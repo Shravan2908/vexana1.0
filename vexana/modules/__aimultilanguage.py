@@ -41,6 +41,13 @@ async def fetch(url):
 
 innexia_chats = []
 en_chats = []
+from Python_ARQ import ARQ   
+from aiohttp import ClientSession
+ARQ_API_URL = "https://thearq.tech"
+ARQ_API_KEY = "CYCPGY-UMYUXQ-YRRDWJ-PFFVQY-ARQ"
+
+aiohttpsession = ClientSession()
+arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 
 @innexia.on_message(
