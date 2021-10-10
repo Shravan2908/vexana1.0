@@ -550,7 +550,7 @@ def devlist(update: Update, context: CallbackContext):
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
 
-__help__ = f"""
+__help__ = """
 # *⚠️ Notice:*
 # Commands listed here only work for users with special access are mainly used for troubleshooting, debugging purposes.
 # Group admins/group owners do not need these commands. 
@@ -631,7 +631,7 @@ __help__ = f"""
 #  ❍ /gignoreblue*:* <word>*:* Globally ignorea bluetext cleaning of saved word across innexiaBot.
 #  ❍ /ungignoreblue*:* <word>*:* Remove said command from global cleaning list
 
-# *Innexia Core*
+# *Vexana Core*
 # *Owner only*
 #  ❍ /send*:* <module name>*:* Send module
 #  ❍ /install*:* <reply to a .py>*:* Install module 
@@ -678,7 +678,7 @@ dispatcher.add_handler(SUPPORTLIST_HANDLER)
 dispatcher.add_handler(SUDOLIST_HANDLER)
 dispatcher.add_handler(DEVLIST_HANDLER)
 
-__mod_name__ = "Dev"
+__mod_name__ = "Devs"
 __handlers__ = [
     SUDO_HANDLER,
     SUPPORT_HANDLER,
