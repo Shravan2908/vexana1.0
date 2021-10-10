@@ -27,23 +27,23 @@
 </p>
 
 
-# <p align="left"><a href="https://github.com/aksr-aashish/vexana"><img src="https://github-readme-stats.vercel.app/api/pin?username=itzz_axel1&show_icons=true&theme=dark&hide_border=true&repo=vexana_robot"></a></p><p align="centre"><a href="https://t.me/vexana_support"> <img src="https://img.shields.io/badge/telegram-Support_Group-blue?style=social&logo=telegram" alt="Support" /></a><a href="https://github.com/aksr-aashish/vexana/stargazers"><img src="https://img.shields.io/github/stars/aksr-aashish/vexana1.0?style=social"></a><a href="https://github.com/aksr-aashish/vexana1.0/fork"><img src="https://img.shields.io/github/forks/aksr-aashish/vexana1.0?label=Fork&logoColor=blue&style=social"></a> <a href="https://github.com/aksr-aashish/vexana1.0"><img src="https://img.shields.io/github/last-commit/aksr-aashish/vexana1.0?style=flat-square"></a></p>
+# <p align="left"><a href="https://github.com/aksr-aashish/vexana1.0/tree/patch1.0"><img src="https://github-readme-stats.vercel.app/api/pin?username=itzz_axel1&show_icons=true&theme=dark&hide_border=true&repo=vexana_robot"></a></p><p align="centre"><a href="https://t.me/vexana_support"> <img src="https://img.shields.io/badge/telegram-Support_Group-blue?style=social&logo=telegram" alt="Support" /></a><a href="https://github.com/aksr-aashish/vexana/stargazers"><img src="https://img.shields.io/github/stars/aksr-aashish/vexana1.0?style=social"></a><a href="https://github.com/aksr-aashish/vexana1.0/fork"><img src="https://img.shields.io/github/forks/aksr-aashish/vexana1.0?label=Fork&logoColor=blue&style=social"></a> <a href="https://github.com/aksr-aashish/vexana1.0"><img src="https://img.shields.io/github/last-commit/aksr-aashish/vexana1.0?style=flat-square"></a></p>
 
 
 
 Vexana is a simple one-punch solution to your group management needs and has become one of the most prominently kanged bots around telegram, purely weeab themed.
 
-* Bot Link:  <a href="https://t.me/vexana_robot" alt="VEXANARobot"> <img src="https://img.shields.io/badge/%F0%9F%A4%96%20-PglRobot-blue" /> </a>
-* News channel: <a  href="https://t.me/vexana_Updates" alt="vexana Updates"> <img  src="https://img.shields.io/badge/%F0%9F%92%A1-PglRobot%20Updates-9cf" /> </a>
+* Bot Link:  <a href="https://t.me/vexana_robot" alt="VexanaRobot"> <img src="https://img.shields.io/badge/%F0%9F%A4%96%20-Vexana_RObot-blue" /> </a>
+* News channel: <a  href="https://t.me/vexana_Updates" alt="Vexana Updates"> <img  src="https://img.shields.io/badge/%F0%9F%92%A1-Vexana_RObot%20Updates-9cf" /> </a>
 
-Should you be forking this repo then do not forget to star it - <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/IisGaurav/PglRobot?color=white&label=%F0%9F%8C%9F%20star">
+Should you be forking this repo then do not forget to star it - <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/aksr-aashish/vexana1.0/tree/patch1.0?color=white&label=%F0%9F%8C%9F%20star">
 
 
 ## How to setup/deploy.
 
 ### Read these notes carefully before proceeding
-- Edit any mentions of @AuraXSupport to your own support chat.
-- Your code must be open source and a link to your fork's repository must be there in the start reply of the bot. [See this](https://github.com/aksr-aashish/vexana)
+- Edit any mentions of @VexanaSupport to your own support chat.
+- Your code must be open source and a link to your fork's repository must be there in the start reply of the bot. [See this](https://github.com/aksr-aashish/vexana1.0/tree/patch1.0)
 - Lastly, if you are found to run this repo without the code being open sourced or the repository link not mentioned in the bot, we will push a gban for you in our network because of being in violation of the license, you are free to be a dick and not respect the open source code (we do not mind) but we will not be having you around our chats.
 
 
@@ -57,7 +57,7 @@ REMEMBER: Turn on worker dyno (Don't worry It's free :D) & Webhook
 Now send the bot /start, If it doesn't respond go to https://dashboard.heroku.com/apps/(app-name)/settings and remove webhook and port.
 ```
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aksr-aashish/vexana.git)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aksr-aashish/vexana1.0/tree/patch1.0.git)
 
 </details>  
 <details>
