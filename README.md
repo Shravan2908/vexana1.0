@@ -27,7 +27,7 @@
 </p>
 
 
-# <p align="left"><a href="https://github.com/aksr-aashish/vexana"><img src="https://github-readme-stats.vercel.app/api/pin?username=IisGaurav&show_icons=true&theme=dark&hide_border=true&repo=vexana_robot"></a></p><p align="centre"><a href="https://t.me/AuraXSupport"> <img src="https://img.shields.io/badge/telegram-Support_Group-blue?style=social&logo=telegram" alt="Support" /></a><a href="https://github.com/aksr-aashish/vexana/stargazers"><img src="https://img.shields.io/github/stars/IisGaurav/PglRobot?style=social"></a><a href="https://github.com/aksr-aashish/vexana/fork"><img src="https://img.shields.io/github/forks/IisGaurav/PglRobot?label=Fork&logoColor=blue&style=social"></a> <a href="https://github.com/aksr-aashish/vexana"><img src="https://img.shields.io/github/last-commit/aksr-aashish/vexanat?style=flat-square"></a></p>
+# <p align="left"><a href="https://github.com/aksr-aashish/vexana"><img src="https://github-readme-stats.vercel.app/api/pin?username=itzz_axel1&show_icons=true&theme=dark&hide_border=true&repo=vexana_robot"></a></p><p align="centre"><a href="https://t.me/vexana_support"> <img src="https://img.shields.io/badge/telegram-Support_Group-blue?style=social&logo=telegram" alt="Support" /></a><a href="https://github.com/aksr-aashish/vexana/stargazers"><img src="https://img.shields.io/github/stars/aksr-aashish/vexana1.0?style=social"></a><a href="https://github.com/aksr-aashish/vexana1.0/fork"><img src="https://img.shields.io/github/forks/aksr-aashish/vexana1.0?label=Fork&logoColor=blue&style=social"></a> <a href="https://github.com/aksr-aashish/vexana1.0"><img src="https://img.shields.io/github/last-commit/aksr-aashish/vexana1.0?style=flat-square"></a></p>
 
 
 
