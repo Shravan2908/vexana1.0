@@ -150,6 +150,6 @@ async def _(event):
             else:
                c = c + 1                    
 
-    required_string = "Successfully Kicked **{}** users"
+    required_string = "Successfully Kicked **{}** users Powered by @Vexana_Support"
     await event.reply(required_string.format(c))
 
