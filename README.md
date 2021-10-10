@@ -245,7 +245,7 @@ For starters click on this button
 
 ### ALL DEVS AND Contributors ❤
 
-#### • AXEL  (AKA-Pain)    »»  <a href="https://github.com/aksr-aashish" alt="aksr0aashish"> <img src="https://img.shields.io/badge/AXEL-90302f?logo=github" /></a> (OWNER)
+#### • AXEL  (aksr-aashish)    »»  <a href="https://github.com/aksr-aashish" alt="aksr0aashish"> <img src="https://img.shields.io/badge/AXEL-90302f?logo=github" /></a> (OWNER)
 
 #### • Anand »»  <a href="https://github.com/Stella-80" alt="Akeno"> <img src="https://img.shields.io/badge/Akeno-95B9C7?logo=github" /></a> (Dev)
 #### • Aashish »»  <a href="https://github.com/aksr-aashish" alt="Aashish "> <img src="https://img.shields.io/badge/Aashish-95B9C7?logo=github" /></a> (Dev)
