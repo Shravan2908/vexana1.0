@@ -28,7 +28,6 @@ from vexana import (
     telethn,
     updater,
     pgram,
-    ubot,
     )
 
 # needed to dynamically load modules
