@@ -22,8 +22,6 @@ from vexana import (
     URL,
     WEBHOOK,
     SUPPORT_CHAT,
-    BOT_USERNAME,
-    BOT_NAME,
     EVENT_LOGS,
     dispatcher,
     StartTime,
