@@ -194,7 +194,14 @@ updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("innexia", API_ID, API_HASH)
 pbot = Client("InnexiaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
-
+print("[VEXANA]: PYROGRAM CLIENT STARTING")
+session_name = TOKEN.split(":")[0]
+pgram = Client(
+    session_name,
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=TOKEN,
+)
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
 WOLVES = list(WOLVES)
