@@ -6,12 +6,12 @@ import time
 import re
 import sys
 import traceback
-import Cutiepii_Robot.modules.sql.users_sql as sql
+import vexana.modules.sql.users_sql as sql
 
 
 from sys import argv
 from typing import Optional
-from Cutiepii_Robot import (
+from vexana import (
     ALLOW_EXCL,
     CERT_PATH,
     DONATION_LINK,
@@ -25,9 +25,6 @@ from Cutiepii_Robot import (
     BOT_USERNAME,
     BOT_NAME,
     EVENT_LOGS,
-    HELP_IMG,
-    GROUP_START_IMG,
-    CUTIEPII_PHOTO,
     dispatcher,
     StartTime,
     telethn,
@@ -38,12 +35,12 @@ from Cutiepii_Robot import (
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from Cutiepii_Robot.events import register
-from Cutiepii_Robot.modules import ALL_MODULES
-from Cutiepii_Robot.modules.helper_funcs.chat_status import is_user_admin
-from Cutiepii_Robot.modules.helper_funcs.alternate import typing_action
-from Cutiepii_Robot.modules.helper_funcs.misc import paginate_modules
-from Cutiepii_Robot.modules.disable import DisableAbleCommandHandler
+from vexana.events import register
+from vexana.modules import ALL_MODULES
+from vexana.modules.helper_funcs.chat_status import is_user_admin
+from vexanat.modules.helper_funcs.alternate import typing_action
+from vexanat.modules.helper_funcs.misc import paginate_modules
+from vexanat.modules.disable import DisableAbleCommandHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -164,6 +161,8 @@ HELP_STRINGS = """
 """
 
 GROUP_START_IMG ="https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
+HELP_IMG ="https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
+CUTIEPII_PHOTO ="https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 
 DONATE_STRING = """❂ I'm Free for Everyone ❂"""
 
