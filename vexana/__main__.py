@@ -128,8 +128,8 @@ Haven't slept since: {}
 buttons = [
     [
                         InlineKeyboardButton(
-                            text=f"Add {BOT_NAME} To Your Group",
-                            url=f"t.me/{BOT_USERNAME}?startgroup=true")
+                            text=f"Add Me To Your Group",
+                            url=f"t.me/vexana__robot?startgroup=true")
                     ],
                    [
                        InlineKeyboardButton(text="[► Help ◄]", callback_data="help_back"),
