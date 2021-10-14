@@ -75,10 +75,16 @@ def get_readable_time(seconds: int) -> str:
 
 PM_START_TEXT = """
 Hi {}, my name is {}!
-   I am a  Powerfull  group management bot, with some fun extras ;)
-   💍✗ 💍[Updates Channel](t.me/Vexana_Updates) 💙.
-   💍✗ 💍[Support Group](t.me/Vexana_Support)💙.
-   You can find the list of available commands with /help..
+I am a  Powerfull  group management bot, with some fun extras ;)
+   
+   ➖➖➖➖➖➖➖➖➖➖➖➖➖
+• *Uptime:* `{}`
+• `{}` *users, across* `{}` *chats.*
+➖➖➖➖➖➖➖➖➖➖➖➖➖
+
+💍✗ 💍[Updates Channel](t.me/Vexana_Updates) 💙.
+💍✗ 💍[Support Group](t.me/Vexana_Support)💙.
+You can find the list of available commands with /help..
 """
 
 buttons = [
