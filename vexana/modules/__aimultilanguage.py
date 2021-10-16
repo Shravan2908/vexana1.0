@@ -44,7 +44,7 @@ from vexana.modules.helper_funcs.filters import CustomFilters
 from vexana.modules.helper_funcs.chat_status import user_admin, user_admin_no_reply
 
 from telegram.utils.helpers import mention_html, mention_markdown, escape_markdown
-
+KUKI_KEY ="KUKItg111XlOZ"
  
 @user_admin_no_reply
 @gloggable
@@ -140,7 +140,7 @@ def chatbot(update: Update, context: CallbackContext):
             return
         Message = message.text
         bot.send_chat_action(chat_id, action="typing")
-        kukiurl = requests.get('kukiapi.xyz/api/apikey=KUKItg111XlOZ/vexana/axel/message=hi'+Message).json()
+        kukiurl = requests.get('https://kukiapi.xy/api/apikey={KUKI_KEY}/botname/owner/message=hi'+Message).json()
         Kuki = json.loads(kukiurl.text)
         kuki = Kuki['reply']
         sleep(0.3)
