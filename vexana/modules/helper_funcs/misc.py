@@ -74,10 +74,10 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
         
     if len(pairs) > 15:
         pairs = pairs[modulo_page * 15:15 * (modulo_page + 1)] + [
-            (EqInlineKeyboardButton("Back🔜", url="t.me/vexana_robot?start=ghelp_help"),)]
+            (EqInlineKeyboardButton("Back🔜", url="https://t.me/vexana_robot?start=help_"),)]
 
     else:
-        pairs += [[EqInlineKeyboardButton("Back🔜", url="t.me/vexana_robot?start=ghelp_help"),]]
+        pairs += [[EqInlineKeyboardButton("Back🔜", url="https://t.me/vexana_robot?start=help_"),]]
         
     return pairs
 
