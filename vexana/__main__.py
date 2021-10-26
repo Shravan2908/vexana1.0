@@ -264,11 +264,10 @@ def start(update: Update, context: CallbackContext):
             )
     else:
         update.effective_message.reply_photo(
-            vexana_IMG,
+            vexanaG_IMG,
             G_START_TEXT.format(uptime),
-        ),
-            parse_mode=ParseMode.HTML,
         )
+
 
 
 # for test purposes
