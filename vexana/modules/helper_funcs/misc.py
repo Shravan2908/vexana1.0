@@ -1,5 +1,4 @@
 from typing import Dict, List
-from math import ceil
 
 from vexana import NO_LOAD
 from telegram import MAX_MESSAGE_LENGTH, Bot, InlineKeyboardButton, ParseMode
@@ -44,11 +43,11 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
                 EqInlineKeyboardButton(
                     x.__mod_name__,
                     callback_data="{}_module({})".format(
-                        prefix, x.__mod_name__.lower()
+                        prefix, x.__mod_name__.lower(),
                     ),
                 )
                 for x in module_dict.values()
-            ]
+            ],
         )
     else:
         modules = sorted(
@@ -56,11 +55,11 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
                 EqInlineKeyboardButton(
                     x.__mod_name__,
                     callback_data="{}_module({},{})".format(
-                        prefix, chat, x.__mod_name__.lower()
+                        prefix, chat, x.__mod_name__.lower(),
                     ),
                 )
                 for x in module_dict.values()
-            ]
+            ],
         )
 
     pairs = [modules[i * 3 : (i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)]
@@ -69,21 +68,11 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
     calc = len(modules) - round(round_num)
     if calc in [1, 2]:
         pairs.append((modules[-1],))
-        
-         # can only have a certain amount of buttons side by side
-        
-    if len(pairs) > 15:
-        pairs = pairs[modulo_page * 15:15 * (modulo_page + 1)] + [
-            (EqInlineKeyboardButton("Back🔜", url="https://t.me/vexana_robot?start=help_"),)]
-
-    else:
-        pairs += [[EqInlineKeyboardButton("Back🔜", url="https://t.me/vexana_robot?start=help_"),]]
-        
     return pairs
 
 
 def send_to_list(
-    bot: Bot, send_to: list, message: str, markdown=False, html=False
+    bot: Bot, send_to: list, message: str, markdown=False, html=False,
 ) -> None:
     if html and markdown:
         raise Exception("Can only send with either markdown or HTML!")
