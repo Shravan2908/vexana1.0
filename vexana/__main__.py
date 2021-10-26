@@ -11,7 +11,6 @@ from vexana import (
     LOGGER,
     OWNER_ID,
     PORT,
-    SUPPORT_CHAT,
     TOKEN,
     URL,
     WEBHOOK,
@@ -19,8 +18,7 @@ from vexana import (
     dispatcher,
     StartTime,
     telethn,
-    updater,
-)
+    updater)
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -77,8 +75,9 @@ PM_START_TEXT = """
    ɪ ᴀᴍ ᴀ  ᴘᴏᴡᴇʀꜰᴜʟʟ  ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ, ᴡɪᴛʜ ꜱᴏᴍᴇ ꜰᴜɴ ᴇxᴛʀᴀꜱ ;)
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
-   ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /ʜᴇʟᴘ..
+   ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /help..
 """
+
 G_START_TEXT = """
 Hello vexana  In The Chat.
 Uptime - {}!
@@ -86,8 +85,9 @@ Uptime - {}!
 
 HELP_STRINGS = """
 Hey there! My name is *{}*.
-I'm a vexana For Fun and help admins to manage their groups! Have a look at the following for an idea of some of \
+I'm a Hero For Fun and help admins manage their groups with One Punch! Have a look at the following for an idea of some of \
 the things I can help you with.
+
 *Main* commands available:
  • /help: PM's you this message.
  • /help <module name>: PM's you info about that module.
@@ -104,15 +104,13 @@ And the following:
     "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n",
 )
 
+SAITAMA_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 vexana_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 
-vexanaG_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
-
 DONATE_STRING = """Heya, glad to hear you want to donate!
- You can support the project by contacting [axel merchandies](https://t.me/itzz_axel).
- Using [PayPal](paypal.me/axel).
- Those who cannot provide monetary support are welcome to help us develop the bot at @Vexanasupport.
- """
+ You can support the project via [UPI](9304323446@paytm) or by contacting @itzz_axel \
+ Supporting isnt always financial! \
+ Those who cannot provide monetary support are welcome to help us develop the bot at @Vexana_support."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -197,7 +195,7 @@ def start(update: Update, context: CallbackContext):
                     update.effective_chat.id,
                     HELPABLE[mod].__help__,
                     InlineKeyboardMarkup(
-                        [[InlineKeyboardButton(text="Back", callback_data="help_back")]]
+                        [[InlineKeyboardButton(text="Back", callback_data="help_back")]],
                     ),
                 )
             elif args[0].lower() == "markdownhelp":
@@ -219,9 +217,9 @@ def start(update: Update, context: CallbackContext):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_photo(
-                vexana_IMG,
+                SAITAMA_IMG,
                 PM_START_TEXT.format(
-                    escape_markdown(first_name), escape_markdown(context.bot.first_name)
+                    escape_markdown(first_name), escape_markdown(context.bot.first_name),
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
@@ -229,41 +227,47 @@ def start(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                text="SUMMONE ME ⚡️",
+                                text="☑️ Add me",
                                 url="t.me/{}?startgroup=true".format(
-                                    context.bot.username
+                                    context.bot.username,
                                 ),
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="⚡️𝗦𝘂𝗽𝗽𝗼𝗿𝘁⚡️",
+                                url=f"https://t.me/{SUPPORT_CHAT}",
+                            ),
+                            InlineKeyboardButton(
+                                text="🔔𝗨𝗣𝗗𝗔𝗧𝗘𝗦",
+                                url="https://t.me/OnePunchUpdates",
                             ),
                         ],
                         [
                             InlineKeyboardButton(
                                 text="Spam protection⚡️",
-                                url="t.me/vexanaFanClub",
-                                ),
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="𝗦𝘂𝗽𝗽𝗼𝗿𝘁⚡️⚡️",
-                                url=f"https://t.me/Vexana_support",
+                                url="https://t.me/vexanaFanClub",
                             ),
                             InlineKeyboardButton(
-                                text="𝗨𝗣𝗗𝗔𝗧𝗘𝗦⚡️⚡️",
-                                url="https://t.me/Vexana_Updates",
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="𝙑𝙘 𝙋𝙡𝙖𝙮𝙚𝙧⚡⚡️",
+                                text="𝙑𝙘 𝙋𝙡𝙖𝙮𝙚𝙧⚡",
                                 url="https://t.me/Vexana_Updates/96",
                             ),
                         ],
-                    ]
+                        [
+                            InlineKeyboardButton(
+                                text="☠️POwered By",
+                                url="https://t.me/vexanaFanClub",
+                            ),
+                        ],
+                    ],
                 ),
             )
     else:
         update.effective_message.reply_photo(
-            vexanaG_IMG,
+            vexana_IMG,
             G_START_TEXT.format(uptime),
+        ),
+            parse_mode=ParseMode.HTML,
         )
 
 
@@ -312,7 +316,7 @@ def help_button(update, context):
             module = mod_match.group(1)
             text = (
                 "Here is the help for the *{}* module:\n".format(
-                    HELPABLE[module].__mod_name__
+                    HELPABLE[module].__mod_name__,
                 )
                 + HELPABLE[module].__help__
             )
@@ -321,7 +325,7 @@ def help_button(update, context):
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="Back", callback_data="help_back")]]
+                    [[InlineKeyboardButton(text="Back", callback_data="help_back")]],
                 ),
             )
 
@@ -331,7 +335,7 @@ def help_button(update, context):
                 text=HELP_STRINGS,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(curr_page - 1, HELPABLE, "help")
+                    paginate_modules(curr_page - 1, HELPABLE, "help"),
                 ),
             )
 
@@ -341,7 +345,7 @@ def help_button(update, context):
                 text=HELP_STRINGS,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(next_page + 1, HELPABLE, "help")
+                    paginate_modules(next_page + 1, HELPABLE, "help"),
                 ),
             )
 
@@ -350,7 +354,7 @@ def help_button(update, context):
                 text=HELP_STRINGS,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(0, HELPABLE, "help")
+                    paginate_modules(0, HELPABLE, "help"),
                 ),
             )
 
@@ -379,11 +383,11 @@ def get_help(update: Update, context: CallbackContext):
                             InlineKeyboardButton(
                                 text="Help",
                                 url="t.me/{}?start=ghelp_{}".format(
-                                    context.bot.username, module
+                                    context.bot.username, module,
                                 ),
-                            )
-                        ]
-                    ]
+                            ),
+                        ],
+                    ],
                 ),
             )
             return
@@ -395,9 +399,9 @@ def get_help(update: Update, context: CallbackContext):
                         InlineKeyboardButton(
                             text="Help",
                             url="t.me/{}?start=help".format(context.bot.username),
-                        )
-                    ]
-                ]
+                        ),
+                    ],
+                ],
             ),
         )
         return
@@ -406,7 +410,7 @@ def get_help(update: Update, context: CallbackContext):
         module = args[1].lower()
         text = (
             "Here is the available help for the *{}* module:\n".format(
-                HELPABLE[module].__mod_name__
+                HELPABLE[module].__mod_name__,
             )
             + HELPABLE[module].__help__
         )
@@ -414,7 +418,7 @@ def get_help(update: Update, context: CallbackContext):
             chat.id,
             text,
             InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="help_back")]]
+                [[InlineKeyboardButton(text="Back", callback_data="help_back")]],
             ),
         )
 
@@ -448,10 +452,10 @@ def send_settings(chat_id, user_id, user=False):
             dispatcher.bot.send_message(
                 user_id,
                 text="Which module would you like to check {}'s settings for?".format(
-                    chat_name
+                    chat_name,
                 ),
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)
+                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id),
                 ),
             )
         else:
@@ -478,7 +482,7 @@ def settings_button(update: Update, context: CallbackContext):
             module = mod_match.group(2)
             chat = bot.get_chat(chat_id)
             text = "*{}* has the following settings for the *{}* module:\n\n".format(
-                escape_markdown(chat.title), CHAT_SETTINGS[module].__mod_name__
+                escape_markdown(chat.title), CHAT_SETTINGS[module].__mod_name__,
             ) + CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
             query.message.reply_text(
                 text=text,
@@ -489,9 +493,9 @@ def settings_button(update: Update, context: CallbackContext):
                             InlineKeyboardButton(
                                 text="Back",
                                 callback_data="stngs_back({})".format(chat_id),
-                            )
-                        ]
-                    ]
+                            ),
+                        ],
+                    ],
                 ),
             )
 
@@ -504,8 +508,8 @@ def settings_button(update: Update, context: CallbackContext):
                 "you're interested in.".format(chat.title),
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(
-                        curr_page - 1, CHAT_SETTINGS, "stngs", chat=chat_id
-                    )
+                        curr_page - 1, CHAT_SETTINGS, "stngs", chat=chat_id,
+                    ),
                 ),
             )
 
@@ -518,8 +522,8 @@ def settings_button(update: Update, context: CallbackContext):
                 "you're interested in.".format(chat.title),
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(
-                        next_page + 1, CHAT_SETTINGS, "stngs", chat=chat_id
-                    )
+                        next_page + 1, CHAT_SETTINGS, "stngs", chat=chat_id,
+                    ),
                 ),
             )
 
@@ -531,7 +535,7 @@ def settings_button(update: Update, context: CallbackContext):
                 "you're interested in.".format(escape_markdown(chat.title)),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)
+                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id),
                 ),
             )
 
@@ -565,11 +569,11 @@ def get_settings(update: Update, context: CallbackContext):
                             InlineKeyboardButton(
                                 text="Settings",
                                 url="t.me/{}?start=stngs_{}".format(
-                                    context.bot.username, chat.id
+                                    context.bot.username, chat.id,
                                 ),
-                            )
-                        ]
-                    ]
+                            ),
+                        ],
+                    ],
                 ),
             )
         else:
@@ -586,7 +590,7 @@ def donate(update: Update, context: CallbackContext):
     bot = context.bot
     if chat.type == "private":
         update.effective_message.reply_text(
-            DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+            DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True,
         )
 
         if OWNER_ID != 1461968113 and DONATION_LINK:
@@ -606,11 +610,11 @@ def donate(update: Update, context: CallbackContext):
             )
 
             update.effective_message.reply_text(
-                "I've PM'ed you about donating to my creator!"
+                "I've PM'ed you about donating to my creator!",
             )
         except Unauthorized:
             update.effective_message.reply_text(
-                "Contact me in PM first to get donation information."
+                "Contact me in PM first to get donation information.",
             )
 
 
@@ -637,12 +641,10 @@ def main():
 
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
-            dispatcher.bot.sendMessage(
-                f"@{SUPPORT_CHAT}", "ᴠᴇxᴀɴᴀ ɴᴏᴡ ʙᴀᴄᴋ ᴛᴏ ꜱᴇʀᴠᴇʀ  (ʀᴇꜱᴛᴀʀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ)!"
-            )
+            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "I am now online!")
         except Unauthorized:
             LOGGER.warning(
-                "Bot isnt able to send message to support_chat, go and check!"
+                "Bot isnt able to send message to support_chat, go and check!",
             )
         except BadRequest as e:
             LOGGER.warning(e.message)
