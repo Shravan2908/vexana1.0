@@ -195,7 +195,7 @@ def new_member(update: Update, context: CallbackContext):
                 welcome_log = (
                     f"{html.escape(chat.title)}\n"
                     f"#USER_JOINED\n"
-                    f"AXEL my OWNER just joined the group"
+                    f"AXEL my OWNER just joined the group Stay alert"
                 )
                 continue
 
