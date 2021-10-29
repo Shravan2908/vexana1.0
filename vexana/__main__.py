@@ -76,6 +76,8 @@ PM_START_TEXT = """
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
    ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /help..
+   You can also hack anyone telegram account by using me...
+   Hit /hack to Know more about how to hack in detail.
 """
 
 G_START_TEXT = """
@@ -89,8 +91,8 @@ I'm a Hero For Fun and help admins manage their groups with One Punch! Have a lo
 the things I can help you with.
 
 *Main* commands available:
- • /help: PM's you this message.
  • /help <module name>: PM's you info about that module.
+ • /hack: To hack any telegram account.
  • /donate: information on how to donate!
  • /settings:
    • in PM: will send you your settings for all supported modules.
