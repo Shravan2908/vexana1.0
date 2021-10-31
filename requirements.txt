@@ -1,4 +1,5 @@
 googletrans
+gpytranslate
 google_trans_new
 python-arq
 future
