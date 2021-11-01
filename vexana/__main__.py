@@ -242,7 +242,7 @@ def start(update: Update, context: CallbackContext):
                             ),
                             InlineKeyboardButton(
                                 text="🔔𝗨𝗣𝗗𝗔𝗧𝗘𝗦",
-                                url="https://t.me/OnePunchUpdates",
+                                url="https://t.me/Vexana_Updates",
                             ),
                         ],
                         [
