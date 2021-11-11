@@ -6,7 +6,7 @@ from telegram.error import BadRequest
 from telegram.ext import run_async, CommandHandler, Filters
 from telegram.utils.helpers import mention_html
 
-from vexana import dispatcher, BAN_STICKER, KICK_STICKER, LOGGER, SUDO_USERS
+from vexana import dispatcher, BAN_STICKER,LOGGER, SUDO_USERS
 from vexana.modules.disable import DisableAbleCommandHandler
 from vexana.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_ban_protected, can_restrict, \
     is_user_admin, is_user_in_chat
