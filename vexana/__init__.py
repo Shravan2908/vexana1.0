@@ -195,10 +195,6 @@ telethn = TelegramClient("innexia", API_ID, API_HASH)
 pbot = Client("InnexiaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
-mongodb = MongoClient(MONGO_DB_URL, 27017)[MONGO_DB]
-motor = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
-db = motor[MONGO_DB]
-engine = AIOEngine(motor, MONGO_DB)
 session_name = TOKEN.split(":")[0]
 pgram = Client(
     session_name,
