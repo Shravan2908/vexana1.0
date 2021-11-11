@@ -566,7 +566,7 @@ KICK_HANDLER = CommandHandler(["kick", "punch"], punch)
 UNBAN_HANDLER = CommandHandler("unban", unban)
 ROAR_HANDLER = CommandHandler("roar", selfunban)
 UNBAN_BUTTON_HANDLER = CallbackQueryHandler(unbanb_btn, pattern=r"unbanb_")
-KICKME_HANDLER = DisableAbleCommandHandler(["kickme", "punchme"], punchme, filters=Filters.chat_type.groups)
+KICKME_HANDLER = DisableAbleCommandHandler(["kickme", "punchme"], punchme)
 SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=CustomFilters.sudo_filter)
 BANME_HANDLER = CommandHandler("banme", banme)
 
