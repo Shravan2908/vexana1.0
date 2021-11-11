@@ -41,3 +41,8 @@ dispatcher.add_handler(PASTE_HANDLER)
 
 __command_list__ = ["paste"]
 __handlers__ = [PASTE_HANDLER]
+
+
+
+
+
