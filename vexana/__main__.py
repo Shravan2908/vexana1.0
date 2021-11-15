@@ -756,7 +756,7 @@ def migrate_chats(update, context):
 
 
 def is_chat_allowed(update, context):
-    if len(WHITELIST_CHATS) != 0:
+    if len(BL_CHATS) != 0:
         chat_id = update.effective_message.chat_id
         if chat_id not in WHITELIST_CHATS:
             context.bot.send_message(
@@ -776,7 +776,7 @@ def is_chat_allowed(update, context):
                 context.bot.leave_chat(chat_id)
             finally:
                 raise DispatcherHandlerStop
-    if len(WHITELIST_CHATS) != 0 and len(BL_CHATS) != 0:
+    if len(BL_CHATS) != 0 and len(BL_CHATS) != 0:
         chat_id = update.effective_message.chat_id
         if chat_id in BL_CHATS:
             context.bot.send_message(
@@ -813,7 +813,7 @@ def main():
 
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
-            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "I am now online ❤")
+            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "ᴠᴇxᴀɴᴀ ɴᴏᴡ ʙᴀᴄᴋ ᴛᴏ ꜱᴇʀᴠᴇʀ  (ʀᴇꜱᴛᴀʀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ)!")
         except Unauthorized:
             LOGGER.warning(
                 "Bot isnt able to send message to support_chat, go and check!"
