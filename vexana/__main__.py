@@ -56,11 +56,11 @@ from vexana import (
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from Natsuki.modules import ALL_MODULES
-from Natsuki.modules.helper_funcs.alternate import typing_action
-from Natsuki.modules.helper_funcs.chat_status import is_user_admin
-from Natsuki.modules.helper_funcs.misc import paginate_modules
-from Natsuki.modules.helper_funcs.readable_time import get_readable_time
+from vexana.modules import ALL_MODULES
+from vexana.modules.helper_funcs.alternate import typing_action
+from vexana.modules.helper_funcs.chat_status import is_user_admin
+from vexana.modules.helper_funcs.misc import paginate_modules
+from vexana.modules.helper_funcs.readable_time import get_readable_time
 
 PM_START_TEXT = """
 ʜɪ {}, ᴍʏ ɴᴀᴍᴇ ɪꜱ {}!
