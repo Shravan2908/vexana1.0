@@ -46,7 +46,7 @@ from vexana import (
     TOKEN,
     URL,
     WEBHOOK,
-    WHITELIST_CHATS,
+   # WHITELIST_CHATS,
     StartTime,
     dispatcher,
     pbot,
