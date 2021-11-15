@@ -1,9 +1,9 @@
-from typing import List, Dict
+from typing import Dict, List
 
-from telegram import MAX_MESSAGE_LENGTH, InlineKeyboardButton, Bot, ParseMode
+from telegram import MAX_MESSAGE_LENGTH, Bot, InlineKeyboardButton, ParseMode
 from telegram.error import TelegramError
 
-from vexana import LOAD, NO_LOAD
+from vexana import NO_LOAD
 
 
 class EqInlineKeyboardButton(InlineKeyboardButton):
@@ -65,6 +65,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
         )
 
     pairs = [modules[i * 3 : (i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)]
+
     round_num = len(modules) / 3
     calc = len(modules) - round(round_num)
     if calc == 1:
@@ -72,11 +73,8 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
     elif calc == 2:
         pairs.append((modules[-1],))
 
-    # can only have a certain amount of buttons side by side
-    #    if len(pairs) > 7:
-    #        pairs = pairs[modulo_page * 7:7 * (modulo_page + 1)] + [
-    #            (EqInlineKeyboardButton("<<<", callback_data="{}_prev({})".format(prefix, modulo_page)),
-    #             EqInlineKeyboardButton(">>>", callback_data="{}_next({})".format(prefix, modulo_page)))]
+    else:
+        pairs += [[EqInlineKeyboardButton("Back to Info", callback_data="aboutmanu_")]]
 
     return pairs
 
@@ -120,10 +118,6 @@ def revert_buttons(buttons):
     return res
 
 
-def is_module_loaded(name):
-    return (not LOAD or name in LOAD) and name not in NO_LOAD
-
-
 def build_keyboard_parser(bot, chat_id, buttons):
     keyb = []
     for btn in buttons:
@@ -135,3 +129,7 @@ def build_keyboard_parser(bot, chat_id, buttons):
             keyb.append([InlineKeyboardButton(btn.name, url=btn.url)])
 
     return keyb
+
+
+def is_module_loaded(name):
+    return name not in NO_LOAD
