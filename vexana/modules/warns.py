@@ -1,28 +1,10 @@
+
+  
 import html
 import re
 from typing import Optional
 
 import telegram
-from vexana import TIGERS, WOLVES, dispatcher
-from vexana.modules.disable import DisableAbleCommandHandler
-from vexana.modules.helper_funcs.chat_status import (
-    bot_admin,
-    can_restrict,
-    is_user_admin,
-    user_admin,
-    user_admin_no_reply,
-    can_delete,
-)
-from vexana.modules.helper_funcs.extraction import (
-    extract_text,
-    extract_user,
-    extract_user_and_text,
-)
-from vexana.modules.helper_funcs.filters import CustomFilters
-from vexana.modules.helper_funcs.misc import split_message
-from vexana.modules.helper_funcs.string_handling import split_quotes
-from vexana.modules.log_channel import loggable
-from vexana.modules.sql import warns_sql as sql
 from telegram import (
     CallbackQuery,
     Chat,
@@ -44,7 +26,26 @@ from telegram.ext import (
     run_async,
 )
 from telegram.utils.helpers import mention_html
-from vexana.modules.sql.approve_sql import is_approved
+
+from vexana import TIGERS, WOLVES, dispatcher
+from vexana.modules.disable import DisableAbleCommandHandler
+from vexana.modules.helper_funcs.chat_status import (
+    bot_admin,
+    can_restrict,
+    is_user_admin,
+    user_admin,
+    user_admin_no_reply,
+)
+from vexana.modules.helper_funcs.extraction import (
+    extract_text,
+    extract_user,
+    extract_user_and_text,
+)
+from vexana.modules.helper_funcs.filters import CustomFilters
+from vexana.modules.helper_funcs.misc import split_message
+from vexana.modules.helper_funcs.string_handling import split_quotes
+from vexana.modules.log_channel import loggable
+from vexana.modules.sql import warns_sql as sql
 
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
@@ -52,7 +53,7 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
 # Not async
 def warn(
-        user: User, chat: Chat, reason: str, message: Message, warner: User = None
+    user: User, chat: Chat, reason: str, message: Message, warner: User = None
 ) -> str:
     if is_user_admin(chat, user.id):
         # message.reply_text("Damn admins, They are too far to be One Punched!")
@@ -88,7 +89,7 @@ def warn(
         if soft_warn:  # punch
             chat.unban_member(user.id)
             reply = (
-                f"<code>❕</code><b>Punch Event</b>\n"
+                f"<code> </code><b>Punch Event Powered by Vexana</b>\n"
                 f"<code> </code><b>•  User:</b> {mention_html(user.id, user.first_name)}\n"
                 f"<code> </code><b>•  Count:</b> {limit}"
             )
@@ -96,7 +97,7 @@ def warn(
         else:  # ban
             chat.kick_member(user.id)
             reply = (
-                f"<code>❕</code><b>Ban Event</b>\n"
+                f"<code> </code><b>Ban Event Powered by Vexana</b>\n"
                 f"<code> </code><b>•  User:</b> {mention_html(user.id, user.first_name)}\n"
                 f"<code> </code><b>•  Count:</b> {limit}"
             )
@@ -120,19 +121,19 @@ def warn(
             [
                 [
                     InlineKeyboardButton(
-                        "🔘 Remove Warn 🔘", callback_data="rm_warn({})".format(user.id)
+                        "🔘 Remove warn", callback_data="rm_warn({})".format(user.id)
                     )
                 ]
             ]
         )
 
         reply = (
-            f"<code>╍╍▷</code><b>! Warning</b>\n"
-            f"<code> </code><b>┣  User:</b> {mention_html(user.id, user.first_name)}\n"
-            f"<code> </code><b>┣  Warn Count:</b> {num_warns}/{limit}"
+            f"<code> </code><b>Warn Event Powered by Vexana</b>\n"
+            f"<code> </code><b>•  User:</b> {mention_html(user.id, user.first_name)}\n"
+            f"<code> </code><b>•  Count:</b> {num_warns}/{limit}"
         )
         if reason:
-            reply += f"\n<code> </code><b>╍╍▷  Reason:</b> {html.escape(reason)}"
+            reply += f"\n<code> </code><b>•  Reason:</b> {html.escape(reason)}"
 
         log_reason = (
             f"<b>{html.escape(chat.title)}:</b>\n"
@@ -170,7 +171,7 @@ def button(update: Update, context: CallbackContext) -> str:
         res = sql.remove_warn(user_id, chat.id)
         if res:
             update.effective_message.edit_text(
-                "Warning Removed BY- {}.".format(mention_html(user.id, user.first_name)),
+                "Warn removed by {}.".format(mention_html(user.id, user.first_name)),
                 parse_mode=ParseMode.HTML,
             )
             user_member = chat.get_member(user_id)
@@ -199,12 +200,11 @@ def warn_user(update: Update, context: CallbackContext) -> str:
     warner: Optional[User] = update.effective_user
 
     user_id, reason = extract_user_and_text(message, args)
-    if message.text.startswith("/d") and message.reply_to_message:
-        message.reply_to_message.delete()
+
     if user_id:
         if (
-                message.reply_to_message
-                and message.reply_to_message.from_user.id == user_id
+            message.reply_to_message
+            and message.reply_to_message.from_user.id == user_id
         ):
             return warn(
                 message.reply_to_message.from_user,
@@ -381,8 +381,7 @@ def reply_filter(update: Update, context: CallbackContext) -> str:
 
     if user.id == 777000:
         return
-    if is_approved(chat.id, user.id):
-        return
+
     chat_warn_filters = sql.get_chat_warn_triggers(chat.id)
     to_match = extract_text(message)
     if not to_match:
@@ -476,8 +475,8 @@ def set_warn_strength(update: Update, context: CallbackContext):
 
 def __stats__():
     return (
-        f"┝ {sql.num_warns()} OveraLL Warns, To {sql.num_warn_chats()} Groups.\n"
-        f"┝ {sql.num_warn_filters()} Warn Filters, Across {sql.num_warn_filter_chats()} Chats."
+        f"• {sql.num_warns()} overall warns, across {sql.num_warn_chats()} chats.\n"
+        f"• {sql.num_warn_filters()} warn filters, across {sql.num_warn_filter_chats()} chats."
     )
 
 
@@ -501,30 +500,21 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- • /warns <userhandle> get a user's number, and reason, of warns.
-
- • /warnlist list of all current warning filters
-
+ ✪ /warns <userhandle>*:* get a user's number, and reason, of warns.
+ ✪ /warnlist*:* list of all current warning filters
 *Admins only:*
- • /warn <userhandle> warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
-
- • /dwarn <userhandle> warn a user and delete the message. After 3 warns, the user will be banned from the group. Can also be used as a reply.
-
- • /resetwarn <userhandle> reset the warns for a user. Can also be used as a reply.
-
- • /addwarn <keyword> <reply message>`*:* set a warning filter on a certain keyword. If you want your keyword to \
-be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`.
-
- • /nowarn <keyword> stop a warning filter
-
- • /warnlimit <num> set the warning limit
-
- • /strongwarn <on/yes/off/no> If set to on, exceeding the warn limit will result in a ban. Else, will just punch.
+ ✪ /warn <userhandle>*:* warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
+ ✪ /resetwarn <userhandle>*:* reset the warns for a user. Can also be used as a reply.
+ ✪ /addwarn <keyword> <reply message>*:* set a warning filter on a certain keyword. If you want your keyword to \
+be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
+ ✪ /nowarn <keyword>*:* stop a warning filter
+ ✪ /warnlimit <num>*:* set the warning limit
+ ✪ /strongwarn <on/yes/off/no>*:* If set to on, exceeding the warn limit will result in a ban. Else, will just punch.
 """
 
 __mod_name__ = "Warnings"
 
-WARN_HANDLER = CommandHandler(["warn", "dwarn"], warn_user, filters=Filters.group)
+WARN_HANDLER = CommandHandler("warn", warn_user, filters=Filters.group)
 RESET_WARN_HANDLER = CommandHandler(
     ["resetwarn", "resetwarns"], reset_warns, filters=Filters.group
 )
@@ -555,5 +545,3 @@ dispatcher.add_handler(LIST_WARN_HANDLER)
 dispatcher.add_handler(WARN_LIMIT_HANDLER)
 dispatcher.add_handler(WARN_STRENGTH_HANDLER)
 dispatcher.add_handler(WARN_FILTER_HANDLER, WARN_HANDLER_GROUP)
-
-
