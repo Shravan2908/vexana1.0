@@ -93,10 +93,13 @@ buttons = [
             text="➕ Add To Me Your Group ➕",
             url="t.me/mocha_chatbot?startgroup=true",
         ),
+        InlineKeyboardButton(
+            text="Basic Help", callback_data="aboutmanu_"
+        ),
     ],
 ]
 
-NATSUKI_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
+VEXANA_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 
 HELP_STRINGS = f"""
 *Main Commands :* [🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)
@@ -236,8 +239,8 @@ def start(update: Update, context: CallbackContext):
                 timeout=60,
             )
     else:
-        update.effective_message.reply_text(
-            "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
+        update.effective_message.reply_photo(
+            VEXANA_IMG,"I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
                 uptime
             ),
             parse_mode=ParseMode.HTML,
