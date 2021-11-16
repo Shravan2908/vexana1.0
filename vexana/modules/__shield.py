@@ -182,7 +182,7 @@ async def _(event):
     return
 
 
-@tbot.on(events.NewMessage(pattern="/gshield (.*)"))
+#@tbot.on(events.NewMessage(pattern="/gshield (.*)"))
 async def _(event):
     if event.is_private:
         return
