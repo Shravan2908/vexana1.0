@@ -4,7 +4,7 @@ import requests
 from telethon import types
 
 from vexana.events import register
-from vexana import tbot as client
+from vexana.pyrogramee.telethon import tbot as client
 
 
 async def is_register_admin(chat, user):
