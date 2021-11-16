@@ -10,7 +10,7 @@ import emoji
 import asyncio
 from vexana.modules.sql import cleaner_sql as sql
 from pymongo import MongoClient
-from Harita import MONGO_DB_URI
+from vexana import MONGO_DB_URI
 from vexana.events import register
 from telethon import types, events
 from telethon.tl import *
