@@ -421,10 +421,50 @@ def set_about_me(update: Update, context: CallbackContext):
 
 @run_async
 @sudo_plus
-def stats(update: Update, context: CallbackContext):
-    stats = "<b>📊 Current stats of Vexana:Coded by Axel Running Of Yarn:-13.7</b>" + "\n".join([mod.__stats__() for mod in STATS])
-    result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
-    update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
+def stats(update, context):
+    uptime = datetime.datetime.fromtimestamp(boot_time()).strftime("%Y-%m-%d %H:%M:%S")
+    botuptime = get_readable_time((time.time() - StartTime))
+    status = "*╒═══📊 Current stats of Vexana*\n\n"
+    status += "*➥ System Start time:* " + str(uptime) + "\n"
+    uname = platform.uname()
+    status += "*➥ System:* " + str(uname.system) + "\n"
+    status += "*➥ Node name:* " + escape_markdown(str(uname.node)) + "\n"
+    status += "*➥ Release:* " + escape_markdown(str(uname.release)) + "\n"
+    status += "*➥ Machine:* " + escape_markdown(str(uname.machine)) + "\n"
+    mem = virtual_memory()
+    cpu = cpu_percent()
+    disk = disk_usage("/")
+    status += "*➥ CPU:* " + str(cpu) + " %\n"
+    status += "*➥ RAM:* " + str(mem[2]) + " %\n"
+    status += "*➥ Storage:* " + str(disk[3]) + " %\n\n"
+    status += "*➥ Python Version:* " + python_version() + "\n"
+    status += "*➥ python-Telegram-Bot:* " + str(ptbver) + "\n"
+    status += "*➥ Uptime:* " + str(botuptime) + "\n"
+    try:
+        update.effective_message.reply_text(
+            status
+            + "\n*📊 Current stats of Vexana*:\n"
+            + "\n".join([mod.__stats__() for mod in STATS]),
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+        )
+    except BaseException:
+        update.effective_message.reply_text(
+            (
+                (
+                    (
+                        "\n*Bot statistics*:\n"
+                        + "\n".join(mod.__stats__() for mod in STATS)
+                    )
+                    + f"\n\n⊙ [Support](https://t.me/vexana_support) | ⊙ [Updates](https://t.me/vexana_updates)\n\n"
+                )
+                + "╘══「 POwered BY  [VexanaFanClub](https://t.me/joinchat/bUur6UDhJMMzMmM1) 」\n"
+            ),
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+        )
+        
+        
 
 
 @run_async
