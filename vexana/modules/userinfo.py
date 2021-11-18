@@ -272,6 +272,7 @@ def info(update: Update, context: CallbackContext):
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
         text += f"\n\n<b>Health:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i>{userhp['percentage']}%]"
+        text += f"For Support Visit @Vexana_Support"
 
     try:
         spamwtc = sw.get_ban(int(user.id))
@@ -422,7 +423,7 @@ def set_about_me(update: Update, context: CallbackContext):
 @run_async
 @sudo_plus
 def stats(update: Update, context: CallbackContext):
-    stats = "<b>📊 Current stats of Vexana:- "\n" Coded by Axel Running Of Yarn:-13.7</b>" + "\n".join([mod.__stats__() for mod in STATS])
+    stats = "<b>📊 Current stats of Vexana:-  Coded by Axel Running Of Yarn:-13.7</b>" + "\n".join([mod.__stats__() for mod in STATS])
     result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
         
