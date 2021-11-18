@@ -63,7 +63,7 @@ from vexana.modules.helper_funcs.misc import paginate_modules
 from vexana.modules.helper_funcs.readable_time import get_readable_time
 
 PM_START_TEXT = """
-ʜɪ {}, ᴍʏ ɴᴀᴍᴇ ɪꜱ {}[🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)!
+ʜɪ  ᴍʏ ɴᴀᴍᴇ ɪꜱ Vexana [🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)!
    ɪ ᴀᴍ ᴀ  ᴘᴏᴡᴇʀꜰᴜʟʟ  ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ, ᴡɪᴛʜ ꜱᴏᴍᴇ ꜰᴜɴ ᴇxᴛʀᴀꜱ ;)
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
@@ -85,7 +85,7 @@ buttons = [
             text="Spam Protection", url="https://t.me/vexanaFabClub"
         ),
         InlineKeyboardButton(
-            text="Command Help ❓", callback_data="help_back"
+            text="Main Help ❓", callback_data="help_back"
         ),
     ],
     [
