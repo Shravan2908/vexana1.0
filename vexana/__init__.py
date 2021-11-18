@@ -11,6 +11,27 @@ from telethon import TelegramClient
 StartTime = time.time()
 CMD_HELP = {}
 
+
+
+
+# enable logging
+FORMAT = "[Vexana] %(message)s"
+logging.basicConfig(
+    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+    level=logging.INFO,
+    format=FORMAT,
+    datefmt="[%X]",
+)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
+
+LOGGER = logging.getLogger(__name__)
+LOGGER.info("Vexana is starting. | An VexanaFanClub Project. | Licensed under GPLv3.")
+LOGGER.info("Not affiliated to Shie Hashaikai or Villain in any way whatsoever.")
+LOGGER.info("Project maintained by: Itzz_axel11 (t.me/Itzz_Axel)")
+
+
+
+
 # enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
