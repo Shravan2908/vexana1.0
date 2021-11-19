@@ -1,14 +1,18 @@
 import html
-from vexana.modules.disable import DisableAbleCommandHandler
-from vexana import dispatcher, DRAGONS
-from vexana.modules.helper_funcs.extraction import extract_user
-from telegram.ext import CallbackContext, CallbackQueryHandler, Filters, run_async
-import vexana.modules.sql.approve_sql as sql
-from vexana.modules.helper_funcs.chat_status import user_admin
-from vexana.modules.log_channel import loggable
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, Update
-from telegram.utils.helpers import mention_html
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import BadRequest
+from telegram.ext import CallbackContext, CallbackQueryHandler, run_async
+from telegram.utils.helpers import mention_html
+
+import vexana.modules.sql.approve_sql as sql
+from vexana import DRAGONS, dispatcher
+from vexana.modules.disable import DisableAbleCommandHandler
+from vexana.modules.helper_funcs.chat_status import user_admin
+from vexana.modules.helper_funcs.extraction import extract_user
+from vexna.modules.log_channel import loggable
+
+
 @loggable
 @user_admin
 @run_async
@@ -173,10 +177,8 @@ def unapproveall_btn(update: Update, context: CallbackContext):
     member = chat.get_member(query.from_user.id)
     if query.data == "unapproveall_user":
         if member.status == "creator" or query.from_user.id in DRAGONS:
-            users = []
             approved_users = sql.list_approved(chat.id)
-            for i in approved_users:
-                users.append(int(i.user_id))
+            users = [int(i.user_id) for i in approved_users]
             for user_id in users:
                 sql.disapprove(chat.id, user_id)
 
@@ -221,6 +223,6 @@ dispatcher.add_handler(APPROVAL)
 dispatcher.add_handler(UNAPPROVEALL)
 dispatcher.add_handler(UNAPPROVEALL_BTN)
 
-__mod_name__ = "Approvals"
+__mod_name__ = "Approval"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
 __handlers__ = [APPROVE, DISAPPROVE, APPROVED, APPROVAL]
