@@ -74,15 +74,15 @@ PM_START_TEXT = """
 buttons = [
     [
         InlineKeyboardButton(
-            text="Vexana News 🙋‍♂️", url="https://t.me/Vexana_Updates"
+            text="Vexana News ", url="https://t.me/Vexana_Updates"
         ),
         InlineKeyboardButton(
-            text="Support Group 💬", url="https://t.me/vexana_support"
+            text="Support Group ", url="https://t.me/vexana_support"
         ),
     ],
     [
         InlineKeyboardButton(
-            text="Spam Protection", url="https://t.me/vexanaFabClub"
+            text="VexanaFanClub", url="https://t.me/joinchat/bUur6UDhJMMzMmM1"
         ),
         InlineKeyboardButton(
             text="Main Help ❓", callback_data="help_back"
