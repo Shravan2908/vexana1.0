@@ -10,7 +10,7 @@ from vexana import DRAGONS, dispatcher
 from vexana.modules.disable import DisableAbleCommandHandler
 from vexana.modules.helper_funcs.chat_status import user_admin
 from vexana.modules.helper_funcs.extraction import extract_user
-from vexna.modules.log_channel import loggable
+from vexnaa.modules.log_channel import loggable
 
 
 @loggable
