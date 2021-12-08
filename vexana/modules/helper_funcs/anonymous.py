@@ -6,8 +6,8 @@ from telegram.ext import CallbackContext
 from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
 from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
-from vexana import DEV_USERS, SUDO_USERS, dispatcher
-from .decorators import kigcallback
+from vexana import DEV_USERS, DRAGONS, dispatcher
+from .decorators import Vexcallback
 
 class AdminPerms(Enum):
     CAN_RESTRICT_MEMBERS = 'can_restrict_members'
