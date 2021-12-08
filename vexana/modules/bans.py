@@ -16,7 +16,7 @@ from vexana import (
     dispatcher,
 )
 from vexana.modules.disable import DisableAbleCommandHandler
-from Service.modules.helper_funcs.chat_status import (
+from vexana.modules.helper_funcs.chat_status import (
     bot_admin,
     can_restrict,
     connection_status,
