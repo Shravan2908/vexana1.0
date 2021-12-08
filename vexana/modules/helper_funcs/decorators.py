@@ -19,21 +19,21 @@ class VexanaTelegramHandler:
             try:
                 if can_disable:
                     self._dispatcher.add_handler(
-                        DisableAbleCommandHandler(command, func, filters=filters, run_async=run_async, pass_args=pass_args, admin_ok=admin_ok), group
+                        DisableAbleCommandHandler(command, func, filters=filters, run_async=True, pass_args=pass_args, admin_ok=admin_ok), group
                     )
                 else:
                     self._dispatcher.add_handler(
-                        CommandHandler(command, func, filters=filters, run_async=run_async, pass_args=pass_args), group
+                        CommandHandler(command, func, filters=filters, run_async=True, pass_args=pass_args), group
                     )
                 log.debug(f"[Vexcmd] Loaded handler {command} for function {func.__name__} in group {group}")
             except TypeError:
                 if can_disable:
                     self._dispatcher.add_handler(
-                        DisableAbleCommandHandler(command, func, filters=filters, run_async=run_async, pass_args=pass_args, admin_ok=admin_ok, pass_chat_data=pass_chat_data)
+                        DisableAbleCommandHandler(command, func, filters=filters, run_async=True, pass_args=pass_args, admin_ok=admin_ok, pass_chat_data=pass_chat_data)
                     )
                 else:
                     self._dispatcher.add_handler(
-                        CommandHandler(command, func, filters=filters, run_async=run_async, pass_args=pass_args, pass_chat_data=pass_chat_data)
+                        CommandHandler(command, func, filters=filters, run_async=True, pass_args=pass_args, pass_chat_data=pass_chat_data)
                     )
                 log.debug(f"[Vexcmd] Loaded handler {command} for function {func.__name__}")
 
