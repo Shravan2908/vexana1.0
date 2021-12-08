@@ -25,7 +25,7 @@ from vexana.modules.helper_funcs.chat_status import (
 from vexana.modules.helper_funcs.extraction import extract_user_and_text
 from vexana.modules.helper_funcs.string_handling import extract_time
 from vexana.modules.log_channel import loggable, gloggable
-from vexana.modules.helper_funcs.decorators import kigcmd
+from vexana.modules.helper_funcs.decorators import Vexcmd
 from vexana.modules.disable import DisableAbleCommandHandler
 
 from ..modules.helper_funcs.anonymous import user_admin, AdminPerms
