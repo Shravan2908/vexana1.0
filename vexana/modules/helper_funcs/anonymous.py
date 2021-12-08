@@ -53,7 +53,7 @@ def user_admin(permission: AdminPerms):
     return wrapper
 
 
-@vexcallback(pattern="anoncb")
+@Vexcallback(pattern="anoncb")
 def anon_callback_handler1(upd: Update, _: CallbackContext):
     callback = upd.callback_query
     perm = callback.data.split('/')[3]
