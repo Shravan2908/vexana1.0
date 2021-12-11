@@ -39,10 +39,10 @@ from vexana.modules.log_channel import gloggable, loggable
 @user_admin
 @user_can_ban
 @loggable
-def ban(update: Update, context: CallbackContext)   
-    chat = update.effective_chat  
-    user = update.effective_user  
-    message = update.effective_message  
+def ban(update: Update, context: CallbackContext)
+    chat = update.effective_chat
+    user = update.effective_user
+    message = update.effective_message
     args = context.args
     bot = context.bot
     log_message = ""
