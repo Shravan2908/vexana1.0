@@ -39,16 +39,14 @@ from vexana.modules.log_channel import gloggable, loggable
 @user_admin
 @user_can_ban
 @loggable
-def ban(update: Update, context: CallbackContext) -> str:
-    chat = update.effective_chat
-    user = update.effective_user
-    message = update.effective_message
-    log_message = ""
-    bot = context.bot
+def ban(update: Update, context: CallbackContext) -> Optional[str]:  # sourcery no-metrics
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
+    message = update.effective_message  # type: Optional[Message]
     args = context.args
-    user_id, reason = extract_user_and_text(message, args)
-    
-    
+    bot = context.bot
+    log_message = ""
+    reason = ""
     if message.reply_to_message and message.reply_to_message.sender_chat:
         r = bot._request.post(bot.base_url + '/banChatSenderChat', {
             'sender_chat_id': message.reply_to_message.sender_chat.id,
@@ -62,21 +60,31 @@ def ban(update: Update, context: CallbackContext) -> str:
             ),
                 parse_mode="html"
             )
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"#BANNED\n"
+                f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                f"<b>Channel:</b> {html.escape(message.reply_to_message.sender_chat.title)} ({message.reply_to_message.sender_chat.id})"
+            )
         else:
             message.reply_text("Failed to ban channel")
         return
 
+    user_id, reason = extract_user_and_text(message, args)
+
     if not user_id:
         message.reply_text("I doubt that's a user.")
         return log_message
+
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message != "User not found":
             raise
+
         message.reply_text("Can't seem to find this person.")
         return log_message
-    if user_id == bot.id:
+    if user_id == context.bot.id:
         message.reply_text("Oh yeah, ban myself, noob!")
         return log_message
 
