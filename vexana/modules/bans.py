@@ -39,7 +39,7 @@ from vexana.modules.log_channel import gloggable, loggable
 @user_admin
 @user_can_ban
 @loggable
-def ban(update: Update, context: CallbackContext) -> Optional[str]:  # sourcery no-metrics
+def ban(update: Update, context: CallbackContext)   # sourcery no-metrics
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
