@@ -49,7 +49,7 @@ async def is_administrator(user_id: int, message):
 
 
 
-@telethn.on(events.NewMessage(pattern=f"^[!/]zombies ?(.*)"))
+@telethn.on(events.NewMessage(pattern='^[!/]zombies ?(.*)'))
 async def zombies(event):
     """ For .zombies command, list all the zombies in a chat. """
 
@@ -139,16 +139,16 @@ async def _(event):
         if isinstance(i.status, UserStatusLastMonth):
             status = await event.client(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
             if not status:
-               return
+                return
             else:
-               c = c + 1
-                    
+                c += 1
+
         if isinstance(i.status, UserStatusLastMonth):
             status = await event.client(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
             if not status:
-               return
+                return
             else:
-               c = c + 1                    
+                c += 1                    
 
     required_string = "Successfully Kicked **{}** users Powered by @Vexana_Support"
     await event.reply(required_string.format(c))

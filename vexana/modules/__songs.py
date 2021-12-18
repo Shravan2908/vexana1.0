@@ -58,7 +58,7 @@ async def fetch(url):
     return data
 
 async def download_song(url):
-    song_name = f"asuna.mp3"
+    song_name = 'asuna.mp3'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
             if resp.status == 200:
@@ -112,7 +112,7 @@ async def fetch(url):
     return data
 
 async def download_song(url):
-    song_name = f"asuna.mp3"
+    song_name = 'asuna.mp3'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
             if resp.status == 200:
