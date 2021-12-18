@@ -57,7 +57,7 @@ async def ytmusic(client, message: Message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
-        await event.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await event.edit(event, f'**Failed To Download** \n**Error :** `{e}`')
         return
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
@@ -130,7 +130,7 @@ async def ytmusic(client, message: Message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(mo, download=True)
     except Exception as e:
-        await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await pablo.edit(f'**Failed To Download** \n**Error :** `{e}`')
         return
     c_time = time.time()
     capy = f"**Song Name :** `{thum}` \n**Requested For :** `{urlissed}` \n**Channel :** `{thums}` \n**Link :** `{mo}`"
@@ -194,9 +194,7 @@ async def _(client, message):
 @pbot.on_message(filters.command(["glyric", "glyrics"]))
 async def lyrics(client, message):
 
-    if r"-" in message.text:
-        pass
-    else:
+    if r"-" not in message.text:
         await message.reply(
             "`Error: please use '-' as divider for <artist> and <song>`\n"
             "eg: `.glyrics Nicki Minaj - Super Bass`"
