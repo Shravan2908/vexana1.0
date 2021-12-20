@@ -632,119 +632,6 @@ def adminlist(update, context):
         msg.edit_text(text, parse_mode=ParseMode.HTML)
     except BadRequest:  # if original message is deleted
         return
-    
-    
-    
-    
-@Client.on_message(filters.command("antichannelpin", prefix))
-@require_admin(permissions=["can_pin_messages"])
-@use_chat_lang()
-@logging_errors
-async def setantichannelpin(c: Client, m: Message, strings):
-    if len(m.text.split()) > 1:
-        if m.command[1] == "on":
-            await toggle_antichannelpin(m.chat.id, True)
-            await m.reply_text(strings("antichannelpin_enabled"))
-        elif m.command[1] == "off":
-            await toggle_antichannelpin(m.chat.id, False)
-            await m.reply_text(strings("antichannelpin_disabled"))
-        else:
-            await m.reply_text(strings("antichannelpin_invalid_arg"))
-    else:
-        check_acp = await check_if_antichannelpin(m.chat.id)
-        if not check_acp:
-            await m.reply_text(strings("antichannelpin_status_disabled"))
-        else:
-            await m.reply_text(strings("antichannelpin_status_enabled"))
-
-
-@Client.on_message(filters.linked_channel, group=-1)
-async def acp_action(c: Client, m: Message):
-    try:
-        get_acp = await check_if_antichannelpin(m.chat.id)
-        getmychatmember = await c.get_chat_member(m.chat.id, "me")
-        if (get_acp and getmychatmember.can_pin_messages) is True:
-            await m.unpin()
-        else:
-            pass
-    except:
-        pass
-
-
-@Client.on_message(filters.command("cleanservice", prefix))
-@require_admin(permissions=["can_delete_messages"])
-@use_chat_lang()
-@logging_errors
-async def delservice(c: Client, m: Message, strings):
-    if len(m.text.split()) > 1:
-        if m.command[1] == "on":
-            await toggle_del_service(m.chat.id, True)
-            await m.reply_text(strings("cleanservice_enabled"))
-        elif m.command[1] == "off":
-            await toggle_del_service(m.chat.id, False)
-            await m.reply_text(strings("cleanservice_disabled"))
-        else:
-            await m.reply_text(strings("cleanservice_invalid_arg"))
-    else:
-        check_delservice = await check_if_del_service(m.chat.id)
-        if not check_delservice:
-            await m.reply_text(strings("cleanservice_status_disabled"))
-        else:
-            await m.reply_text(strings("cleanservice_status_enabled"))
-
-
-@Client.on_message(filters.service, group=-1)
-async def delservice_action(c: Client, m: Message):
-    try:
-        get_delservice = await check_if_del_service(m.chat.id)
-        getmychatmember = await c.get_chat_member(m.chat.id, "me")
-        if (get_delservice and getmychatmember.can_delete_messages) is True:
-            await m.delete()
-        else:
-            pass
-    except:
-        pass
-
-
-@Client.on_message(filters.command("clear_anon_channel", prefix))
-@require_admin(permissions=["can_delete_messages"])
-@use_chat_lang()
-@logging_errors
-async def delanonchannel(c: Client, m: Message, strings):
-    if len(m.text.split()) > 1:
-        if m.command[1] == "on":
-            await toggle_del_anon_channel_messages(m.chat.id, True)
-            await m.reply_text(strings("delanonchannel_status_enabled"))
-        elif m.command[1] == "off":
-            await toggle_del_anon_channel_messages(m.chat.id, False)
-            await m.reply_text(strings("delanonchannel_status_disabled"))
-        else:
-            await m.reply_text(strings("clear_anon_channel_invalid_arg"))
-    else:
-        check_delanonchannel = await check_if_del_anon_channel_messages(m.chat.id)
-        if not check_delanonchannel:
-            await m.reply_text(strings("delanonchannel_status_disabled"))
-        else:
-            await m.reply_text(strings("delanonchannel_status_enabled"))
-
-
-@Client.on_message(anon_channel_filter, group=-1)
-async def delanonchannel_action(c: Client, m: Message):
-    try:
-        get_delanonchannel = await check_if_del_anon_channel_messages(m.chat.id)
-        getmychatmember = await c.get_chat_member(m.chat.id, "me")
-        if (get_delanonchannel and getmychatmember.can_delete_messages) is True:
-            await m.delete()
-        else:
-            pass
-    except:
-        pass
-    
-    
-    
-    
-    
-
 
 __help__ = """
  ❍ /admins*:* list of admins in the chat
@@ -825,7 +712,6 @@ __command_list__ = [
     "promote",
     "demote",
     "admincache",
-    "clear_anon_channel",
 ]
 __handlers__ = [
     ADMINLIST_HANDLER,
