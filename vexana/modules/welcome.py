@@ -98,7 +98,7 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: the current message has an invalid url "
-                    "in one of its buttons. Please update."
+                                     "in one of its buttons. Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -116,8 +116,8 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: the current message has buttons which "
-                    "use url protocols that are unsupported by "
-                    "telegram. Please update."
+                                     "use url protocols that are unsupported by "
+                                     "telegram. Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -126,7 +126,7 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: the current message has some bad urls. "
-                    "Please update."
+                                     "Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -138,7 +138,7 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: An error occured when sending the "
-                    "custom message. Please update."
+                                     "custom message. Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -267,7 +267,8 @@ def new_member(update: Update, context: CallbackContext):
                 creator = None
                 if not vexana.ALLOW_CHATS:
                     with suppress(BadRequest):
-                         update.effective_message.reply_text(f"Groups are disabled for {bot.first_name}, I'm outta here.")
+                        update.effective_message.reply_text(
+                            f"Groups are disabled for {bot.first_name}, I'm outta here.")
                     bot.leave_chat(update.effective_chat.id)
                     return
                 for x in bot.bot.get_chat_administrators(update.effective_chat.id):
@@ -303,7 +304,7 @@ def new_member(update: Update, context: CallbackContext):
                     media_wel = True
 
                 first_name = (
-                    new_mem.first_name or "PersonWithNoName"
+                        new_mem.first_name or "PersonWithNoName"
                 )  # edge case of empty name - occurs for some bugs.
 
                 if cust_welcome:
@@ -357,8 +358,8 @@ def new_member(update: Update, context: CallbackContext):
 
         # User exceptions from welcomemutes
         if (
-            is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id))
-            or human_checks
+                is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id))
+                or human_checks
         ):
             should_mute = False
         # Join welcome: soft mute
@@ -504,7 +505,6 @@ def check_not_bot(member, chat_id, message_id, context):
             pass
 
 
-@run_async
 def left_member(update: Update, context: CallbackContext):
     bot = context.bot
     chat = update.effective_chat
@@ -563,7 +563,7 @@ def left_member(update: Update, context: CallbackContext):
                 return
 
             first_name = (
-                left_mem.first_name or "PersonWithNoName"
+                    left_mem.first_name or "PersonWithNoName"
             )  # edge case of empty name - occurs for some bugs.
             if cust_goodbye:
                 if cust_goodbye == sql.DEFAULT_GOODBYE:
