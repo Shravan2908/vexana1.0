@@ -106,7 +106,7 @@ class CustomCommandHandler(CommandHandler):
                         return args, filter_result
                     return False
 
-    def handle_update(self, update, dispatcher, check_result, context=None):
+   def handle_update(self, update, dispatcher, check_result, context=None):
         if context:
             self.collect_additional_context(context, update, dispatcher, check_result)
             return self.callback(update, context)
