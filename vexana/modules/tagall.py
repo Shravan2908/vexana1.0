@@ -30,7 +30,7 @@ async def mentionall(event):
         if isinstance(
             partici_.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
         ):
-            is_admin = false
+            is_admin = True
     
 
     if event.pattern_match.group(1) and event.is_reply:
