@@ -30,7 +30,7 @@ async def mentionall(event):
         if isinstance(
             partici_.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
         ):
-            is_admin = True
+            is_admin = false
     if not is_admin:
         return await event.respond("Only admins can mention all!")
 
@@ -82,7 +82,7 @@ async def cancel_spam(event):
         spam_chats.remove(event.chat_id)
     except:
         pass
-    return await event.respond("Stopped.")
+    return await event.respond("Stopped { Lots OF LOve From AXel }.")
 
 
 __mod_name__ = "Mentions"
