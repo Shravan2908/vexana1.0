@@ -6,14 +6,16 @@ from telethon import Button, TelegramClient, events
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
+from vexana import telethn
+from telethon import events
 
 from vexana import telethn as Client
 
 spam_chats = []
 
 
-@Client.on(events.NewMessage(pattern="^/all ?(.*)"))
-@Client.on(events.NewMessage(pattern="^@all ?(.*)"))
+@telethn.on(events.NewMessage(pattern="^/all ?(.*)"))
+@telethn.on(events.NewMessage(pattern="^@all ?(.*)"))
 async def mentionall(event):
     chat_id = event.chat_id
     if event.is_private:
@@ -72,7 +74,7 @@ async def mentionall(event):
         pass
 
 
-@Client.on(events.NewMessage(pattern="^/cancel$"))
+@telethn.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
     if event.chat_id not in spam_chats:
         return await event.respond("There is no proccess on going...")
