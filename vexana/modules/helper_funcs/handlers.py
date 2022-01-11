@@ -1,4 +1,4 @@
-import MizuharaSmexyBot.modules.sql.blacklistusers_sql as sql
+import vexana.modules.sql.blacklistusers_sql as sql
 from vexana import ALLOW_EXCL
 from vexana import DEV_USERS, DRAGONS, DEMONS, TIGERS, WOLVES
 
