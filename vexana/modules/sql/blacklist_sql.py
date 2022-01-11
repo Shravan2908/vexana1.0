@@ -1,6 +1,6 @@
 import threading
 
-from sqlalchemy import func, distinct, Column, String, UnicodeText, Integer
+from sqlalchemy import func, distinct, Column, String, UnicodeText, BigInteger
 
 from vexana.modules.sql import SESSION, BASE
 
