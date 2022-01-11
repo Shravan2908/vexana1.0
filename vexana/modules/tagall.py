@@ -31,8 +31,7 @@ async def mentionall(event):
             partici_.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
         ):
             is_admin = false
-    if not is_admin:
-        return await event.respond("Only admins can mention all!")
+    
 
     if event.pattern_match.group(1) and event.is_reply:
         return await event.respond("Give me one argument!")
