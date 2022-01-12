@@ -1,7 +1,7 @@
 import os
 import config
 import motor.motor_asyncio
-import config
+#from vexana import config
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from vexana import telethn
