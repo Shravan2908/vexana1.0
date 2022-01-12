@@ -1,5 +1,5 @@
 import os
-import config
+#import config
 import motor.motor_asyncio
 #from vexana import config
 from pyrogram import Client, filters
