@@ -55,7 +55,7 @@ class Database:
     async def delete_chat_list(self, chat_id):
         await self.col.delete_many({"id": int(chat_id)})
 
-DB_URL = config.MONGO_DB_URI
+DB_URL = os.environ.get("MONGO_DB_URI", None)
 DB_NAME = "VEXANA"
 
 db = Database(MONGO_DB_URI, "VEXANA")
