@@ -58,7 +58,7 @@ class Database:
 DB_URL = os.environ.get("MONGO_DB_URI", None)
 DB_NAME = "VEXANA"
 
-db = Database(MONGO_DB_URI, "VEXANA")
+db = Database(DB_URL, "VEXANA")
 
 async def whitelist_check(chat_id,channel_id=0):
     if not await db.is_chat_exist(chat_id):
