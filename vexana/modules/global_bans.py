@@ -163,7 +163,7 @@ def gban(update: Update, context: CallbackContext):
 
         return
 
-    message.reply_text("On it!")
+    message.reply_text("Enforcing a remote Command! Hold On")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
@@ -254,7 +254,7 @@ def gban(update: Update, context: CallbackContext):
 
     if gban_time > 60:
         gban_time = round((gban_time / 60), 2)
-    message.reply_text("Done! Gbanned.", parse_mode=ParseMode.HTML)
+    message.reply_text("Enforcing Completed Successfully:- Detail Logged [Here](https://t.me/logs_vexana) .", parse_mode=ParseMode.HTML)
     try:
         bot.send_message(
             user_id,
