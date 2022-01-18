@@ -1,7 +1,9 @@
 import threading
 
+from sqlalchemy import Column, UnicodeText, String, Boolean
+from sqlalchemy.sql.sqltypes import BigInteger
+
 from vexana.modules.sql import BASE, SESSION
-from sqlalchemy import Boolean, Column, BigInteger, String, UnicodeText
 
 
 class GloballyBannedUsers(BASE):
