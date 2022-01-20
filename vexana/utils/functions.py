@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pyrogram.types import Message
 
 from vexana import aiohttpsession as aiosession
-from vexana.utils.dbfunctions import start_restart_stage
+from vexana.utils.dbfunc import start_restart_stage
 from vexana.utils.http import get, post
 
 
