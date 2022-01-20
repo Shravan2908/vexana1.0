@@ -7,6 +7,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from vexana import MONGO_DB_URI
 from vexana import pgram as app
 from vexana import pbot
+from vexana.utils.decorators.permissions adminsOnly 
 from vexana.utils.dbfunc import (antiservice_off, antiservice_on,
                                    is_antiservice_on)
 
