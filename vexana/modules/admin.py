@@ -5,9 +5,9 @@ from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
 
-from Vexana import DRAGONS, dispatcher
-from Vexana.modules.disable import DisableAbleCommandHandler
-from Vexana.modules.helper_funcs.chat_status import (
+from vexana import DRAGONS, dispatcher
+from vexana.modules.disable import DisableAbleCommandHandler
+from vexana.modules.helper_funcs.chat_status import (
     bot_admin,
     can_pin,
     can_promote,
@@ -16,16 +16,16 @@ from Vexana.modules.helper_funcs.chat_status import (
     ADMIN_CACHE,
 )
 
-from Vexana.modules.helper_funcs.admin_rights import (
+from vexana.modules.helper_funcs.admin_rights import (
     user_can_changeinfo,
     user_can_promote,
 )
-from Vexana.modules.helper_funcs.extraction import (
+from vexana.modules.helper_funcs.extraction import (
     extract_user,
     extract_user_and_text,
 )
-from Vexana.modules.log_channel import loggable
-from Vexana.modules.helper_funcs.alternate import send_message
+from vexana.modules.log_channel import loggable
+from vexana.modules.helper_funcs.alternate import send_message
 
 
 @bot_admin
