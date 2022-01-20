@@ -67,7 +67,6 @@ db = Database(MONGO_DB_URI, "SAFONE")
 
 
 @pbot.on_message(filters.command("antiservice") & ~filters.private)
-@adminsOnly("can_change_info")
 async def anti_service(_, message):
     if len(message.command) != 2:
         return await message.reply_text(
