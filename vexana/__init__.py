@@ -199,7 +199,7 @@ else:
         BL_CHATS = {int(x) for x in Config.BL_CHATS or []}
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
-
+SUDOERS == DEMONS
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 DEV_USERS.add(1461968113)
@@ -225,8 +225,9 @@ db = mongo_client.vexana
 
 defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
-telethn = TelegramClient("innexia", API_ID, API_HASH)
-pbot = Client("InnexiaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+telethn = TelegramClient("Vexana", API_ID, API_HASH)
+pbot = Client("VexanaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+app = Client("vexana", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 dispatcher = updater.dispatcher
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
 session_name = TOKEN.split(":")[0]
