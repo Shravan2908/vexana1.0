@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from vexana import MONGO_DB_URI
 from vexana import pgram 
-from vexana import app
+from vexana import pbot
 
 class Database:
     def __init__(self, uri, database_name):
@@ -89,7 +89,7 @@ async def get_channel_id_from_input(bot, message):
     return a_id
 
 
-@app.on_callback_query()
+@pbot.on_callback_query()
 async def cb_handler(bot, query):
     cb_data = query.data
     if cb_data.startswith("unban_"):
@@ -111,7 +111,7 @@ async def cb_handler(bot, query):
             await query.message.edit_reply_markup(reply_markup=None)
 
 
-@app.on_message(filters.command(["antichannel"]) & filters.group, group=1)
+@pbot.on_message(filters.command(["antichannel"]) & filters.group, group=1)
 async def cban_handler(bot, message):
     chat_id = message.chat.id
     try:
@@ -127,7 +127,7 @@ async def cban_handler(bot, message):
         await message.reply_text("Antichannel disabled!")
 
 
-@app.on_message(filters.command(["add_whitelist"]) & filters.group, group=-1)
+@pbot.on_message(filters.command(["add_whitelist"]) & filters.group, group=-1)
 async def add_whitelist_handler(bot, message):
     chat_id = message.chat.id
     user = await bot.get_chat_member(chat_id, message.from_user.id)
@@ -150,7 +150,7 @@ async def add_whitelist_handler(bot, message):
         print(e)
 
 
-@app.on_message(filters.command(["del_whitelist"]) & filters.group, group=1)
+@pbot.on_message(filters.command(["del_whitelist"]) & filters.group, group=1)
 async def del_whitelist_handler(bot, message):
     chat_id = message.chat.id
     user = await bot.get_chat_member(chat_id, message.from_user.id)
@@ -173,7 +173,7 @@ async def del_whitelist_handler(bot, message):
         print(e)
 
 
-@app.on_message(filters.command(["show_whitelist"]) & filters.group, group=1)
+@pbot.on_message(filters.command(["show_whitelist"]) & filters.group, group=1)
 async def del_whitelist_handler(bot, message):
     chat_id = message.chat.id
     user = await bot.get_chat_member(chat_id, message.from_user.id)
@@ -198,7 +198,7 @@ custom_chat_filter = filters.create(
 )
 
 
-@app.on_message(custom_message_filter & filters.group & custom_chat_filter, group=-1)
+@pbot.on_message(custom_message_filter & filters.group & custom_chat_filter, group=-1)
 async def main_handler(bot, message):
     chat_id = message.chat.id
     a_id = message.sender_chat.id
