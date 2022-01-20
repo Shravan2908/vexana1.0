@@ -227,7 +227,7 @@ defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
 pbot = Client("VexanaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-app = Client("vexana", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+app = Client("vexan", bot_token=TOKEN, api_id=API_ID, api_hash=API_HASH)
 dispatcher = updater.dispatcher
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
 session_name = TOKEN.split(":")[0]
