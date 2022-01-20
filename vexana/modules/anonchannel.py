@@ -11,7 +11,7 @@ from pyrogram import filters
 
 #from wbb import app
 from vexana.utils.permissions import adminsOnly
-from vexana.utils.dbfunctions import (antiservice_off, antiservice_on,
+from vexana.utils.dbfunc import (antiservice_off, antiservice_on,
                                    is_antiservice_on)
 class Database:
     def __init__(self, uri, database_name):
