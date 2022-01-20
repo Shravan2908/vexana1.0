@@ -4,9 +4,9 @@ import motor.motor_asyncio
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from Vexana import MONGO_DB_URI
-from Vexana import pgram 
-from Vexana import app
+from vexana import MONGO_DB_URI
+from vexana import pgram 
+from vexana import app
 
 class Database:
     def __init__(self, uri, database_name):
