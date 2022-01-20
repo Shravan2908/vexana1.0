@@ -221,7 +221,10 @@ print("[INFO]: INITIALIZING DATABASE")
 mongo_client = MongoClient(MONGO_DB_URI)
 db = mongo_client.vexana
 
-
+aiohttpsession = ClientSession()
+ARQ_API_URL = "https://thearq.tech"
+ARQ_API_KEY = os.environ.get("ARQ_API_KEY", "BZWJWN-UGDDBR-WVEMJF-WIQTZH-ARQ")
+arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
