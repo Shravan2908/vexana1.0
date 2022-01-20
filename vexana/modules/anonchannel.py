@@ -9,7 +9,7 @@ from vexana import pgram
 from vexana import pbot
 from pyrogram import filters
 
-from wbb import app
+#from wbb import app
 from vexana.utils.permissions import adminsOnly
 from vexana.utils.dbfunctions import (antiservice_off, antiservice_on,
                                    is_antiservice_on)
