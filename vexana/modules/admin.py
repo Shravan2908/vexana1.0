@@ -4,7 +4,7 @@ import asyncio
 from pyrogram import filters
 from pyrogram.types import CallbackQuery, ChatPermissions, Message
 
-from vexana import BOT_ID, DRAGONS, app
+from vexana import BOT_ID, DRAGONS, app, pbot
 from vexana.utils.errors import capture_err
 #from wbb.core.keyboard import ikb
 from vexana.utils.dbfunc import (add_warn, get_warn, int_to_alpha,
@@ -63,7 +63,7 @@ async def member_permissions(chat_id: int, user_id: int):
     return perms
 
 
-from wbb.core.decorators.permissions import adminsOnly
+from vexana.utils.permissions import adminsOnly
 
 
 async def list_admins(chat_id: int):
@@ -108,7 +108,7 @@ async def list_members(group_id):
 # Purge Messages
 
 
-@app.on_message(filters.command("purge") & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command("purge") & ~filters.edited & ~filters.private)
 @adminsOnly("can_delete_messages")
 async def purgeFunc(_, message: Message):
     await message.delete()
@@ -148,7 +148,7 @@ async def purgeFunc(_, message: Message):
 # Kick members
 
 
-@app.on_message(
+@pbot.on_message(
     filters.command(["kick", "dkick"]) & ~filters.edited & ~filters.private
 )
 @adminsOnly("can_restrict_members")
@@ -182,7 +182,7 @@ async def kickFunc(_, message: Message):
 # Ban members
 
 
-@app.on_message(
+@pbot.on_message(
     filters.command(["ban", "dban", "tban"])
     & ~filters.edited
     & ~filters.private
@@ -247,7 +247,7 @@ async def banFunc(_, message: Message):
 # Unban members
 
 
-@app.on_message(filters.command("unban") & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command("unban") & ~filters.edited & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def unbanFunc(_, message: Message):
     # we don't need reasons for unban, also, we
@@ -270,7 +270,7 @@ async def unbanFunc(_, message: Message):
 # Delete messages
 
 
-@app.on_message(filters.command("del") & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command("del") & ~filters.edited & ~filters.private)
 @adminsOnly("can_delete_messages")
 async def deleteFunc(_, message: Message):
     if not message.reply_to_message:
@@ -282,7 +282,7 @@ async def deleteFunc(_, message: Message):
 # Promote Members
 
 
-@app.on_message(
+@pbot.on_message(
     filters.command(["promote", "fullpromote"])
     & ~filters.edited
     & ~filters.private
@@ -329,7 +329,7 @@ async def promoteFunc(_, message: Message):
 # Demote Member
 
 
-@app.on_message(filters.command("demote") & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command("demote") & ~filters.edited & ~filters.private)
 @adminsOnly("can_promote_members")
 async def demote(_, message: Message):
     user_id = await extract_user(message)
@@ -359,7 +359,7 @@ async def demote(_, message: Message):
 # Pin Messages
 
 
-@app.on_message(filters.command(["pin", "unpin"]) & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command(["pin", "unpin"]) & ~filters.edited & ~filters.private)
 @adminsOnly("can_pin_messages")
 async def pin(_, message: Message):
     if not message.reply_to_message:
@@ -384,7 +384,7 @@ async def pin(_, message: Message):
 # Mute members
 
 
-@app.on_message(
+@pbot.on_message(
     filters.command(["mute", "tmute"]) & ~filters.edited & ~filters.private
 )
 @adminsOnly("can_restrict_members")
@@ -438,7 +438,7 @@ async def mute(_, message: Message):
 # Unmute members
 
 
-@app.on_message(filters.command("unmute") & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command("unmute") & ~filters.edited & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def unmute(_, message: Message):
     user_id = await extract_user(message)
@@ -452,7 +452,7 @@ async def unmute(_, message: Message):
 # Ban deleted accounts
 
 
-@app.on_message(filters.command("ban_ghosts") & ~filters.private)
+@pbot.on_message(filters.command("ban_ghosts") & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def ban_deleted_accounts(_, message: Message):
     chat_id = message.chat.id
@@ -473,7 +473,7 @@ async def ban_deleted_accounts(_, message: Message):
         await message.reply_text("There are no deleted accounts in this chat")
 
 
-@app.on_message(
+@pbot.on_message(
     filters.command(["warn", "dwarn"]) & ~filters.edited & ~filters.private
 )
 @adminsOnly("can_restrict_members")
@@ -525,7 +525,7 @@ async def warn_user(_, message: Message):
         await add_warn(chat_id, await int_to_alpha(user_id), warn)
 
 
-@app.on_callback_query(filters.regex("unwarn_"))
+@pbot.on_callback_query(filters.regex("unwarn_"))
 async def remove_warning(_, cq: CallbackQuery):
     from_user = cq.from_user
     chat_id = cq.message.chat.id
@@ -554,7 +554,7 @@ async def remove_warning(_, cq: CallbackQuery):
 # Rmwarns
 
 
-@app.on_message(
+@pbot.on_message(
     filters.command("rmwarns") & ~filters.edited & ~filters.private
 )
 @adminsOnly("can_restrict_members")
@@ -579,7 +579,7 @@ async def remove_warnings(_, message: Message):
 # Warns
 
 
-@app.on_message(filters.command("warns") & ~filters.edited & ~filters.private)
+@pbot.on_message(filters.command("warns") & ~filters.edited & ~filters.private)
 @capture_err
 async def check_warns(_, message: Message):
     user_id = await extract_user(message)
@@ -597,7 +597,7 @@ async def check_warns(_, message: Message):
 # Report
 
 
-@app.on_message(
+@pbot.on_message(
     (
         filters.command("report")
         | filters.command(["admins", "admin"], prefixes="@")
