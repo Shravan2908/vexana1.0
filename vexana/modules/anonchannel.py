@@ -7,7 +7,8 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from vexana import MONGO_DB_URI
 from vexana import pgram as app
 from vexana import pbot
-
+from vexana.utils.dbfunc import (antiservice_off, antiservice_on,
+                                   is_antiservice_on)
 
 class Database:
     def __init__(self, uri, database_name):
@@ -64,167 +65,44 @@ class Database:
 db = Database(MONGO_DB_URI, "SAFONE")
 
 
-async def whitelist_check(chat_id, channel_id=0):
-    if not await db.is_chat_exist(chat_id):
-        return True
-    _chat_list = await db.get_chat_list(chat_id)
-    if int(channel_id) in _chat_list:
-        return True
-    else:
-        return False
-
-
-async def get_channel_id_from_input(bot, message):
-    try:
-        a_id = message.text.split(" ", 1)[1]
-    except:
-        await message.reply_text("Send cmd along with channel id")
-        return False
-    if not str(a_id).startswith("-"):
-        try:
-            a_id = await bot.get_chat(a_id)
-            a_id = a_id.id
-        except:
-            await message.reply_text("Inavalid channel id")
-            return False
-    return a_id
-
-
-@pbot.on_callback_query()
-async def cb_handler(bot, query):
-    cb_data = query.data
-    if cb_data.startswith("unban_"):
-        an_id = cb_data.split("_")[-1]
-        chat_id = cb_data.split("_")[-2]
-        user = await bot.get_chat_member(chat_id, query.from_user.id)
-        if user.status == "creator" or user.status == "administrator":
-            pass
-        else:
-            return await query.answer("This Message is Not For You!", show_alert=True)
-        await bot.resolve_peer(an_id)
-        res = await query.message.chat.unban_member(an_id)
-        chat_data = await bot.get_chat(an_id)
-        mention = f"@{chat_data.username}" if chat_data.username else chat_data.title
-        if res:
-            await query.message.reply_text(
-                f"{mention} has been unbanned by {query.from_user.mention}"
-            )
-            await query.message.edit_reply_markup(reply_markup=None)
-
-
-@pbot.on_message(filters.command(["antichannel"]) & filters.group, group=1)
-async def cban_handler(bot, message):
-    chat_id = message.chat.id
-    try:
-        saf = message.text.split(" ", 1)[1]
-    except:
-        await message.reply_text("Send cmd along with on/off")
-        return
-    if saf == "on":
-        await db.add_chat_list(chat_id)
-        await message.reply_text("Antichannel enabled!")
-    elif saf == "off":
-        await db.delete_chat_list(chat_id)
-        await message.reply_text("Antichannel disabled!")
-
-
-@pbot.on_message(filters.command(["add_whitelist"]) & filters.group, group=-1)
-async def add_whitelist_handler(bot, message):
-    chat_id = message.chat.id
-    user = await bot.get_chat_member(chat_id, message.from_user.id)
-    if user.status == "creator" or user.status == "administrator":
-        pass
-    else:
-        return
-    try:
-        a_id = await get_channel_id_from_input(bot, message)
-        if not a_id:
-            return
-        if await whitelist_check(chat_id, a_id):
-            return await message.reply_text("Channel Id already found in whitelist")
-        chk, msg = await db.add_chat_list(chat_id, a_id)
-        if chk and msg != "":
-            await message.reply_text(msg)
-        else:
-            await message.reply_text("Something wrong happend")
-    except Exception as e:
-        print(e)
-
-
-@pbot.on_message(filters.command(["del_whitelist"]) & filters.group, group=1)
-async def del_whitelist_handler(bot, message):
-    chat_id = message.chat.id
-    user = await bot.get_chat_member(chat_id, message.from_user.id)
-    if user.status == "creator" or user.status == "administrator":
-        pass
-    else:
-        return
-    try:
-        a_id = await get_channel_id_from_input(bot, message)
-        if not a_id:
-            return
-        if not (await whitelist_check(chat_id, a_id)):
-            return await message.reply_text("Channel Id not found in whitelist")
-        chk, msg = await db.del_chat_list(message.chat.id, a_id)
-        if chk:
-            await message.reply_text(msg)
-        else:
-            await message.reply_text("Something wrong happend")
-    except Exception as e:
-        print(e)
-
-
-@pbot.on_message(filters.command(["show_whitelist"]) & filters.group, group=1)
-async def del_whitelist_handler(bot, message):
-    chat_id = message.chat.id
-    user = await bot.get_chat_member(chat_id, message.from_user.id)
-    if user.status == "creator" or user.status == "administrator":
-        pass
-    else:
-        return
-    show_wl = await db.get_chat_list(chat_id)
-    if show_wl:
-        await message.reply_text(f"This ids found in whitelist\n\n{show_wl}")
-    else:
-        await message.reply_text("White list not found.")
-
-
-custom_message_filter = filters.create(
-    lambda _, __, message: False
-    if message.forward_from_chat or message.from_user
-    else True
-)
-custom_chat_filter = filters.create(
-    lambda _, __, message: True if message.sender_chat else False
-)
-
-
-@pbot.on_message(custom_message_filter & filters.group & custom_chat_filter, group=-1)
-async def main_handler(bot, message):
-    chat_id = message.chat.id
-    a_id = message.sender_chat.id
-    if await whitelist_check(chat_id, a_id):
-        return
-    try:
-        res = await bot.kick_chat_member(chat_id, a_id)
-    except:
-        return await message.reply_text("Promote me as admin, to use me")
-    if res:
-        mention = (
-            f"@{message.sender_chat.username}"
-            if message.sender_chat.username
-            else message.chat_data.title
+@pbot.on_message(filters.command("antiservice") & ~filters.private)
+@adminsOnly("can_change_info")
+async def anti_service(_, message):
+    if len(message.command) != 2:
+        return await message.reply_text(
+            "Usage: /antiservice [enable | disable]"
         )
+    status = message.text.split(None, 1)[1].strip()
+    status = status.lower()
+    chat_id = message.chat.id
+    if status == "enable":
+        await antiservice_on(chat_id)
         await message.reply_text(
-            text=f"{mention} has been banned.\n\n💡 He can write only with his profile but not through other channels.",
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            "Unban", callback_data=f"unban_{chat_id}_{a_id}"
-                        )
-                    ]
-                ]
-            ),
+            "Enabled AntiService System. I will Delete Service Messages from Now on."
         )
-    await message.delete()
+    elif status == "disable":
+        await antiservice_off(chat_id)
+        await message.reply_text(
+            "Disabled AntiService System. I won't Be Deleting Service Message from Now on."
+        )
+    else:
+        await message.reply_text(
+            "Unknown Suffix, Use /antiservice [enable|disable]"
+        )
+
+
+@pbot.on_message(filters.service, group=11)
+async def delete_service(_, message):
+    chat_id = message.chat.id
+    try:
+        if await is_antiservice_on(chat_id):
+            return await message.delete()
+    except Exception:
+        pass
+    
+    
+__MODULE__ = "AntiService"
+__HELP__ = """
+Plugin to delete service messages in a chat!
+/antiservice [enable|disable]
+"""
