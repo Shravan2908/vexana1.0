@@ -6,6 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 import time
 import spamwatch
 from pyrogram import *
+from Python_ARQ import ARQ
 from aiohttp import ClientSession
 from pyrogram.types import Message
 import telegram.ext as tg
