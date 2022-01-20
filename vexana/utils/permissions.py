@@ -5,7 +5,7 @@ from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
 
 from vexana import DEMONS, pbot
-from vexana.modules.admin import member_permissions
+from vexana.modules.admin import *
 
 
 async def authorised(func, subFunc2, client, message, *args, **kwargs):
