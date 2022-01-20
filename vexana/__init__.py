@@ -1,9 +1,13 @@
 import logging
 import os
 import sys
+from inspect import getfullargspec
+from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 import time
 import spamwatch
-
+from pyrogram import 
+from aiohttp import ClientSession
+from pyrogram.types import Message
 import telegram.ext as tg
 from pyrogram import Client, errors
 from telethon import TelegramClient
@@ -48,6 +52,15 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     )
     quit(1)
 
+    
+# MongoDB client
+print("[INFO]: INITIALIZING DATABASE")
+mongo_client = MongoClient(MONGO_DB_URI)
+db = mongo_client.vexana
+    
+    
+    
+    
 ENV = bool(os.environ.get("ENV", False))
 
 if ENV:
