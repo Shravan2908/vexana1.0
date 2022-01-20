@@ -52,15 +52,6 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     )
     quit(1)
 
-    
-# MongoDB client
-print("[INFO]: INITIALIZING DATABASE")
-mongo_client = MongoClient(MONGO_DB_URI)
-db = mongo_client.vexana
-    
-    
-    
-    
 ENV = bool(os.environ.get("ENV", False))
 
 if ENV:
@@ -223,6 +214,14 @@ else:
     except:
         sw = None
         LOGGER.warning("Can't connect to SpamWatch!")
+        
+        
+# MongoDB client
+print("[INFO]: INITIALIZING DATABASE")
+mongo_client = MongoClient(MONGO_DB_URI)
+db = mongo_client.vexana
+
+
 
 defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
