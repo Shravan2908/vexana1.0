@@ -7,7 +7,7 @@ from pyrogram.types import CallbackQuery, ChatPermissions, Message
 from vexana import BOT_ID, DRAGONS, app
 from vexana.utils.errors import capture_err
 #from wbb.core.keyboard import ikb
-from vexana.utils.dbfunctions import (add_warn, get_warn, int_to_alpha,
+from vexana.utils.dbfunc import (add_warn, get_warn, int_to_alpha,
                                    remove_warns, save_filter)
 from vexana.utils.functions import (extract_user, extract_user_and_reason,
                                  time_converter)
