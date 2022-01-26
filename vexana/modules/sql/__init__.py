@@ -8,7 +8,7 @@ from Natsunagi import DB_URI, LOGGER
 
 
 def start() -> scoped_session:
-    engine = create_engine(DB_URL, client_encoding="utf8")
+    engine = create_engine(DB_URI, client_encoding="utf8")
     LOGGER.info("PostgreSQL Connecting to database......")
     BASE.metadata.bind = engine
     BASE.metadata.create_all(engine)
