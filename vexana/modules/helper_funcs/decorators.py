@@ -1,4 +1,4 @@
-from SiestaRobot.modules.disable import (
+from vexana.modules.disable import (
     DisableAbleCommandHandler,
     DisableAbleMessageHandler,
 )
