@@ -26,7 +26,7 @@ from vexana .modules.helper_funcs.string_handling import extract_time
 from vexana .modules.connection import connected
 from vexana .modules.helper_funcs.alternate import send_message
 from vexana .modules.sql.approve_sql import is_approved
-from vexana .modules.language import gs
+
 
 FLOOD_GROUP = 3
 
