@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from Natsunagi import DB_URI, LOGGER
+from vexana import DB_URI, LOGGER
 
 
 def start() -> scoped_session:
