@@ -5,7 +5,7 @@ from telegram import Update, message, ParseMode
 from telegram.ext import CallbackContext
 
 from vexana.modules.helper_funcs.decorators import vexanacmd, vexanamsg
-from vexana.modules.helper_funcs.channel_mode import user_admin, AdminPerms
+from vexana.modules.helper_funcs.anonymous import user_admin, AdminPerms
 from vexana.modules.sql.antichannel_sql import antichannel_status, disable_antichannel, enable_antichannel
 #from vexanat.modules.language import gs
 
