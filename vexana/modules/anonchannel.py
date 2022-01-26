@@ -1,54 +1,104 @@
-import html
+import os
+import asyncio
+import motor.motor_asyncio
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from telegram.ext.filters import Filters
-from telegram import Update, message, ParseMode
-from telegram.ext import CallbackContext
+from vexana import MONGO_DB_URI
+from vexana import pgram 
+from vexana import pbot
+from pyrogram import filters
 
-from vexana.modules.helper_funcs.decorators import vexanacmd, vexanamsg
-from vexana.modules.helper_funcs.anonymous import user_admin, AdminPerms
-from vexana.modules.sql.antichannel_sql import antichannel_status, disable_antichannel, enable_antichannel
-#from vexanat.modules.language import gs
+#from wbb import app
+from vexana.utils.permissions import adminsOnly
+from vexana.utils.dbfunc import (antiservice_off, antiservice_on,
+                                   is_antiservice_on)
+class Database:
+    def __init__(self, uri, database_name):
+        self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
+        self.db = self._client[database_name]
+        self.col = self.db.users
 
+    async def add_chat_list(self, chat_id, ch_id=None):
+        get_chat = await self.is_chat_exist(chat_id)
+        if get_chat:
+            chat_list = list(get_chat.get("chats"))
+            if ch_id != None and int(ch_id) in chat_list:
+                return True, f"{ch_id} already in white list."
+            elif ch_id == None:
+                return False, ""
+            elif ch_id is not None:
+                chat_list.append(int(ch_id))
+                await self.col.update_one(
+                    {"id": chat_id}, {"$set": {"chats": chat_list}}
+                )
+                return True, f"{ch_id}, added into white list"
+        a_chat = {"id": int(chat_id), "chats": [ch_id]}
+        await self.col.insert_one(a_chat)
+        return False, ""
 
-@vexanacmd(command="antichannelmode", group=100)
-@user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
-def set_antichannel(update: Update, context: CallbackContext):
-    message = update.effective_message
-    chat = update.effective_chat
-    args = context.args
-    if len(args) > 0:
-        s = args[0].lower()
-        if s in ["yes", "on"]:
-            enable_antichannel(chat.id)
-            message.reply_html(text=gs(chat.id, "active_antichannel").format(html.escape(chat.title)))
-        elif s in ["off", "no"]:
-            disable_antichannel(chat.id)
-            message.reply_html(text=gs(chat.id, "disable_antichannel").format(html.escape(chat.title)))
+    async def is_chat_exist(self, id):
+        user = await self.col.find_one({"id": int(id)})
+        return user if user else False
+
+    async def get_chat_list(self, chat_id):
+        get_chat = await self.is_chat_exist(chat_id)
+        if get_chat:
+            return get_chat.get("chats", [])
         else:
-            message.reply_text(text=gs(chat.id, "invalid_antichannel").format(s))
-        return
-    message.reply_html(
-        text=gs(chat.id, "status_antichannel").format(antichannel_status(chat.id), html.escape(chat.title)))
+            return False
+
+    async def del_chat_list(self, chat_id, ch_id=None):
+        get_chat = await self.is_chat_exist(chat_id)
+        if get_chat:
+            chat_list = list(get_chat.get("chats"))
+            if ch_id != None and ch_id in chat_list:
+                chat_list.remove(int(ch_id))
+                await self.col.update_one(
+                    {"id": chat_id}, {"$set": {"chats": chat_list}}
+                )
+                return True, f"{ch_id}, removed from white list"
+            elif int(ch_id) not in chat_list:
+                return True, f"{ch_id}, not found in white list."
+
+    async def delete_chat_list(self, chat_id):
+        await self.col.delete_many({"id": int(chat_id)})
 
 
-@vexanamsg(Filters.chat_type.groups, group=110)
-def eliminate_channel(update: Update, context: CallbackContext):
-    message = update.effective_message
-    chat = update.effective_chat
-    bot = context.bot
-    if not antichannel_status(chat.id):
-        return
-    if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
-        message.delete()
-        sender_chat = message.sender_chat
-        bot.ban_chat_sender_chat(sender_chat_id=sender_chat.id, chat_id=chat.id)
-
-__help__ = """
-️𝗔ntichannel_help 𝗰𝗼𝗺𝗺𝗮𝗻𝗱:
-❍ /antichannelmode [Show You Chat Current Mode]
-"""
-def helps(chat):
-    return gs(chat, "antichannel_help")
+db = Database(MONGO_DB_URI, "VEXANA")
 
 
-__mod_name__ = "Anti-Channel"
+@pbot.on_message(filters.command("antiservice") & ~filters.private)
+@adminsOnly("can_change_info")
+async def anti_service(_, message):
+    if len(message.command) != 2:
+        return await message.reply_text(
+            "Usage: /antiservice [enable | disable]"
+        )
+    status = message.text.split(None, 1)[1].strip()
+    status = status.lower()
+    chat_id = message.chat.id
+    if status == "enable":
+        await antiservice_on(chat_id)
+        await message.reply_text(
+            "Enabled AntiService System. I will Delete Service Messages from Now on."
+        )
+    elif status == "disable":
+        await antiservice_off(chat_id)
+        await message.reply_text(
+            "Disabled AntiService System. I won't Be Deleting Service Message from Now on."
+        )
+    else:
+        await message.reply_text(
+            "Unknown Suffix, Use /antiservice [enable|disable]"
+        )
+
+
+@pbot.on_message(filters.service, group=11)
+async def delete_service(_, message):
+    chat_id = message.chat.id
+    try:
+        if await is_antiservice_on(chat_id):
+            return await message.delete()
+    except Exception:
+        pass
