@@ -82,7 +82,7 @@ buttons = [
     ],
     [
         InlineKeyboardButton(
-            text="VexanaFanClub", url="https://t.me/joinchat/bUur6UDhJMMzMmM1"
+            text="VexanaFanClub", url="https://t.me/feelingZones"
         ),
         InlineKeyboardButton(
             text="Main Help ❓", callback_data="help_back"
