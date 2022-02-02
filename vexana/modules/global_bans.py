@@ -163,7 +163,7 @@ def gban(update: Update, context: CallbackContext):
 
         return
 
-    message.reply_text("On it!")
+    message.reply_text("Organating a remote Cmds")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
@@ -271,7 +271,7 @@ def gban(update: Update, context: CallbackContext):
 
 
 @support_plus
-def ungban(update: Update, context: CallbackContext):
+def ungban(update: Update, context: CallbackContext):  # sourcery no-metrics
     bot, args = context.bot, context.args
     message = update.effective_message
     user = update.effective_user
