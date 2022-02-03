@@ -42,7 +42,7 @@ class Chats(BASE):
 
 class ChatMembers(BASE):
     __tablename__ = "chat_members"
-    priv_chat_id = Column(Integer, primary_key=True)
+    priv_chat_id = Column(BigInteger, primary_key=True)
 
     # NOTE: Use dual primary key instead of private primary key?
     chat = Column(
@@ -84,13 +84,12 @@ def ensure_bot_in_db():
         SESSION.commit()
 
 
-def update_user(user_id, username, chat_id=None, chat_name=None):
+def update_user(user_id, chat_id=None, chat_name=None):
     with INSERTION_LOCK:
         user = SESSION.query(Users).get(user_id)
         if not user:
             user = Users(user_id, username)
             SESSION.add(user)
-            SESSION.rollback()
             SESSION.flush()
         else:
             user.username = username
@@ -207,7 +206,7 @@ def migrate_chat(old_chat_id, new_chat_id):
         for member in chat_members:
             member.chat = str(new_chat_id)
         SESSION.commit()
-
+        SESSION.rollback()
 
 ensure_bot_in_db()
 
@@ -223,6 +222,7 @@ def del_user(user_id):
         ChatMembers.query.filter(ChatMembers.user == user_id).delete()
         SESSION.commit()
         SESSION.close()
+        SESSION.rollback()
     return False
 
 
@@ -234,3 +234,4 @@ def rem_chat(chat_id):
             SESSION.commit()
         else:
             SESSION.close()
+            SESSION.rollback()
