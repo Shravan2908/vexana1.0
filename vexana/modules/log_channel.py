@@ -13,9 +13,9 @@ if is_module_loaded(FILENAME):
     from telegram.ext import CommandHandler, JobQueue
     from telegram.utils.helpers import escape_markdown
 
-    from NekoRobot import EVENT_LOGS, LOGGER, dispatcher
-    from NekoRobot.modules.helper_funcs.chat_status import user_admin
-    from NekoRobot.modules.sql import log_channel_sql as sql
+    from vexana import EVENT_LOGS, LOGGER, dispatcher
+    from vexana.modules.helper_funcs.chat_status import user_admin
+    from vexana.modules.sql import log_channel_sql as sql
 
     def loggable(func):
         @wraps(func)
