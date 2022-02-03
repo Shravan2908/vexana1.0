@@ -43,6 +43,7 @@ class Chats(BASE):
 class ChatMembers(BASE):
     __tablename__ = "chat_members"
     priv_chat_id = Column(Integer, primary_key=True)
+
     # NOTE: Use dual primary key instead of private primary key?
     chat = Column(
         String(14),
@@ -89,6 +90,7 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
         if not user:
             user = Users(user_id, username)
             SESSION.add(user)
+            Session.rollback()
             SESSION.flush()
         else:
             user.username = username
