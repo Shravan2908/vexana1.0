@@ -90,7 +90,7 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
         if not user:
             user = Users(user_id, username)
             SESSION.add(user)
-            Session.rollback()
+            SESSION.rollback()
             SESSION.flush()
         else:
             user.username = username
