@@ -5,7 +5,6 @@ from vexana.modules.sql import BASE, SESSION
 from sqlalchemy import (
     Column,
     ForeignKey,
-    Integer,
     BigInteger,
     String,
     UnicodeText,
@@ -117,6 +116,7 @@ def update_user(user_id,username,  chat_id=None, chat_name=None):
             SESSION.add(chat_member)
 
         SESSION.commit()
+        SESSION.rollback()
 
 
 def get_userid_by_name(username):
@@ -128,6 +128,7 @@ def get_userid_by_name(username):
         )
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_name_by_userid(user_id):
@@ -135,6 +136,7 @@ def get_name_by_userid(user_id):
         return SESSION.query(Users).get(Users.user_id == int(user_id)).first()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_chat_members(chat_id):
@@ -182,6 +184,7 @@ def num_chats():
         return SESSION.query(Chats).count()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def num_users():
@@ -189,6 +192,7 @@ def num_users():
         return SESSION.query(Users).count()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def migrate_chat(old_chat_id, new_chat_id):
