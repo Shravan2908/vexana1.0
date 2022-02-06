@@ -90,6 +90,7 @@ def update_user(user_id,username,  chat_id=None, chat_name=None):
             user = Users(user_id, username)
             SESSION.add(user)
             SESSION.flush()
+            SESSION.rollback()
         else:
             user.username = username
 
@@ -102,6 +103,7 @@ def update_user(user_id,username,  chat_id=None, chat_name=None):
             chat = Chats(str(chat_id), chat_name)
             SESSION.add(chat)
             SESSION.flush()
+            SESSION.rollback()
 
         else:
             chat.chat_name = chat_name
@@ -201,6 +203,7 @@ def migrate_chat(old_chat_id, new_chat_id):
         if chat:
             chat.chat_id = str(new_chat_id)
         SESSION.commit()
+        SESSION.rollback()
 
         chat_members = (
             SESSION.query(ChatMembers)
@@ -226,7 +229,6 @@ def del_user(user_id):
         ChatMembers.query.filter(ChatMembers.user == user_id).delete()
         SESSION.commit()
         SESSION.close()
-        SESSION.rollback()
     return False
 
 
