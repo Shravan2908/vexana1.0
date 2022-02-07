@@ -21,7 +21,7 @@ class Users(BASE):
 
 class Chats(BASE):
     __tablename__ = "chats"
-    chat_id = Column(String(14), primary_key=True)
+    chat_id = Column(String(32), primary_key=True)
     chat_name = Column(UnicodeText, nullable=False)
 
     def __init__(self, chat_id, chat_name):
@@ -36,7 +36,7 @@ class ChatMembers(BASE):
     __tablename__ = "chat_members"
     priv_chat_id = Column(Integer, primary_key=True)
     # NOTE: Use dual primary key instead of private primary key?
-    chat = Column(String(14),
+    chat = Column(String(32),
                   ForeignKey("chats.chat_id",
                              onupdate="CASCADE",
                              ondelete="CASCADE"),
@@ -76,6 +76,7 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
         user = SESSION.query(Users).get(user_id)
         if not user:
             user = Users(user_id, username)
+            SESSION.rollback()
             SESSION.add(user)
             SESSION.flush()
         else:
@@ -88,6 +89,7 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
         chat = SESSION.query(Chats).get(str(chat_id))
         if not chat:
             chat = Chats(str(chat_id), chat_name)
+            SESSION.rollback()
             SESSION.add(chat)
             SESSION.flush()
 
@@ -98,6 +100,7 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
                                                    ChatMembers.user == user.user_id).first()
         if not member:
             chat_member = ChatMembers(chat.chat_id, user.user_id)
+            SESSION.rollback()
             SESSION.add(chat_member)
 
         SESSION.commit()
@@ -172,6 +175,7 @@ def migrate_chat(old_chat_id, new_chat_id):
         chat = SESSION.query(Chats).get(str(old_chat_id))
         if chat:
             chat.chat_id = str(new_chat_id)
+            SESSION.rollback()
             SESSION.add(chat)
 
         SESSION.flush()
@@ -179,6 +183,7 @@ def migrate_chat(old_chat_id, new_chat_id):
         chat_members = SESSION.query(ChatMembers).filter(ChatMembers.chat == str(old_chat_id)).all()
         for member in chat_members:
             member.chat = str(new_chat_id)
+            SESSION.rollback()
             SESSION.add(member)
 
         SESSION.commit()
@@ -197,6 +202,7 @@ def del_user(user_id):
 
         ChatMembers.query.filter(ChatMembers.user == user_id).delete()
         SESSION.commit()
+        SESSION.rollback()
         SESSION.close()
     return False
 
@@ -207,5 +213,6 @@ def rem_chat(chat_id):
         if chat:
             SESSION.delete(chat)
             SESSION.commit()
+            SESSION.rollback()
         else:
             SESSION.close()
