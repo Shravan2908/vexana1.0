@@ -1,9 +1,17 @@
 import threading
 
-from sqlalchemy import Column, Integer, UnicodeText, String, ForeignKey, UniqueConstraint, BigInteger, func
-
 from vexana import dispatcher
 from vexana.modules.sql import BASE, SESSION
+from sqlalchemy import (
+    Column,
+    ForeignKey,
+    Integer,
+    BigInteger,
+    String,
+    UnicodeText,
+    UniqueConstraint,
+    func,
+)
 
 
 class Users(BASE):
@@ -21,7 +29,7 @@ class Users(BASE):
 
 class Chats(BASE):
     __tablename__ = "chats"
-    chat_id = Column(String(32), primary_key=True)
+    chat_id = Column(String(14), primary_key=True)
     chat_name = Column(UnicodeText, nullable=False)
 
     def __init__(self, chat_id, chat_name):
@@ -36,25 +44,29 @@ class ChatMembers(BASE):
     __tablename__ = "chat_members"
     priv_chat_id = Column(Integer, primary_key=True)
     # NOTE: Use dual primary key instead of private primary key?
-    chat = Column(String(32),
-                  ForeignKey("chats.chat_id",
-                             onupdate="CASCADE",
-                             ondelete="CASCADE"),
-                  nullable=False)
-    user = Column(BigInteger,
-                  ForeignKey("users.user_id",
-                             onupdate="CASCADE",
-                             ondelete="CASCADE"),
-                  nullable=False)
-    __table_args__ = (UniqueConstraint('chat', 'user', name='_chat_members_uc'),)
+    chat = Column(
+        String(14),
+        ForeignKey("chats.chat_id", onupdate="CASCADE", ondelete="CASCADE"),
+        nullable=False,
+    )
+    user = Column(
+        Integer,
+        ForeignKey("users.user_id", onupdate="CASCADE", ondelete="CASCADE"),
+        nullable=False,
+    )
+    __table_args__ = (UniqueConstraint("chat", "user", name="_chat_members_uc"),)
 
     def __init__(self, chat, user):
         self.chat = chat
         self.user = user
 
     def __repr__(self):
-        return "<Chat user {} ({}) in chat {} ({})>".format(self.user.username, self.user.user_id,
-                                                            self.chat.chat_name, self.chat.chat_id)
+        return "<Chat user {} ({}) in chat {} ({})>".format(
+            self.user.username,
+            self.user.user_id,
+            self.chat.chat_name,
+            self.chat.chat_id,
+        )
 
 
 Users.__table__.create(checkfirst=True)
@@ -76,7 +88,6 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
         user = SESSION.query(Users).get(user_id)
         if not user:
             user = Users(user_id, username)
-            SESSION.rollback()
             SESSION.add(user)
             SESSION.flush()
         else:
@@ -89,35 +100,44 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
         chat = SESSION.query(Chats).get(str(chat_id))
         if not chat:
             chat = Chats(str(chat_id), chat_name)
-            SESSION.rollback()
             SESSION.add(chat)
             SESSION.flush()
+            SESSION.rollback()
 
         else:
             chat.chat_name = chat_name
 
-        member = SESSION.query(ChatMembers).filter(ChatMembers.chat == chat.chat_id,
-                                                   ChatMembers.user == user.user_id).first()
+        member = (
+            SESSION.query(ChatMembers)
+            .filter(ChatMembers.chat == chat.chat_id, ChatMembers.user == user.user_id)
+            .first()
+        )
         if not member:
             chat_member = ChatMembers(chat.chat_id, user.user_id)
-            SESSION.rollback()
             SESSION.add(chat_member)
 
         SESSION.commit()
+        SESSION.rollback()
 
 
 def get_userid_by_name(username):
     try:
-        return SESSION.query(Users).filter(func.lower(Users.username) == username.lower()).all()
+        return (
+            SESSION.query(Users)
+            .filter(func.lower(Users.username) == username.lower())
+            .all()
+        )
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_name_by_userid(user_id):
     try:
-        return SESSION.query(Users).get(Users.user_id == int(user_id)).first()
+        return SESSION.query(Users).get(Users.user_id == bigint(user_id)).first()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_chat_members(chat_id):
@@ -125,6 +145,7 @@ def get_chat_members(chat_id):
         return SESSION.query(ChatMembers).filter(ChatMembers.chat == str(chat_id)).all()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_all_chats():
@@ -132,6 +153,7 @@ def get_all_chats():
         return SESSION.query(Chats).all()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_all_users():
@@ -139,21 +161,28 @@ def get_all_users():
         return SESSION.query(Users).all()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_user_num_chats(user_id):
     try:
-        return SESSION.query(ChatMembers).filter(ChatMembers.user == int(user_id)).count()
+        return (
+            SESSION.query(ChatMembers).filter(ChatMembers.user == bigint(user_id)).count()
+        )
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def get_user_com_chats(user_id):
     try:
-        chat_members = SESSION.query(ChatMembers).filter(ChatMembers.user == int(user_id)).all()
+        chat_members = (
+            SESSION.query(ChatMembers).filter(ChatMembers.user == bigint(user_id)).all()
+        )
         return [i.chat for i in chat_members]
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def num_chats():
@@ -161,6 +190,7 @@ def num_chats():
         return SESSION.query(Chats).count()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def num_users():
@@ -168,6 +198,7 @@ def num_users():
         return SESSION.query(Users).count()
     finally:
         SESSION.close()
+        SESSION.rollback()
 
 
 def migrate_chat(old_chat_id, new_chat_id):
@@ -175,18 +206,17 @@ def migrate_chat(old_chat_id, new_chat_id):
         chat = SESSION.query(Chats).get(str(old_chat_id))
         if chat:
             chat.chat_id = str(new_chat_id)
-            SESSION.rollback()
-            SESSION.add(chat)
+        SESSION.commit()
 
-        SESSION.flush()
-
-        chat_members = SESSION.query(ChatMembers).filter(ChatMembers.chat == str(old_chat_id)).all()
+        chat_members = (
+            SESSION.query(ChatMembers)
+            .filter(ChatMembers.chat == str(old_chat_id))
+            .all()
+        )
         for member in chat_members:
             member.chat = str(new_chat_id)
-            SESSION.rollback()
-            SESSION.add(member)
-
         SESSION.commit()
+        SESSION.rollback()
 
 
 ensure_bot_in_db()
@@ -202,8 +232,8 @@ def del_user(user_id):
 
         ChatMembers.query.filter(ChatMembers.user == user_id).delete()
         SESSION.commit()
-        SESSION.rollback()
         SESSION.close()
+        SESSION.rollback()
     return False
 
 
@@ -213,6 +243,6 @@ def rem_chat(chat_id):
         if chat:
             SESSION.delete(chat)
             SESSION.commit()
-            SESSION.rollback()
         else:
             SESSION.close()
+            SESSION.rollback()
