@@ -2,18 +2,24 @@ import html
 import re
 import os
 import requests
+import datetime
+import platform
+import time
 
+from psutil import cpu_percent, virtual_memory, disk_usage, boot_time
+from platform import python_version
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events
 
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update
+from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update, MessageEntity, __version__ as ptbver, InlineKeyboardButton, \
+    InlineKeyboardMarkup
 from telegram.ext import CallbackContext, CommandHandler
 from telegram.ext.dispatcher import run_async
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from vexana import (
+from Vexana import (
     DEV_USERS,
     OWNER_ID,
     DRAGONS,
@@ -23,16 +29,19 @@ from vexana import (
     INFOPIC,
     dispatcher,
     sw,
+    StartTime,
+    SUPPORT_CHAT,
 )
-from vexana.__main__ import STATS, TOKEN, USER_INFO
-import vexana.modules.sql.userinfo_sql as sql
-from vexana.modules.disable import DisableAbleCommandHandler
-from vexana.modules.sql.global_bans_sql import is_user_gbanned
-from vexana.modules.sql.afk_sql import is_afk, check_afk_status
-from vexana.modules.sql.users_sql import get_user_num_chats
-from vexana.modules.helper_funcs.chat_status import sudo_plus
-from vexana.modules.helper_funcs.extraction import extract_user
-from vexana import telethn as YoneTelethonClient, TIGERS, DRAGONS, DEMONS
+from Vexana.__main__ import STATS, TOKEN, USER_INFO
+from Vexana.modules.sql import SESSION
+import Vexana.modules.sql.userinfo_sql as sql
+from Vexana.modules.disable import DisableAbleCommandHandler
+from Vexana.modules.sql.global_bans_sql import is_user_gbanned
+from Vexana.modules.sql.afk_sql import is_afk, set_afk, check_afk_status
+from Vexana.modules.sql.users_sql import get_user_num_chats
+from Vexana.modules.helper_funcs.chat_status import sudo_plus
+from Vexana.modules.helper_funcs.extraction import extract_user
+from Vexana import telethn as YoneTelethonClient, TIGERS, DRAGONS, DEMONS
 
 
 def no_by_per(totalhp, percentage):
@@ -214,13 +223,13 @@ def info(update: Update, context: CallbackContext):
         user = message.from_user
 
     elif not message.reply_to_message and (
-        not args
-        or (
-            len(args) >= 1
-            and not args[0].startswith("@")
-            and not args[0].isdigit()
-            and not message.parse_entities([MessageEntity.TEXT_MENTION])
-        )
+            not args
+            or (
+                    len(args) >= 1
+                    and not args[0].startswith("@")
+                    and not args[0].isdigit()
+                    and not message.parse_entities([MessageEntity.TEXT_MENTION])
+            )
     ):
         message.reply_text("I can't extract a user from this.")
         return
@@ -407,11 +416,10 @@ def set_about_me(update: Update, context: CallbackContext):
 @run_async
 @sudo_plus
 def stats(update: Update, context: CallbackContext):
-    stats = "<b>📊 Current stats of Vexana:-  Coded by Axel Running Of Yarn:-13.7</b>" + "\n".join([mod.__stats__() for mod in STATS])
+    stats = "<b>📊 Current stats of Vexana:-Running Of Yarn:-13.7</b>" + "\n".join(
+        [mod.__stats__() for mod in STATS])
     result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
-        
-        
 
 
 @run_async
@@ -525,9 +533,8 @@ When marked as AFK, any mentions will be replied to with a message to say you're
 
 *Overall Information about you:*
  ❍ /info*:* get information about a user. 
- 
-*What is that health thingy?*
- Come and see [HP System explained](https://t.me/OnePunchUpdates/192)
+
+
 """
 
 SET_BIO_HANDLER = DisableAbleCommandHandler("setbio", set_about_bio)
