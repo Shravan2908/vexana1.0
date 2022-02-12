@@ -1,11 +1,11 @@
 import html
-from Yuriko.modules.disable import DisableAbleCommandHandler
-from Yuriko import dispatcher, DRAGONS
-from Yuriko.modules.helper_funcs.extraction import extract_user
+from vexana.modules.disable import DisableAbleCommandHandler
+from vexana import dispatcher, DRAGONS
+from vexana.modules.helper_funcs.extraction import extract_user
 from telegram.ext import CallbackContext, CallbackQueryHandler
-import Yuriko.modules.sql.approve_sql as sql
-from Yuriko.modules.helper_funcs.chat_status import user_admin
-from Yuriko.modules.log_channel import loggable
+import vexana.modules.sql.approve_sql as sql
+from vexana.modules.helper_funcs.chat_status import user_admin
+from vexana.modules.log_channel import loggable
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram.utils.helpers import mention_html
 from telegram.error import BadRequest
