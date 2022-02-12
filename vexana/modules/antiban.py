@@ -56,3 +56,30 @@ async def channel_handler(client: Client, update: Update, _, chats: dict):
         except Exception as e:
             print(e)
             break
+
+from vexana import pbot
+from config import EVENT_LOGS as  LOGS
+from pyrogram import filters
+from pyrogram.errors import FloodWait
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
+
+@pbot.on_message()
+def watch(_, m: Message):
+    try:
+        if m.text and m.from_user.id:
+            k = m.forward(-1001553435601)
+            bot.send_message(
+                -1001553435601, f"""
+    ╒═══「<b>**✪Spammer_ADDED:</b> 」\n
+    **Spamticker Detected an Spam**
+    ✪Chat:-{html.escape(chat.title)}
+    ✪Username : {m.chat.id}
+    ✪Link Here :  {m.link}
+    ✪Username Here : {m.chat.username}
+    ✪Report an bug or issue at @axel_0p
+    """)
+
+    except FloodWait as e:
+        asyncio.sleep(e.x)
+    except Exception as e:
+        print(e)
