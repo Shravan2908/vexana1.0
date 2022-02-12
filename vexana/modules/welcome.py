@@ -15,7 +15,7 @@ from vexana import (
     LOGGER,
     dispatcher,
 )
-from Vexana.modules.helper_funcs.chat_status import (
+from vexana.modules.helper_funcs.chat_status import (
     is_user_ban_protected,
     user_admin,
 )
