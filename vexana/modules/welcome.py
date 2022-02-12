@@ -540,32 +540,32 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
         if user.id == new_mem.id:
             bot.send_message(
                 -1001691353081,
-           f""" **🚨{html.escape(chat.title)}\n
-                **🚨USER_JOINED\n
-                **User: {mention_html(user.id, 'link')}\n
-                **ID: {user.id}\n
-                **Username: {(user.first_name)}\n
+           f""" ╒═══「<b>**✪USER_JOINED:</b> 」\n
+                **✪Chat:-{html.escape(chat.title)}\n
+                **✪User:"{mention_html(user.id, 'link')}"
+                **✪ID: {user.id}
+                **✪Username: {(user.first_name)}
                  
                 """
             )
         elif new_mem.is_bot:
             bot.send_message(
-                -1001691353081, f""" 
-                **🚨{html.escape(chat.title)}\n
-                **🚨**#BOT_ADDED\n
-                **Bot: {mention_html(user.id, 'link')}\n
-                **ID: {user.id}\n
-                **Username: {(user.first_name)}\n
+                -1001691353081, 
+          f"""  ╒═══「<b>**✪BOT_ADDED:</b> 」\n
+                **✪Chat:-{html.escape(chat.title)}\n
+                **✪Bot: {mention_html(user.id, 'link')}
+                **✪ID: {user.id}
+                **✪Username: {(user.first_name)}
                 """ 
             )
         else:
             bot.send_message(
-                -1001691353081, f"""
-                **🚨{html.escape(chat.title)}\n
-                **🚨#USER_ADDED\n
-                **User: {mention_html(user.id, 'link')}\n
-                **ID: {user.id}\n
-                **Username: {(user.first_name)}\n"""
+                -1001691353081, 
+           f""" ╒═══「<b>**✪#USER_ADDED:</b> 」\n
+                **✪Chat:-{html.escape(chat.title)}\n
+                **✪User: {mention_html(user.id, "link")}\n
+                **✪ID: {user.id}\n
+                **✪Username: {(user.first_name)}\n"""
             )
         return welcome_log
 
