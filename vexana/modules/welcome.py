@@ -228,10 +228,11 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                     "Huh! VexanaFanClub Mamber just joined! Stay Alert!",
                     reply_to_message_id=reply,
                 )
-                elcome_log = (
+                welcome_log = (
                     f"{html.escape(chat.title)}\n"
                     f"#USER_JOINED\n"
                     f"Bot Sudo just joined the group"
+                )
                 continue
 
             # Welcome Support
