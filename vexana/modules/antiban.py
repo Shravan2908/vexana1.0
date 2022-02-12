@@ -66,7 +66,7 @@ from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, 
 @pbot.on_message()
 def watch(_, m: Message):
     try:
-        if m.text and m.from_user.id:
+        if "spam" in m.text or "Spam" in m.text and m.from_user.id:
             k = m.forward(-1001553435601)
             bot.send_message(
                 -1001553435601, f"""
