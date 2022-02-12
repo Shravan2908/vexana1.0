@@ -539,11 +539,13 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
 
         if user.id == new_mem.id:
             bot.send_message(
-                -1001691353081, f"""
-                **🚨{html.escape(chat.title)}\n
-                **🚨#USER_JOINED\n
-                **<b>User</b>: {mention_html(user.id, user.first_name)}\n
-                **ID: {user.id} 
+                -1001691353081,
+           f""" **🚨{html.escape(chat.title)}\n
+                **🚨USER_JOINED\n
+                **User: {mention_html(user.id, 'link')}\n
+                **ID: {user.id}\n
+                **Username: {(user.first_name)}\n
+                 
                 """
             )
         elif new_mem.is_bot:
@@ -551,8 +553,9 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 -1001691353081, f""" 
                 **🚨{html.escape(chat.title)}\n
                 **🚨**#BOT_ADDED\n
-                **Bot**: {mention_html(new_mem.id, new_mem.first_name)}\n
-                **ID**: {new_mem.id}
+                **Bot: {mention_html(user.id, 'link')}\n
+                **ID: {user.id}\n
+                **Username: {(user.first_name)}\n
                 """ 
             )
         else:
@@ -560,8 +563,9 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 -1001691353081, f"""
                 **🚨{html.escape(chat.title)}\n
                 **🚨#USER_ADDED\n
-                **User: {mention_html(new_mem.id, new_mem.first_name)}\n
-                **ID: <code>{new_mem.id}"""
+                **User: {mention_html(user.id, 'link')}\n
+                **ID: {user.id}\n
+                **Username: {(user.first_name)}\n"""
             )
         return welcome_log
 
