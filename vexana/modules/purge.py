@@ -1,3 +1,4 @@
+import asyncio
 import time
 from telethon import events
 
@@ -13,19 +14,23 @@ async def purge_messages(event):
     if event.from_id is None:
         return
 
-    if not await user_is_admin(
-        user_id=event.sender_id, message=event
-    ) and event.from_id not in [1087968824]:
+    if (
+        not await user_is_admin(
+            user_id=event.sender_id,
+            message=event,
+        )
+        and event.from_id not in [1087968824]
+    ):
         await event.reply("Only Admins are allowed to use this command")
         return
 
     if not await can_delete_messages(message=event):
-        await event.reply("Can't seem to purge the message")
+        await event.reply("Ma na dekha dekh skata 😴")
         return
 
     reply_msg = await event.get_reply_message()
     if not reply_msg:
-        await event.reply("Reply to a message to select where to start purging from.")
+        await event.reply("Reply do vro jaha se purge karna ha ase nahi hota ye😏.")
         return
     messages = []
     message_id = reply_msg.id
@@ -43,17 +48,20 @@ async def purge_messages(event):
     except:
         pass
     time_ = time.perf_counter() - start
-    text = f"Purged Successfully in {time_:0.2f} Second(s)"
+    text = f"Purged Successfully in {time_:0.2f} Second(s) Very Fast Kiya na💫😎"
     await event.respond(text, parse_mode="markdown")
-
 
 async def delete_messages(event):
     if event.from_id is None:
         return
 
-    if not await user_is_admin(
-        user_id=event.sender_id, message=event
-    ) and event.from_id not in [1087968824]:
+    if (
+        not await user_is_admin(
+            user_id=event.sender_id,
+            message=event,
+        )
+        and event.from_id not in [1087968824]
+    ):
         await event.reply("Only Admins are allowed to use this command")
         return
 
@@ -69,14 +77,12 @@ async def delete_messages(event):
     del_message = [message, event.message]
     await event.client.delete_messages(chat, del_message)
 
-
-
-PURGE_HANDLER = purge_messages, events.NewMessage(pattern="^[!/]purge$", run_async=True)
-DEL_HANDLER = delete_messages, events.NewMessage(pattern="^[!/]del$", run_async=True)
+PURGE_HANDLER = purge_messages, events.NewMessage(pattern="^[!/]purge$")
+DEL_HANDLER = delete_messages, events.NewMessage(pattern="^[!/]del$")
 
 telethn.add_event_handler(*PURGE_HANDLER)
 telethn.add_event_handler(*DEL_HANDLER)
 
-__mod_name__ = "DETELE"
+__mod_name__ = "Purges"
 __command_list__ = ["del", "purge"]
 __handlers__ = [PURGE_HANDLER, DEL_HANDLER]
