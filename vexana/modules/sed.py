@@ -2,9 +2,9 @@ import sre_constants
 
 import regex
 import telegram
-from Yuriko import LOGGER, dispatcher
-from Yuriko.modules.disable import DisableAbleMessageHandler
-from Yuriko.modules.helper_funcs.regex_helper import infinite_loop_check
+from vexana import LOGGER, dispatcher
+from vexana.modules.disable import DisableAbleMessageHandler
+from vexana.modules.helper_funcs.regex_helper import infinite_loop_check
 from telegram import Update
 from telegram.ext import CallbackContext, Filters, run_async
 
