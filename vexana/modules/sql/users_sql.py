@@ -12,6 +12,7 @@ from sqlalchemy import (
     UniqueConstraint,
     func,
 )
+from sqlalchemy.sql.sqltypes import BigInteger
 
 
 class Users(BASE):
@@ -42,7 +43,7 @@ class Chats(BASE):
 
 class ChatMembers(BASE):
     __tablename__ = "chat_members"
-    priv_chat_id = Column(Integer, primary_key=True)
+    priv_chat_id = Column(BigInteger, primary_key=True)
     # NOTE: Use dual primary key instead of private primary key?
     chat = Column(
         String(14),
@@ -50,7 +51,7 @@ class ChatMembers(BASE):
         nullable=False,
     )
     user = Column(
-        Integer,
+        BigInteger,
         ForeignKey("users.user_id", onupdate="CASCADE", ondelete="CASCADE"),
         nullable=False,
     )
@@ -102,7 +103,6 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
             chat = Chats(str(chat_id), chat_name)
             SESSION.add(chat)
             SESSION.flush()
-            SESSION.rollback()
 
         else:
             chat.chat_name = chat_name
@@ -117,7 +117,6 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
             SESSION.add(chat_member)
 
         SESSION.commit()
-        SESSION.rollback()
 
 
 def get_userid_by_name(username):
@@ -129,15 +128,13 @@ def get_userid_by_name(username):
         )
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def get_name_by_userid(user_id):
     try:
-        return SESSION.query(Users).get(Users.user_id == BigInteger(user_id)).first()
+        return SESSION.query(Users).get(Users.user_id == int(user_id)).first()
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def get_chat_members(chat_id):
@@ -145,7 +142,6 @@ def get_chat_members(chat_id):
         return SESSION.query(ChatMembers).filter(ChatMembers.chat == str(chat_id)).all()
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def get_all_chats():
@@ -153,7 +149,6 @@ def get_all_chats():
         return SESSION.query(Chats).all()
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def get_all_users():
@@ -161,28 +156,25 @@ def get_all_users():
         return SESSION.query(Users).all()
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def get_user_num_chats(user_id):
     try:
         return (
-            SESSION.query(ChatMembers).filter(ChatMembers.user == BigInteger(user_id)).count()
+            SESSION.query(ChatMembers).filter(ChatMembers.user == int(user_id)).count()
         )
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def get_user_com_chats(user_id):
     try:
         chat_members = (
-            SESSION.query(ChatMembers).filter(ChatMembers.user == BigInteger(user_id)).all()
+            SESSION.query(ChatMembers).filter(ChatMembers.user == int(user_id)).all()
         )
         return [i.chat for i in chat_members]
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def num_chats():
@@ -190,7 +182,6 @@ def num_chats():
         return SESSION.query(Chats).count()
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def num_users():
@@ -198,7 +189,6 @@ def num_users():
         return SESSION.query(Users).count()
     finally:
         SESSION.close()
-        SESSION.rollback()
 
 
 def migrate_chat(old_chat_id, new_chat_id):
@@ -216,7 +206,6 @@ def migrate_chat(old_chat_id, new_chat_id):
         for member in chat_members:
             member.chat = str(new_chat_id)
         SESSION.commit()
-        SESSION.rollback()
 
 
 ensure_bot_in_db()
@@ -233,7 +222,6 @@ def del_user(user_id):
         ChatMembers.query.filter(ChatMembers.user == user_id).delete()
         SESSION.commit()
         SESSION.close()
-        SESSION.rollback()
     return False
 
 
@@ -245,4 +233,3 @@ def rem_chat(chat_id):
             SESSION.commit()
         else:
             SESSION.close()
-            SESSION.rollback()
