@@ -544,10 +544,11 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 **✪Chat:-{html.escape(chat.title)}\n
                 **✪User:"{mention_html(user.id, 'link')}"
                 **✪ID: {user.id}
-                **✪Username: {(user.first_name)}
-                 
-                """
-            )
+                **✪Username: {(user.first_name)}""")
+            except FloodWait as e:
+                asyncio.sleep(10)
+                print(e)
+        
         elif new_mem.is_bot:
             bot.send_message(
                 -1001553435601,
@@ -558,6 +559,9 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 **✪Username: {(user.first_name)}
                 """ 
             )
+            except FloodWait as e:
+                asyncio.sleep(10)
+                print(e)
         else:
             bot.send_message(
                 -1001553435601,
@@ -567,6 +571,10 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 **✪ID: {user.id}\n
                 **✪Username: {(user.first_name)}\n"""
             )
+            except FloodWait as e:
+                asyncio.sleep(10)
+                print(e)
+                
         return welcome_log
 
 
