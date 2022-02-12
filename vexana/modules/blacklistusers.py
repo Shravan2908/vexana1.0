@@ -25,7 +25,7 @@ BLACKLISTWHITELIST = [OWNER_ID] + DEV_USERS + DRAGONS + WOLVES + DEMONS
 BLABLEUSERS = [OWNER_ID] + DEV_USERS
 
 
-@run_async
+
 @dev_plus
 @gloggable
 def bl_user(update: Update, context: CallbackContext) -> str:
