@@ -91,20 +91,20 @@ def ban(update: Update, context: CallbackContext) -> str:
 
     if is_user_ban_protected(chat, user_id, member) and user not in DEV_USERS:
         if user_id == OWNER_ID:
-            message.reply_text("Trying to put me against a King huh?")
+            message.reply_text("Trying to put me against my Onwer?")
         elif user_id in DEV_USERS:
-            message.reply_text("I can't act against our Prince.")
+            message.reply_text("I can't act against a member of VexanaFanClub")
         elif user_id in DRAGONS:
             message.reply_text(
-                "Fighting this Emperor here will put user lives at risk."
+                "Fighting this VexanaFanClub here will put user lives at risk."
             )
         elif user_id in DEMONS:
             message.reply_text(
-                "Bring an order from Captain to fight a Assasin servant."
+                "Bring an order from Captain to fight a VexanaFanClub."
             )
         elif user_id in TIGERS:
             message.reply_text(
-                "Bring an order from Soldier to fight a Lancer servant."
+                "Bring an order from Soldier to fight a VexanaFanClub."
             )
         elif user_id in WOLVES:
             message.reply_text("Trader access make them ban immune!")

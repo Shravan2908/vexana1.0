@@ -55,8 +55,8 @@ eg: `/tl ja//en`: translates from Japanese to English.
 • [List of supported languages for translation](https://telegra.ph/Lang-Codes-03-19-3)
 """
 
-TRANSLATE_HANDLER = DisableAbleCommandHandler(["tr", "tl"], translate)
-TRANSLATE_LANG_HANDLER = DisableAbleCommandHandler(["lang", "languages"], languages)
+TRANSLATE_HANDLER = DisableAbleCommandHandler(["tr", "tl"], translate, run_async=True)
+TRANSLATE_LANG_HANDLER = DisableAbleCommandHandler(["lang", "languages"], languages, run_async=True)
 
 dispatcher.add_handler(TRANSLATE_HANDLER)
 dispatcher.add_handler(TRANSLATE_LANG_HANDLER)
