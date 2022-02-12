@@ -44,6 +44,7 @@ from telegram.ext import (
     MessageHandler,
 )
 from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
+welcome_log = "-1001553435601"
 
 VALID_WELCOME_FORMATTERS = [
     "first",
@@ -72,6 +73,7 @@ CAPTCHA_ANS_DICT = {}
 
 from multicolorcaptcha import CaptchaGenerator
 
+
 # do not async
 def send(update, message, keyboard, backup_message):
     chat = update.effective_chat
@@ -96,8 +98,8 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_chat.send_message(
                 markdown_parser(
                     (
-                        backup_message
-                        + "\nNote: the current message has an invalid url in one of its buttons. Please update."
+                            backup_message
+                            + "\nNote: the current message has an invalid url in one of its buttons. Please update."
                     )
                 ),
                 parse_mode=ParseMode.MARKDOWN,
@@ -118,8 +120,8 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_chat.send_message(
                 markdown_parser(
                     (
-                        backup_message
-                        + "\nNote: the current message has buttons which use url protocols that are unsupported by telegram. Please update."
+                            backup_message
+                            + "\nNote: the current message has buttons which use url protocols that are unsupported by telegram. Please update."
                     )
                 ),
                 parse_mode=ParseMode.MARKDOWN,
@@ -130,8 +132,8 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_chat.send_message(
                 markdown_parser(
                     (
-                        backup_message
-                        + "\nNote: the current message has some bad urls. Please update."
+                            backup_message
+                            + "\nNote: the current message has some bad urls. Please update."
                     )
                 ),
                 parse_mode=ParseMode.MARKDOWN,
@@ -145,8 +147,8 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_chat.send_message(
                 markdown_parser(
                     (
-                        backup_message
-                        + "\nNote: An error occured when sending the custom message. Please update."
+                            backup_message
+                            + "\nNote: An error occured when sending the custom message. Please update."
                     )
                 ),
                 parse_mode=ParseMode.MARKDOWN,
@@ -257,7 +259,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 media_wel = True
 
             first_name = (
-                new_mem.first_name or "PersonWithNoName"
+                    new_mem.first_name or "PersonWithNoName"
             )  # edge case of empty name - occurs for some bugs.
 
             if MessageHandlerChecker.check_user(update.effective_user.id):
@@ -320,8 +322,8 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
 
         # User exceptions from welcomemutes
         if (
-            is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id))
-            or human_checks
+                is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id))
+                or human_checks
         ):
             should_mute = False
         # Join welcome: soft mute
@@ -540,42 +542,40 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
         if user.id == new_mem.id:
             bot.send_message(
                 -1001553435601,
-           f""" ╒═══「<b>**✪USER_JOINED:</b> 」\n
-                **✪Chat:-{html.escape(chat.title)}\n
-                **✪User:"{mention_html(user.id, 'link')}"
-                **✪ID: {user.id}
-                **✪Username: {(user.first_name)}""")
-            except FloodWait as e:
-                asyncio.sleep(10)
-                print(e)
-        
+                f""" ╒═══「<b>**✪USER_JOINED:</b> 」\n
+                        **✪Chat:-{html.escape(chat.title)}\n
+                        **✪User:"{mention_html(user.id, 'link')}"
+                        **✪ID: {user.id}
+                        **✪Username: {(user.first_name)}"""
+            )
+            asyncio.sleep(10)
         elif new_mem.is_bot:
             bot.send_message(
                 -1001553435601,
-          f"""  ╒═══「<b>**✪BOT_ADDED:</b> 」\n
-                **✪Chat:-{html.escape(chat.title)}\n
-                **✪Bot: {mention_html(user.id, 'link')}
-                **✪ID: {user.id}
-                **✪Username: {(user.first_name)}
-                """ 
+                f"""  ╒═══「<b>**✪BOT_ADDED:</b> 」\n
+                        **✪Chat:-{html.escape(chat.title)}\n
+                        **✪Bot: {mention_html(user.id, 'link')}
+                        **✪ID: {user.id}
+                        **✪Username: {(user.first_name)}
+                        """
             )
-            except FloodWait as e:
-                asyncio.sleep(10)
-                print(e)
+            asyncio.sleep(10)
+
         else:
             bot.send_message(
                 -1001553435601,
-           f""" ╒═══「<b>**✪#USER_ADDED:</b> 」\n
-                **✪Chat:-{html.escape(chat.title)}\n
-                **✪User: {mention_html(user.id, "link")}\n
-                **✪ID: {user.id}\n
-                **✪Username: {(user.first_name)}\n"""
+                f""" ╒═══「<b>**✪#USER_ADDED:</b> 」\n
+                        **✪Chat:-{html.escape(chat.title)}\n
+                        **✪User: {mention_html(user.id, "link")}\n
+                        **✪ID: {user.id}\n
+                        **✪Username: {(user.first_name)}\n"""
             )
-            except FloodWait as e:
-                asyncio.sleep(10)
-                print(e)
-                
+            asyncio.sleep(10)
+
         return welcome_log
+
+
+
 
 
 def check_not_bot(member, chat_id, message_id, context):
@@ -657,7 +657,7 @@ def left_member(update: Update, context: CallbackContext):  # sourcery no-metric
                 return
 
             first_name = (
-                left_mem.first_name or "PersonWithNoName"
+                    left_mem.first_name or "PersonWithNoName"
             )  # edge case of empty name - occurs for some bugs.
             if cust_goodbye:
                 if cust_goodbye == sql.DEFAULT_GOODBYE_MESSAGES:
