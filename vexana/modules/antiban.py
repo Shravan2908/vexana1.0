@@ -58,7 +58,7 @@ async def channel_handler(client: Client, update: Update, _, chats: dict):
             break
 
 from vexana import pbot
-from config import EVENT_LOGS as  LOGS
+from vexana import EVENT_LOGS as  LOGS
 from pyrogram import filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
