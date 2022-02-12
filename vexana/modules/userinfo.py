@@ -237,7 +237,7 @@ def info(update: Update, context: CallbackContext):
     rep = message.reply_text("<code>Taking a look in database</code>", parse_mode=ParseMode.HTML)
 
     text = (
-        f"╒═══「<b> Appraisal results:</b> 」\n"
+        f"╒═══「<b> Your Info As Follow :</b> 」\n"
         f"✪ID: <code>{user.id}</code>\n"
         f"✪First Name: {html.escape(user.first_name)}"
     )
@@ -251,7 +251,7 @@ def info(update: Update, context: CallbackContext):
     text += f"\n✪ Permalink: {mention_html(user.id, 'link')}"
 
     if chat.type != "private" and user_id != bot.id:
-        _stext = "\nPresence: <code>{}</code>"
+        _stext = "\n✪Presence: <code>{}</code>"
 
         afk_st = is_afk(user.id)
         if afk_st:
@@ -267,7 +267,7 @@ def info(update: Update, context: CallbackContext):
                     text += _stext.format("Admin")
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
-        text += '\n\nReport any BUG or Error at @Vexana_Support'
+        text += '\n\nReport any Bug or Error at @Vexana_Support'
 
     try:
         spamwtc = sw.get_ban(int(user.id))
