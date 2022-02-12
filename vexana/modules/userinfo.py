@@ -32,7 +32,7 @@ from vexana.modules.sql.afk_sql import is_afk, check_afk_status
 from vexana.modules.sql.users_sql import get_user_num_chats
 from vexana.modules.helper_funcs.chat_status import sudo_plus
 from vexana.modules.helper_funcs.extraction import extract_user
-from vexana import telethn as PglRobotTelethonClient, TIGERS, DRAGONS, DEMONS
+from vexana import telethn, TIGERS, DRAGONS, DEMONS
 
 
 def no_by_per(totalhp, percentage):
