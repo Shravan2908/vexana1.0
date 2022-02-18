@@ -704,7 +704,7 @@ def migrate_chats(update: Update, context: CallbackContext):
 
 def main():
 
-    if DEV_CHAT is not None and isinstance(DEV_CHAT, str):
+    if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
             dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "ᴠᴇxᴀɴᴀ ɴᴏᴡ ʙᴀᴄᴋ ᴛᴏ ꜱᴇʀᴠᴇʀ  (ʀᴇꜱᴛᴀʀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ)!")
         except Unauthorized:
