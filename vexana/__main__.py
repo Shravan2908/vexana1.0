@@ -809,20 +809,21 @@ def main():
     # test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start, pass_args=True)
 
-    help_handler = CommandHandler("help", get_help, run_async=True)
+    help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
-    settings_handler = CommandHandler("settings", get_settings, run_async=True)
-    settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_", run_async=True)
+    settings_handler = CommandHandler("settings", get_settings)
+    settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
     about_callback_handler = CallbackQueryHandler(
-        Natsuki_about_callback, pattern=r"aboutmanu_", run_async=True
+        Natsuki_about_callback, pattern=r"aboutmanu_"
     )
 
-    donate_handler = CommandHandler("donate", donate, run_async=True)
+    donate_handler = CommandHandler("donate", donate)
 
-    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats, run_async=True)
-    is_chat_allowed_handler = MessageHandler(Filters.chat_type.groups, is_chat_allowed, run_async=True)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+    is_chat_allowed_handler = MessageHandler(Filters.group, is_chat_allowed)
+
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
