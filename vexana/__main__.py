@@ -93,7 +93,7 @@ PM_START_TEXT = """
    ɪ ᴀᴍ ᴀ  ᴘᴏᴡᴇʀꜰᴜʟʟ  ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ, ᴡɪᴛʜ ꜱᴏᴍᴇ ꜰᴜɴ ᴇxᴛʀᴀꜱ ;)
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
-ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /help..
+ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /help...
 """
 
 buttons = [
@@ -126,7 +126,8 @@ HELP_STRINGS = "\x1f*Main Commands :* [🤖](https://telegra.ph/file/4a7d5037bcd
 VEXANA_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 HELP_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 START_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
-Vexana_PHOTO = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
+MIZUHARA_PHOTO = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
+
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 You can donate to the original writer's of the Base code,
@@ -217,7 +218,7 @@ def start(update: Update, context: CallbackContext):
                         [
                             [
                                 InlineKeyboardButton(
-                                    text="Back", callback_data="help_back"
+                                    text="🔙 ʙᴀᴄᴋ", callback_data="help_back"
                                 )
                             ]
                         ]
@@ -255,6 +256,7 @@ def start(update: Update, context: CallbackContext):
             ),
             parse_mode=ParseMode.HTML,
         )
+
 
 
 def error_handler(update, context):
@@ -383,15 +385,19 @@ def mizuhara_about_callback(update, context):
     query = update.callback_query
     if query.data == "mizuhara_":
         query.message.edit_text(
-            text="""Hello *{}*, My name is *{}*. A Powerful Telegram Group Management Bot built to help you manage Group easily.
-            \n ‣ I can Restrict Users.
-            \n ‣ I can Greet Users with customizable welcome message and even set a group rules
-            \n ‣ I have an advanced Anti-Flood System which will help you to safe group from Spammmer.
-            \n ‣ I can Warn Users until they reach max Warns, with each predefined actions such as Ban, Mute and Kick etc.
-            \n ‣ I have Note Keeping System, Blacklists, And even Predetermined replies on certain keywords.
-            \n ‣ I check Admins Permissions before perform any Command and more Stuffs.
-            \n ‣ I have an advanced Artificial Chatbot System, so can talk with users like humans.
-            \n\n*If you have any Question, You can join Support Chat. My Developer Team will Answer. Check Link Below*""",
+            text=""" Hey myself iz Vexana*, a powerful Anime Based  group management bot built to help you manage your group easily.
+                 \n➥ I can restrict users.
+                 \n➥ I can greet users with customizable welcome messages and even set a group's rules.
+                 \n➥ I have an advanced anti-flood system.
+                 \n➥ I can warn users until they reach max warns, with each predefined actions such as ban, mute, kick, etc.
+                 \n➥ I have a note keeping system, blacklists, and even predetermined replies on certain keywords.
+                 \n➥ I check for admins' permissions before executing any command and more stuffs
+                 \n\n_Vexana's licensed under the GNU General Public License v3.0_
+                 \n➥ My Network  @Skytech_Support
+                 \n➥ Support Group @Vexana_Support
+                 \n➥ Special Thanks To @vexana_Devs.
+                 \n➥ Here is the [Fanclub](https://t.me/feelingZones) Where I am From.
+                 \n➥ If you have any question about Mizuhara, let us know at @Chizuru_Support .""",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
@@ -412,7 +418,7 @@ def Source_about_callback(update, context):
     query = update.callback_query
     if query.data == "source_":
         query.message.edit_text(
-            text=""" Hi, I'm *Vexana*
+            text="""  Hi, I'm *Vexana*
                  \nOwner and developed by [My Devs](https://t.me/axel_0p) .""",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
@@ -755,10 +761,9 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-
-    else:
-        LOGGER.info("Vexana Started Using long polling.")
-        updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
+        else:
+            LOGGER.info("Vexana Started Using long polling.")Started Using long polling.")
+            updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
 
     if len(argv) not in (1, 3, 4):
         telethn.disconnect()
