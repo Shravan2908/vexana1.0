@@ -761,7 +761,7 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-        else:
+   else:
             LOGGER.info("Vexana Started Using long polling.")Started Using long polling.")
             updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
 
