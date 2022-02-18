@@ -163,7 +163,7 @@ def gban(update: Update, context: CallbackContext):
 
         return
 
-    message.reply_text("Organating a remote Cmds")
+    message.reply_text("Orgeneting a remote Cmds")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
@@ -376,9 +376,9 @@ def ungban(update: Update, context: CallbackContext):  # sourcery no-metrics
 
     if ungban_time > 60:
         ungban_time = round((ungban_time / 60), 2)
-        message.reply_text(f"Unblacklisted successful. Total Time taken {ungban_time} min")
+        message.reply_text(f"Unblacklisting successful. Total Time taken {ungban_time} min")
     else:
-        message.reply_text(f"Unblacklisted successful. Total Time taken {ungban_time} sec")
+        message.reply_text(f"Unblacklisting successful. Total Time taken {ungban_time} sec")
 
 
 @support_plus
@@ -433,7 +433,7 @@ def check_and_ban(update, user_id, should_message=True):
         update.effective_chat.ban_member(user_id)
         if should_message:
             text = (
-                f"<b>This User is mark as Threat by my Owners and sudo User.\n"
+                f"<b>This User is mark as Threat by my Owners or any Sudo User.\n"
                 f"<b>Support chat</b>: @{SUPPORT_CHAT}\n"
                 f"<b>User ID</b>: <code>{user_id}</code>"
             )
