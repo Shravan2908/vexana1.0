@@ -657,7 +657,7 @@ def donate(update: Update, context: CallbackContext):
             DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
         )
 
-        if OWNER_ID != 1332331113 and DONATION_LINK:
+        if OWNER_ID != 5001573230 and DONATION_LINK:
             update.effective_message.reply_text(
                 "You can also donate to the person currently running me "
                 "[here]({})".format(DONATION_LINK),
@@ -692,12 +692,12 @@ def migrate_chats(update: Update, context: CallbackContext):
         return
 
     LOGGER.info(
-        "Mizuhara is started migrating from %s, to %s", str(old_chat), str(new_chat)
+        "Vexana is started migrating from %s, to %s", str(old_chat), str(new_chat)
     )
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Mizuhara Successfully migrated!")
+    LOGGER.info("Vexana Successfully migrated!")
     raise DispatcherHandlerStop
 
 
