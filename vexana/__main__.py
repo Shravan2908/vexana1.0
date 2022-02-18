@@ -383,26 +383,22 @@ def mizuhara_about_callback(update, context):
     query = update.callback_query
     if query.data == "mizuhara_":
         query.message.edit_text(
-            text=""" Ohayo Me iz Mizuhara*, a powerful Anime Based  group management bot built to help you manage your group easily.
-                 \n➥ I can restrict users.
-                 \n➥ I can greet users with customizable welcome messages and even set a group's rules.
-                 \n➥ I have an advanced anti-flood system.
-                 \n➥ I can warn users until they reach max warns, with each predefined actions such as ban, mute, kick, etc.
-                 \n➥ I have a note keeping system, blacklists, and even predetermined replies on certain keywords.
-                 \n➥ I check for admins' permissions before executing any command and more stuffs
-                 \n\n_Mizuhara's licensed under the GNU General Public License v3.0_
-                 \n➥ My Network  @Project_Tsukiyomi
-                 \n➥ Support Group @Chizuru_Support
-                 \n➥ Special Thanks To @TeamSmexy.
-                 \n➥ Here is the [Anime](https://t.me/joinchat/_kD7MEaySg45MWQ1) Where I am From.
-                 \n➥ If you have any question about Mizuhara, let us know at @Chizuru_Support .""",
+            text="""Hello *{}*, My name is *{}*. A Powerful Telegram Group Management Bot built to help you manage Group easily.
+            \n ‣ I can Restrict Users.
+            \n ‣ I can Greet Users with customizable welcome message and even set a group rules
+            \n ‣ I have an advanced Anti-Flood System which will help you to safe group from Spammmer.
+            \n ‣ I can Warn Users until they reach max Warns, with each predefined actions such as Ban, Mute and Kick etc.
+            \n ‣ I have Note Keeping System, Blacklists, And even Predetermined replies on certain keywords.
+            \n ‣ I check Admins Permissions before perform any Command and more Stuffs.
+            \n ‣ I have an advanced Artificial Chatbot System, so can talk with users like humans.
+            \n\n*If you have any Question, You can join Support Chat. My Developer Team will Answer. Check Link Below*""",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="aboutmanu_back")]]
+                [[InlineKeyboardButton(text="Back", callback_data="vexana_back")]]
             ),
         )
-    elif query.data == "aboutmanu_back":
+    elif query.data == "vexana_back":
         query.message.edit_text(
             PM_START_TEXT,
             reply_markup=InlineKeyboardMarkup(buttons),
@@ -727,7 +723,7 @@ def main():
     )
 
     about_callback_handler = CallbackQueryHandler(
-        mizuhara_about_callback, pattern=r"mizuhara_", run_async=True
+        mizuhara_about_callback, pattern=r"vexana_", run_async=True
     )
     source_callback_handler = CallbackQueryHandler(
         Source_about_callback, pattern=r"source_", run_async=True
