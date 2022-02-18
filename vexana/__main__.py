@@ -93,7 +93,7 @@ PM_START_TEXT = """
    ɪ ᴀᴍ ᴀ  ᴘᴏᴡᴇʀꜰᴜʟʟ  ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ, ᴡɪᴛʜ ꜱᴏᴍᴇ ꜰᴜɴ ᴇxᴛʀᴀꜱ ;)
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
-ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /help...
+✗ Type /help To Check the available Cmds.. ✗
 """
 
 buttons = [
@@ -109,9 +109,6 @@ buttons = [
     [
         InlineKeyboardButton(text="Vexana News ", url="https://t.me/Vexana_Updates"),
         InlineKeyboardButton(text="VexanaFanClub", url="https://t.me/feelingZones"),
-    ],
-    [
-        InlineKeyboardButton(text="Help", callback_data="help_back"),
     ],
 ]
 
