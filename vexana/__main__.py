@@ -37,7 +37,7 @@ from vexana.events import register
 from vexana.modules import ALL_MODULES
 from vexana.modules.helper_funcs.chat_status import is_user_admin
 from vexana.modules.helper_funcs.alternate import typing_action
-from vexana.modules.helper_funcs.alternate import 
+from vexana.modules.helper_funcs.readable_time  import get_readable_time
 from vexana.modules.helper_funcs.misc import paginate_modules
 from vexana.modules.disable import DisableAbleCommandHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
