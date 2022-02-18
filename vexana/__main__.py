@@ -115,7 +115,7 @@ buttons = [
     ],
 ]
 
-HELP_STRINGS = "\x1f*Main Commands :* [🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)\x1f\x1f • /help <module name>: PM's you info about that module.\x1f • /hack: To hack any telegram account.\x1f • /donate: information on how to donate!\x1f • /settings:\x1f   • in PM: will send you your settings for all supported modules.\x1f   • in a group: will redirect you to pm, with all that chat's settings.\x1f".format(
+HELP_STRINGS = "\x1f*Main Commands :* [🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)\x1f\x1f \n• /help <module name>: PM's you info about that module.\x1f\n • /hack: To hack any telegram account.\x1f\n • /donate: information on how to donate!\x1f \n• /settings:\x1f   • in PM: will send you your settings for all supported modules.\x1f\n• in a group: will redirect you to pm, with all that chat's settings.\x1f".format(
     dispatcher.bot.first_name,
     ""
     if not ALLOW_EXCL
@@ -395,10 +395,10 @@ def mizuhara_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="vexana_back")]]
+                [[InlineKeyboardButton(text="Back", callback_data="mizuhara_back")]]
             ),
         )
-    elif query.data == "vexana_back":
+    elif query.data == "mizuhara_back":
         query.message.edit_text(
             PM_START_TEXT,
             reply_markup=InlineKeyboardMarkup(buttons),
@@ -723,7 +723,7 @@ def main():
     )
 
     about_callback_handler = CallbackQueryHandler(
-        mizuhara_about_callback, pattern=r"vexana_", run_async=True
+        mizuhara_about_callback, pattern=r"mizuhara_", run_async=True
     )
     source_callback_handler = CallbackQueryHandler(
         Source_about_callback, pattern=r"source_", run_async=True
