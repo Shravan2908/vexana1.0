@@ -550,7 +550,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         **✪ID: {user.id}
                         **✪Username: {(user.first_name)}"""
             )
-            asyncio.sleep(20)
+            bot.sleep(20)
         elif new_mem.is_bot:
             bot.send_message(
                 -1001553435601,
@@ -561,7 +561,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         **✪Username: {(user.first_name)}
                         """
             )
-            asyncio.sleep(20)
+            bot.sleep(20)
 
         else:
             bot.send_message(
@@ -572,7 +572,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         **✪ID: {user.id}\n
                         **✪Username: {(user.first_name)}\n"""
             )
-            asyncio.sleep(20)
+            bot.sleep(20)
 
         return welcome_log
 
