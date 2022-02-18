@@ -68,7 +68,6 @@ PM_START_TEXT = """
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
    ʏᴏᴜ ᴄᴀɴ ꜰɪɴᴅ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴡɪᴛʜ /help..
-   You can also hack anyone telegram account by using me...
 """
 
 buttons = [
@@ -85,7 +84,7 @@ buttons = [
             text="VexanaFanClub", url="https://t.me/feelingZones"
         ),
         InlineKeyboardButton(
-            text="Main Help ❓", callback_data="help_back"
+            text="Main Help❓", callback_data="help_back"
         ),
     ],
     [
@@ -94,7 +93,7 @@ buttons = [
             url="t.me/mocha_chatbot?startgroup=true",
         ),
         InlineKeyboardButton(
-            text="Basic Help", callback_data="aboutmanu_"
+            text="Basic", callback_data="aboutmanu_"
         ),
     ],
 ]
@@ -179,7 +178,7 @@ def send_help(chat_id, text, keyboard=None):
     )
 
 
-@run_async
+
 def test(update, context):
     try:
         print(update)
@@ -192,7 +191,7 @@ def test(update, context):
     print(update.effective_message)
 
 
-@run_async
+
 def start(update: Update, context: CallbackContext):
     args = context.args
     uptime = get_readable_time((time.time() - StartTime))
@@ -226,8 +225,8 @@ def start(update: Update, context: CallbackContext):
 
         else:
             update.effective_user.first_name
-            update.effective_message.reply_text(
-                PM_START_TEXT,
+            update.effective_message.reply_photo(
+                VEXANA_IMG,PM_START_TEXT,
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
@@ -299,7 +298,7 @@ def error_callback(update: Update, context: CallbackContext):
         # handle all other telegram related errors
 
 
-@run_async
+
 def help_button(update, context):
     query = update.callback_query
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
@@ -365,7 +364,7 @@ def help_button(update, context):
             LOGGER.exception("Exception in help buttons. %s", str(query.data))
 
 
-@run_async
+
 def Natsuki_about_callback(update, context):
     query = update.callback_query
     if query.data == "aboutmanu_":
@@ -503,7 +502,7 @@ def Natsuki_about_callback(update, context):
         )
 
 
-@run_async
+
 @typing_action
 def get_help(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
@@ -610,7 +609,7 @@ def send_settings(chat_id, user_id, user=False):
         )
 
 
-@run_async
+
 def settings_button(update, context):
     query = update.callback_query
     user = update.effective_user
@@ -696,7 +695,7 @@ def settings_button(update, context):
             LOGGER.exception("Exception in settings buttons. %s", str(query.data))
 
 
-@run_async
+
 def get_settings(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -779,7 +778,7 @@ def is_chat_allowed(update, context):
                 raise DispatcherHandlerStop
 
 
-@run_async
+
 def donate(update: Update, context: CallbackContext):
     update.effective_message.from_user
     chat = update.effective_chat  # type: Optional[Chat]
@@ -808,22 +807,22 @@ def main():
             LOGGER.warning(e.message)
 
     # test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start, pass_args=True)
+    start_handler = CommandHandler("start", start, pass_args=True, run_async=True)
 
-    help_handler = CommandHandler("help", get_help)
-    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
+    help_handler = CommandHandler("help", get_help, run_async=True)
+    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_", run_async=True)
 
-    settings_handler = CommandHandler("settings", get_settings)
-    settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
+    settings_handler = CommandHandler("settings", get_settings, run_async=True)
+    settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_", run_async=True)
 
     about_callback_handler = CallbackQueryHandler(
-        Natsuki_about_callback, pattern=r"aboutmanu_"
+        Natsuki_about_callback, pattern=r"aboutmanu_", run_async=True
     )
 
-    donate_handler = CommandHandler("donate", donate)
+    donate_handler = CommandHandler("donate", donate, run_async=True)
 
-    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
-    is_chat_allowed_handler = MessageHandler(Filters.chat_type.groups, is_chat_allowed)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats, run_async=True)
+    is_chat_allowed_handler = MessageHandler(Filters.chat_type.groups, is_chat_allowed, run_async=True)
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
