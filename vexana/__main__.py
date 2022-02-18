@@ -402,7 +402,7 @@ def mizuhara_about_callback(update, context):
                 [[InlineKeyboardButton(text="Back", callback_data="mizuhara_back")]]
             ),
         )
-    elif query.data == "mizuhara_back":
+    elif query.data == "aboutmanu_back":
         query.message.edit_text(
             PM_START_TEXT,
             reply_markup=InlineKeyboardMarkup(buttons),
@@ -416,8 +416,8 @@ def Source_about_callback(update, context):
     query = update.callback_query
     if query.data == "source_":
         query.message.edit_text(
-            text=""" Hi, I'm *Mizuhara Chizuru*
-                 \nHere are the [My Devs](https://t.me/TeamSmexy) .""",
+            text=""" Hi, I'm *Vexana*
+                 \nOwner and developed by [My Devs](https://t.me/axel_0p) .""",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
