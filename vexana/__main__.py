@@ -237,10 +237,9 @@ def start(update: Update, context: CallbackContext):
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
 
         else:
-            first_name = update.effective_user.first_name
-            update.effective_message.reply_text(
-                PM_START_TEXT.format(
-                    escape_markdown(first_name),
+            update.effective_user.first_name
+            update.effective_message.reply_photo(
+                VEXANA_IMG,PM_START_TEXT,(
                     escape_markdown(uptime),
                     sql.num_users(),
                     sql.num_chats(),
