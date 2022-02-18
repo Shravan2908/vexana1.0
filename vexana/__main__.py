@@ -807,10 +807,10 @@ def main():
             LOGGER.warning(e.message)
 
     # test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start, pass_args=True, run_async=True)
+    start_handler = CommandHandler("start", start, pass_args=True)
 
     help_handler = CommandHandler("help", get_help, run_async=True)
-    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_", run_async=True)
+    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
     settings_handler = CommandHandler("settings", get_settings, run_async=True)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_", run_async=True)
