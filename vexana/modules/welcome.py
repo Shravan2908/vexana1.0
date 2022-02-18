@@ -229,7 +229,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Welcome Sudos
             if new_mem.id in DRAGONS:
                 update.effective_message.reply_text(
-                    "Huh! VexanaFanClub Mamber just joined! Stay Alert!",
+                    "Huh! VexanaFanClub Member just joined! Stay Alert!",
                     reply_to_message_id=reply,
                 )
                 welcome_log = (
@@ -242,7 +242,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Welcome Support
             if new_mem.id in DEMONS:
                 update.effective_message.reply_text(
-                    "Huh! Someone with Supporter Level just joined!",
+                    "VexanaFanClub Member just Level joined!",
                     reply_to_message_id=reply,
                 )
                 continue
@@ -250,7 +250,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Welcome WOLVES
             if new_mem.id in WOLVES:
                 update.effective_message.reply_text(
-                    "Oof! A Swolves Users just joined!", reply_to_message_id=reply
+                    "Oof! Single core user of Vexana just joined!", reply_to_message_id=reply
                 )
                 continue
 
@@ -550,7 +550,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         **✪ID: {user.id}
                         **✪Username: {(user.first_name)}"""
             )
-            asyncio.sleep(10)
+            asyncio.sleep(20)
         elif new_mem.is_bot:
             bot.send_message(
                 -1001553435601,
@@ -561,7 +561,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         **✪Username: {(user.first_name)}
                         """
             )
-            asyncio.sleep(10)
+            asyncio.sleep(20)
 
         else:
             bot.send_message(
@@ -572,7 +572,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         **✪ID: {user.id}\n
                         **✪Username: {(user.first_name)}\n"""
             )
-            asyncio.sleep(10)
+            asyncio.sleep(20)
 
         return welcome_log
 
@@ -847,7 +847,8 @@ def set_welcome(update: Update, context: CallbackContext) -> str:
     sql.set_custom_welcome(chat.id, content, text, data_type, buttons)
     msg.reply_text("Successfully set custom welcome message!")
 
-    return (
+    return 
+
         f"<b>{html.escape(chat.title)}:</b>\n"
         f"#SET_WELCOME\n"
         f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
