@@ -761,9 +761,10 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-   else:
-            LOGGER.info("Vexana Started Using long polling.")Started Using long polling.")
-            updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
+
+    else:
+        LOGGER.info("Vexana Started Using long polling.")
+        updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
 
     if len(argv) not in (1, 3, 4):
         telethn.disconnect()
