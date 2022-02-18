@@ -6,7 +6,7 @@ import time
 import re
 import sys
 import traceback
-import MizuharaSmexyBot.modules.sql.users_sql as sql
+import vexana.modules.sql.users_sql as sql
 
 
 from sys import argv
@@ -706,7 +706,7 @@ def main():
 
     if DEV_CHAT is not None and isinstance(DEV_CHAT, str):
         try:
-            dispatcher.bot.sendMessage(f"@{DEV_CHAT}", "uwu! I am working fine af!")
+            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "ᴠᴇxᴀɴᴀ ɴᴏᴡ ʙᴀᴄᴋ ᴛᴏ ꜱᴇʀᴠᴇʀ  (ʀᴇꜱᴛᴀʀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ)!")
         except Unauthorized:
             LOGGER.warning(
                 "Bot isnt able to send message to support_chat, go and check!"
@@ -762,7 +762,7 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN)
 
     else:
-        LOGGER.info("Mizuhara Started Using long polling.")
+        LOGGER.info("Vexana Started Using long polling.")
         updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
 
     if len(argv) not in (1, 3, 4):
