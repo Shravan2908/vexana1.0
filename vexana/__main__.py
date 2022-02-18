@@ -399,7 +399,7 @@ def mizuhara_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="mizuhara_back")]]
+                [[InlineKeyboardButton(text="Back", callback_data="aboutmanu_back")]]
             ),
         )
     elif query.data == "aboutmanu_back":
