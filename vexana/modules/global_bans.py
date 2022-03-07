@@ -189,15 +189,14 @@ def gban(update: Update, context: CallbackContext):
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
         
-    log_message = (
+    log_message =(
         f"<b>𝐁𝐥𝐚𝐜𝐤𝐥𝐢𝐬𝐭𝐢𝐧𝐠 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞𝐝</b>\n"
         f"<b>𝙏𝙧𝙖𝙘𝙚𝙙 𝙁𝙧𝙤𝙢:</b> <code>{chat_origin}</code>\n"
         f"<b>𝐄𝐧𝐟𝐨𝐫𝐜𝐞𝐫:</b> {mention_html(user.id, user.first_name)}\n"
         f"<b>𝐁𝐚𝐧𝐧𝐞𝐝 𝐔𝐬𝐞𝐫:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
         f"<b>𝗕𝗮𝗻𝗻𝗲𝗱 𝗨𝘀𝗲𝗿 ID:</b> <code>{user_chat.id}</code>\n"
         f"<b>𝐒𝐢𝐠𝐧:</b> <code>{current_time}</code>",
-        reply_markup=InlineKeyboardMarkup(buttons)
-    )
+    ),
     
     if reason:
         if chat.type == chat.SUPERGROUP and chat.username:
@@ -330,13 +329,12 @@ def ungban(update: Update, context: CallbackContext):  # sourcery no-metrics
         f"<b>Unbanned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
         f"<b>Unbanned User ID:</b> <code>{user_chat.id}</code>\n"
         f"<b>Stamp:</b> <code>{current_time}</code>",
-        parse_mode=ParseMode.MARKDOWN,
-        disable_web_page_preview=True,
-    )
+        
+        ),
 
     if EVENT_LOGS:
         try:
-            log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
+            log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML,disable_web_page_preview=True,)
         except BadRequest as excp:
             log = bot.send_message(
                 EVENT_LOGS,
