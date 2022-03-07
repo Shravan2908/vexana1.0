@@ -71,6 +71,20 @@ UNGBAN_ERRORS = {
     "User not found",
 }
 
+buttons = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="𝗨𝗽𝗱𝗮𝘁𝗲𝘀", url="https://t.me/Updates",
+                    ),
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="𝗥𝗲𝗾𝘂𝗲𝘀𝘁", url="https://t.me/vexana_Support",
+                    ),
+                ],
+            ],
+        )
 
 @support_plus
 def gban(update: Update, context: CallbackContext):
@@ -174,20 +188,7 @@ def gban(update: Update, context: CallbackContext):
         chat_origin = "<b>{} ({})</b>\n".format(html.escape(chat.title), chat.id)
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
-        buttons = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        text="𝗨𝗽𝗱𝗮𝘁𝗲𝘀", url="https://t.me/Updates",
-                    ),
-                ],
-                [
-                    InlineKeyboardButton(
-                        text="𝗥𝗲𝗾𝘂𝗲𝘀𝘁", url="https://t.me/vexana_Support",
-                    ),
-                ],
-            ],
-        ),
+        
 
     log_message = f"""
         **"𝐁𝐥𝐚𝐜𝐤𝐥𝐢𝐬𝐭𝐢𝐧𝐠 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞𝐝\n"
