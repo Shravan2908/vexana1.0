@@ -228,12 +228,6 @@ ARQ_API_URL = "https://thearq.tech"
 ARQ_API_KEY = os.environ.get("ARQ_API_KEY", "BZWJWN-UGDDBR-WVEMJF-WIQTZH-ARQ")
 arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
-telethn = TelegramClient(MemorySession(), API_ID, API_HASH)
-pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-pgram = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-
-
-updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
 pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
