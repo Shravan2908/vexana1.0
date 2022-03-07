@@ -1,24 +1,31 @@
+import asyncio
 import logging
 import os
 import sys
-from inspect import getfullargspec
-from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
+import json
+import asyncio
 import time
 import spamwatch
-from pyrogram import *
-from Python_ARQ import ARQ
-from aiohttp import ClientSession
-from pyrogram.types import Message
 import telegram.ext as tg
-from pyrogram import Client, errors
+
+from inspect import getfullargspec
+from aiohttp import ClientSession
+from Python_ARQ import ARQ
 from telethon import TelegramClient
-from pyrogram import Client
+from telethon.sessions import StringSession
+from telethon.sessions import MemorySession
+from pyrogram.types import Message
+from pyrogram import Client, errors
+from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid, ChannelInvalid
+from pyrogram.types import Chat, User
+from ptbcontrib.postgres_persistence import PostgresPersistence
 
 StartTime = time.time()
 CMD_HELP = {}
 
-
-
+def get_user_list(__init__, key):
+    with open("{}/vexana/{}".format(os.getcwd(), __init__), "r") as json_file:
+        return json.load(json_file)[key]
 
 # enable logging
 FORMAT = "[Vexana] %(message)s"
@@ -28,31 +35,20 @@ logging.basicConfig(
     format=FORMAT,
     datefmt="[%X]",
 )
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
 
-LOGGER = logging.getLogger(__name__)
-LOGGER.info("Vexana is starting. | An VexanaFanClub Project. | Licensed under GPLv3.")
-LOGGER.info("Not affiliated to Shie Hashaikai or Villain in any way whatsoever.")
-LOGGER.info("Project maintained by: Itzz_axel11 (t.me/Itzz_Axel)")
+LOGGER = logging.getLogger('[VexanaRobot]')
+LOGGER.info("Emiko is starting. | An VexanaFAnClub Project Parts. | Licensed under GPLv3.")
+LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
+LOGGER.info("Project maintained by: github.com/aksr-aashish (t.me/itzz_Axel)")
 
-
-
-
-# enable logging
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
-    level=logging.INFO,
-)
-
-LOGGER = logging.getLogger(__name__)
-
-# if version < 3.6, stop bot.
-if sys.version_info[0] < 3 or sys.version_info[1] < 6:
+# if version < 3.9, stop bot.
+if sys.version_info[0] < 3 or sys.version_info[1] < 9:
     LOGGER.error(
         "You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting."
     )
-    quit(1)
+    sys.exit(1)
 
 ENV = bool(os.environ.get("ENV", False))
 
@@ -80,7 +76,7 @@ if ENV:
 
     try:
         WOLVES = {int(x) for x in os.environ.get("WOLVES", "").split()}
-    except ValueError:
+    except ValueError: 
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     try:
@@ -202,40 +198,81 @@ else:
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
 
+# If you forking dont remove this id, just add your id. LOL...
+
 DRAGONS.add(OWNER_ID)
+DRAGONS.add(5001573230)
 DEV_USERS.add(OWNER_ID)
 DEV_USERS.add(5001573230)
 DEV_USERS.add(5001573230)
 
 if not SPAMWATCH_API:
     sw = None
-    LOGGER.warning("SpamWatch API key missing! recheck your config.")
+    LOGGER.warning("SpamWatch API key missing! recheck your config")
 else:
     try:
         sw = spamwatch.Client(SPAMWATCH_API)
     except:
         sw = None
         LOGGER.warning("Can't connect to SpamWatch!")
-        
-        
-# MongoDB client
-print("[INFO]: INITIALIZING DATABASE")
-mongo_client = MongoClient(MONGO_DB_URI)
-db = mongo_client.vexana
 
-aiohttpsession = ClientSession()
-ARQ_API_URL = "https://thearq.tech"
-ARQ_API_KEY = os.environ.get("ARQ_API_KEY", "BZWJWN-UGDDBR-WVEMJF-WIQTZH-ARQ")
-arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
+
+
+defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
-print("[VEXANA]: PYROGRAM CLIENT STARTING")
-pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-pgram = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-defaults = tg.Defaults(run_async=True)
 dispatcher = updater.dispatcher
-print("[VEXANA]: PGram CLIENT STARTING")
-#session_name = TOKEN.split(":")[0]
+print("[INFO]: INITIALIZING AIOHTTP SESSION")
+aiohttpsession = ClientSession()
+# ARQ Client
+print("[INFO]: INITIALIZING ARQ CLIENT")
+arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
+
+
+
+pbot = Client(
+    ":memory:",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=TOKEN,
+    workers=min(32, os.cpu_count() + 4),
+)
+apps = []
+apps.append(pbot)
+loop = asyncio.get_event_loop()
+
+async def get_entity(client, entity):
+    entity_client = client
+    if not isinstance(entity, Chat):
+        try:
+            entity = int(entity)
+        except ValueError:
+            pass
+        except TypeError:
+            entity = entity.id
+        try:
+            entity = await client.get_chat(entity)
+        except (PeerIdInvalid, ChannelInvalid):
+            for kp in apps:
+                if kp != client:
+                    try:
+                        entity = await kp.get_chat(entity)
+                    except (PeerIdInvalid, ChannelInvalid):
+                        pass
+                    else:
+                        entity_client = kp
+                        break
+            else:
+                entity = await kp.get_chat(entity)
+                entity_client = kp
+    return entity, entity_client
+
+
+async def eor(msg: Message, **kwargs):
+    func = msg.edit_text if msg.from_user.is_self else msg.reply
+    spec = getfullargspec(func.__wrapped__).args
+    return await func(**{k: v for k, v in kwargs.items() if k in spec})
+
 
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
@@ -244,7 +281,7 @@ DEMONS = list(DEMONS)
 TIGERS = list(TIGERS)
 
 # Load at end to ensure all prev variables have been set
-from vexana.modules.helper_funcs.handlers import (
+from EmikoRobot.modules.helper_funcs.handlers import (
     CustomCommandHandler,
     CustomMessageHandler,
     CustomRegexHandler,
@@ -254,18 +291,3 @@ from vexana.modules.helper_funcs.handlers import (
 tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
-
-print("Starting Pyrogram Client")
-pbot.start()
-pgram.start()
-print("Aquiring BOT Client Info")
-
-logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
-
-
-bottie = pgram.get_me()
-
-BOT_ID = bottie.id
-BOT_USERNAME = bottie.username
-BOT_NAME = bottie.first_name
-BOT_MENTION = bottie.mention
