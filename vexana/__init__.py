@@ -231,10 +231,10 @@ arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
-pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-app = Client("vexan", bot_token=TOKEN, api_id=API_ID, api_hash=API_HASH)
-dispatcher = updater.dispatcher
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
+pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+dispatcher = updater.dispatcher
+print("[VEXANA]: PGram CLIENT STARTING")
 session_name = TOKEN.split(":")[0]
 pgram = Client(
     session_name,
@@ -260,7 +260,7 @@ tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
 
-print("Starting Pyrogram Client")
+print("Pyrogram Client passing")
 pbot.start()
 pgram.start()
 class Client:
