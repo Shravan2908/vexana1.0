@@ -264,7 +264,7 @@ print("Pyrogram Client passing")
 pbot.start()
 pgram.start()
 
-logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
+#logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
 print("Aquiring BOT Client Info")
 
 bottie = pgram.get_me()
