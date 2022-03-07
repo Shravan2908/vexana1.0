@@ -84,7 +84,7 @@ buttons = InlineKeyboardMarkup(
                     ),
                 ],
             ],
-        )
+        ),
 
 @support_plus
 def gban(update: Update, context: CallbackContext):
