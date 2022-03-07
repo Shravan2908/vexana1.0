@@ -1,31 +1,24 @@
-import asyncio
 import logging
 import os
 import sys
-import json
-import asyncio
+from inspect import getfullargspec
+from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 import time
 import spamwatch
-import telegram.ext as tg
-
-from inspect import getfullargspec
-from aiohttp import ClientSession
+from pyrogram import *
 from Python_ARQ import ARQ
-from telethon import TelegramClient
-from telethon.sessions import StringSession
-from telethon.sessions import MemorySession
+from aiohttp import ClientSession
 from pyrogram.types import Message
+import telegram.ext as tg
 from pyrogram import Client, errors
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid, ChannelInvalid
-from pyrogram.types import Chat, User
-
+from telethon import TelegramClient
+from pyrogram import Client
 
 StartTime = time.time()
 CMD_HELP = {}
 
-def get_user_list(__init__, key):
-    with open("{}/vexana/{}".format(os.getcwd(), __init__), "r") as json_file:
-        return json.load(json_file)[key]
+
+
 
 # enable logging
 FORMAT = "[Vexana] %(message)s"
@@ -35,19 +28,31 @@ logging.basicConfig(
     format=FORMAT,
     datefmt="[%X]",
 )
-logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-LOGGER = logging.getLogger('[VexanaRobot]')
-LOGGER.info("Vexana is starting. | An VexanaFAnClub Project Parts. | Licensed under GPLv3.")
-LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
-LOGGER.info("Project maintained by: github.com/aksr-aashish (t.me/itzz_Axel)")
+LOGGER = logging.getLogger(__name__)
+LOGGER.info("Vexana is starting. | An VexanaFanClub Project. | Licensed under GPLv3.")
+LOGGER.info("Not affiliated to Shie Hashaikai or Villain in any way whatsoever.")
+LOGGER.info("Project maintained by: Itzz_axel11 (t.me/Itzz_Axel)")
 
-# if version < 3.9, stop bot.
-if sys.version_info[0] < 3 or sys.version_info[1] < 9:
+
+
+
+# enable logging
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+    level=logging.INFO,
+)
+
+LOGGER = logging.getLogger(__name__)
+
+# if version < 3.6, stop bot.
+if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error(
         "You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting."
     )
-    sys.exit(1)
+    quit(1)
 
 ENV = bool(os.environ.get("ENV", False))
 
@@ -75,7 +80,7 @@ if ENV:
 
     try:
         WOLVES = {int(x) for x in os.environ.get("WOLVES", "").split()}
-    except ValueError: 
+    except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     try:
@@ -197,81 +202,48 @@ else:
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
 
-# If you forking dont remove this id, just add your id. LOL...
-
 DRAGONS.add(OWNER_ID)
-DRAGONS.add(5001573230)
 DEV_USERS.add(OWNER_ID)
 DEV_USERS.add(5001573230)
 DEV_USERS.add(5001573230)
 
 if not SPAMWATCH_API:
     sw = None
-    LOGGER.warning("SpamWatch API key missing! recheck your config")
+    LOGGER.warning("SpamWatch API key missing! recheck your config.")
 else:
     try:
         sw = spamwatch.Client(SPAMWATCH_API)
     except:
         sw = None
         LOGGER.warning("Can't connect to SpamWatch!")
+        
+        
+# MongoDB client
+print("[INFO]: INITIALIZING DATABASE")
+mongo_client = MongoClient(MONGO_DB_URI)
+db = mongo_client.vexana
 
-
-
-defaults = tg.Defaults(run_async=True)
+aiohttpsession = ClientSession()
+ARQ_API_URL = "https://thearq.tech"
+ARQ_API_KEY = os.environ.get("ARQ_API_KEY", "BZWJWN-UGDDBR-WVEMJF-WIQTZH-ARQ")
+arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
+print("[VEXANA]: PYROGRAM CLIENT STARTING")
+pbot = Client("VexanaRobot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+pgram = Client("VexanaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+defaults = tg.Defaults(run_async=True)
 dispatcher = updater.dispatcher
-print("[INFO]: INITIALIZING AIOHTTP SESSION")
-aiohttpsession = ClientSession()
-# ARQ Client
-print("[INFO]: INITIALIZING ARQ CLIENT")
-arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
+print("[VEXANA]: PGram CLIENT STARTING")
+#session_name = TOKEN.split(":")[0]
 
 
+print("Starting Pyrogram Client")
+pbot.start()
+pgram.start()
+print("Aquiring BOT Client Info")
 
-pbot = Client(
-    ":memory:",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=TOKEN,
-    workers=min(32, os.cpu_count() + 4),
-)
-apps = []
-apps.append(pbot)
-loop = asyncio.get_event_loop()
-
-async def get_entity(client, entity):
-    entity_client = client
-    if not isinstance(entity, Chat):
-        try:
-            entity = int(entity)
-        except ValueError:
-            pass
-        except TypeError:
-            entity = entity.id
-        try:
-            entity = await client.get_chat(entity)
-        except (PeerIdInvalid, ChannelInvalid):
-            for kp in apps:
-                if kp != client:
-                    try:
-                        entity = await kp.get_chat(entity)
-                    except (PeerIdInvalid, ChannelInvalid):
-                        pass
-                    else:
-                        entity_client = kp
-                        break
-            else:
-                entity = await kp.get_chat(entity)
-                entity_client = kp
-    return entity, entity_client
-
-
-async def eor(msg: Message, **kwargs):
-    func = msg.edit_text if msg.from_user.is_self else msg.reply
-    spec = getfullargspec(func.__wrapped__).args
-    return await func(**{k: v for k, v in kwargs.items() if k in spec})
-
+logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
 
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
