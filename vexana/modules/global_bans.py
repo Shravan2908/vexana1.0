@@ -189,26 +189,25 @@ def gban(update: Update, context: CallbackContext):
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
         
-
-    log_message = f"""
-        **"𝐁𝐥𝐚𝐜𝐤𝐥𝐢𝐬𝐭𝐢𝐧𝐠 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞𝐝\n"
-        **"<b>𝙏𝙧𝙖𝙘𝙚𝙙 𝙁𝙧𝙤𝙢:</b> <code>{chat_origin}</code>\n"
-        **"<b>𝐄𝐧𝐟𝐨𝐫𝐜𝐞𝐫:</b> {mention_html(user.id, user.first_name)}\n"
-        **"<b>𝐁𝐚𝐧𝐧𝐞𝐝 𝐔𝐬𝐞𝐫:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-        **"<b>𝗕𝗮𝗻𝗻𝗲𝗱 𝗨𝘀𝗲𝗿 ID:</b> <code>{user_chat.id}</code>\n"
-        **"<b>𝐒𝐢𝐠𝐧:</b> <code>{current_time}</code>"
-        )""",
+    log_message = (
+        f"<b>𝐁𝐥𝐚𝐜𝐤𝐥𝐢𝐬𝐭𝐢𝐧𝐠 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞𝐝</b>\n"
+        f"<b>𝙏𝙧𝙖𝙘𝙚𝙙 𝙁𝙧𝙤𝙢:</b> <code>{chat_origin}</code>\n"
+        f"<b>𝐄𝐧𝐟𝐨𝐫𝐜𝐞𝐫:</b> {mention_html(user.id, user.first_name)}\n"
+        f"<b>𝐁𝐚𝐧𝐧𝐞𝐝 𝐔𝐬𝐞𝐫:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
+        f"<b>𝗕𝗮𝗻𝗻𝗲𝗱 𝗨𝘀𝗲𝗿 ID:</b> <code>{user_chat.id}</code>\n"
+        f"<b>𝐒𝐢𝐠𝐧:</b> <code>{current_time}</code>",
+        reply_markup=InlineKeyboardMarkup(buttons)
+    )
     
-
     if reason:
         if chat.type == chat.SUPERGROUP and chat.username:
             log_message += f'\n<b>Reason:</b> <a href="https://telegram.me/{chat.username}/{message.message_id}">{reason}</a> '
         else:
-            log_message += f"\n<b>Reason:</b> <code>{reason}</code>"
+            log_message += f"\n<b>Reason:</b> <code>{reason}</code>,"
 
     if EVENT_LOGS:
         try:
-            log = bot.send_message(EVENT_LOGS, log_message, reply_markup=InlineKeyboardMarkup(buttons), parse_mode=ParseMode.HTML)
+            log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             log = bot.send_message(
                 EVENT_LOGS,
@@ -274,7 +273,7 @@ def gban(update: Update, context: CallbackContext):
 
     if gban_time > 60:
         gban_time = round((gban_time / 60), 2)
-    message.reply_text("𝗘𝗻𝗳𝗼𝗿𝗰𝗲𝗱 𝗮 𝗿𝗲𝗺𝗼𝘁𝗲 𝘀𝗰𝗮𝗻.",reply_markup=InlineKeyboardMarkup(buttons), parse_mode=ParseMode.HTML)
+    message.reply_text("𝗘𝗻𝗳𝗼𝗿𝗰𝗲𝗱 𝗮 𝗿𝗲𝗺𝗼𝘁𝗲 𝘀𝗰𝗮𝗻.", parse_mode=ParseMode.HTML)
     try:
         bot.send_message(
             user_id,
@@ -325,12 +324,14 @@ def ungban(update: Update, context: CallbackContext):  # sourcery no-metrics
         chat_origin = f"<b>{chat.id}</b>\n"
 
     log_message = (
-        f"Unblacklisting Complted #logs\n"
-        f"<b>Enforced From:</b> <code>{chat_origin}</code>\n"
-        f"<b>Enforcer:</b> {mention_html(user.id, user.first_name)}\n"
+        f"𝗨𝗻𝗯𝗹𝗮𝗰𝗸𝗹𝗶𝘀𝘁𝗶𝗻𝗴 𝗖𝗼𝗺𝗽𝗹𝘁𝗲𝗱 #𝗹𝗼𝗴𝘀\n"
+        f"<b>𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗙𝗿𝗼𝗺:</b> <code>{chat_origin}</code>\n"
+        f"<b>Enforcer:</b>  [Vexana AI](https://gban-api.up.railway.app/user/:userid)\n"
         f"<b>Unbanned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
         f"<b>Unbanned User ID:</b> <code>{user_chat.id}</code>\n"
-        f"<b>Stamp:</b> <code>{current_time}</code>"
+        f"<b>Stamp:</b> <code>{current_time}</code>",
+        parse_mode=ParseMode.MARKDOWN,
+        disable_web_page_preview=True,
     )
 
     if EVENT_LOGS:
