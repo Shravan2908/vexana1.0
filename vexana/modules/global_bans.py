@@ -4,6 +4,7 @@ from datetime import datetime
 from io import BytesIO
 
 from telegram import ParseMode, Update
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram.ext import (
     CallbackContext,
@@ -174,14 +175,29 @@ def gban(update: Update, context: CallbackContext):
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
 
-    log_message = (
-        f"Blacklist Successfully Completed\n"
-        f"<b>Traced From:</b> <code>{chat_origin}</code>\n"
-        f"<b>Enforcer:</b> {mention_html(user.id, user.first_name)}\n"
-        f"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-        f"<b>Banned User ID:</b> <code>{user_chat.id}</code>\n"
-        f"<b>Stamp:</b> <code>{current_time}</code>"
-    )
+    log_message = f"""
+        **"Blacklist Successfully Completed\n"
+        **"<b>Traced From:</b> <code>{chat_origin}</code>\n"
+        **"<b>Enforcer:</b> {mention_html(user.id, user.first_name)}\n"
+        **"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
+        **"<b>Banned User ID:</b> <code>{user_chat.id}</code>\n"
+        **"<b>Stamp:</b> <code>{current_time}</code>"
+         buttons = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Updates", url="https://t.me/Updates",
+                    ),
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="Request", url="https://t.me/vexana_Support",
+                    ),
+                ],
+            ],
+        ),
+    )"""
+    
 
     if reason:
         if chat.type == chat.SUPERGROUP and chat.username:
