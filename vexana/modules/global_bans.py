@@ -174,15 +174,7 @@ def gban(update: Update, context: CallbackContext):
         chat_origin = "<b>{} ({})</b>\n".format(html.escape(chat.title), chat.id)
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
-
-    log_message = f"""
-        **"Blacklist Successfully Completed\n"
-        **"<b>Traced From:</b> <code>{chat_origin}</code>\n"
-        **"<b>Enforcer:</b> {mention_html(user.id, user.first_name)}\n"
-        **"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-        **"<b>Banned User ID:</b> <code>{user_chat.id}</code>\n"
-        **"<b>Stamp:</b> <code>{current_time}</code>"
-         buttons = InlineKeyboardMarkup(
+        buttons = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
@@ -196,22 +188,31 @@ def gban(update: Update, context: CallbackContext):
                 ],
             ],
         ),
-    )"""
+
+    log_message = f"""
+        **"Blacklist Successfully Completed\n"
+        **"<b>Traced From:</b> <code>{chat_origin}</code>\n"
+        **"<b>Enforcer:</b> {mention_html(user.id, user.first_name)}\n"
+        **"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
+        **"<b>Banned User ID:</b> <code>{user_chat.id}</code>\n"
+        **"<b>Stamp:</b> <code>{current_time}</code>"
+        )""",
     
 
     if reason:
         if chat.type == chat.SUPERGROUP and chat.username:
-            log_message += f'\n<b>Reason:</b> <a href="https://telegram.me/{chat.username}/{message.message_id}">{reason}</a>'
+            log_message += f'\n<b>Reason:</b> <a href="https://telegram.me/{chat.username}/{message.message_id}">{reason}</a> '
         else:
             log_message += f"\n<b>Reason:</b> <code>{reason}</code>"
 
     if EVENT_LOGS:
         try:
-            log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
+            log = bot.send_message(EVENT_LOGS, log_message, buttons, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             log = bot.send_message(
                 EVENT_LOGS,
-                log_message
+                log_message,
+                buttons
                 + "\n\nFormatting has been disabled due to an unexpected error.",
             )
 
@@ -239,7 +240,7 @@ def gban(update: Update, context: CallbackContext):
                 message.reply_text(f"Could not blacklist due to: {excp.message}")
                 if EVENT_LOGS:
                     bot.send_message(
-                        EVENT_LOGS,
+                        EVENT_LOGS,   
                         f"Could not blacklist due to {excp.message}",
                         parse_mode=ParseMode.HTML,
                     )
@@ -272,7 +273,7 @@ def gban(update: Update, context: CallbackContext):
 
     if gban_time > 60:
         gban_time = round((gban_time / 60), 2)
-    message.reply_text("Enforced a remote scan.", parse_mode=ParseMode.HTML)
+    message.reply_text("Enforced a remote scan.",buttons, parse_mode=ParseMode.HTML)
     try:
         bot.send_message(
             user_id,
