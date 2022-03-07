@@ -210,7 +210,7 @@ def gban(update: Update, context: CallbackContext):
         except BadRequest as excp:
             log = bot.send_message(
                 EVENT_LOGS,
-                log_message,
+                log_message
                 + "\n\nFormatting has been disabled due to an unexpected error.",
             )
 
