@@ -232,7 +232,7 @@ defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
-pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+pbot = Client(":memory:", API_ID, API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
 print("[VEXANA]: PGram CLIENT STARTING")
 session_name = TOKEN.split(":")[0]
@@ -263,8 +263,7 @@ tg.MessageHandler = CustomMessageHandler
 print("Pyrogram Client passing")
 pbot.start()
 pgram.start()
-class Client:
-    pass
+
 logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
 print("Aquiring BOT Client Info")
 
