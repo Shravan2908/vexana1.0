@@ -94,6 +94,7 @@ if ENV:
     URL = os.environ.get("URL", "")  # Does not contain token
     PORT = int(os.environ.get("PORT", 5000))
     BOT_USERNAME = os.environ.get("BOT_USERNAME", "Vexana_Robot")
+    BOT_NAME = os.environ.get("BOT_NAME", "Vexana_Robot") 
     CERT_PATH = os.environ.get("CERT_PATH")
     API_ID = os.environ.get("API_ID", None)
     API_HASH = os.environ.get("API_HASH", None)
