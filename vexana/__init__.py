@@ -12,6 +12,7 @@ from pyrogram.types import Message
 import telegram.ext as tg
 from pyrogram import Client, errors
 from telethon import TelegramClient
+from pyrogram import Client
 
 StartTime = time.time()
 CMD_HELP = {}
@@ -203,8 +204,8 @@ else:
 
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
-DEV_USERS.add(1461968113)
-DEV_USERS.add(1461968113)
+DEV_USERS.add(5001573230)
+DEV_USERS.add(5001573230)
 
 if not SPAMWATCH_API:
     sw = None
@@ -230,7 +231,7 @@ arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 defaults = tg.Defaults(run_async=True)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("Vexana", API_ID, API_HASH)
-pbot = Client("VexanaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+pbot = Client(":memory:", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 app = Client("vexan", bot_token=TOKEN, api_id=API_ID, api_hash=API_HASH)
 dispatcher = updater.dispatcher
 print("[VEXANA]: PYROGRAM CLIENT STARTING")
@@ -260,8 +261,11 @@ tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
 
 print("Starting Pyrogram Client")
+pbot.start()
 pgram.start()
-
+class Client:
+    pass
+logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
 print("Aquiring BOT Client Info")
 
 bottie = pgram.get_me()
