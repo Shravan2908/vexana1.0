@@ -164,7 +164,7 @@ def gban(update: Update, context: CallbackContext):
 
         return
 
-    message.reply_text("Orgeneting a remote Cmds")
+    message.reply_text("𝙎𝙘𝙖𝙣𝙞𝙣𝙜 𝙐𝙨𝙚𝙧 𝙞𝙣 𝙈𝙮 𝘿𝙖𝙩𝙖𝘽𝙖𝙨𝙚")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
@@ -178,24 +178,24 @@ def gban(update: Update, context: CallbackContext):
             [
                 [
                     InlineKeyboardButton(
-                        text="Updates", url="https://t.me/Updates",
+                        text="𝗨𝗽𝗱𝗮𝘁𝗲𝘀", url="https://t.me/Updates",
                     ),
                 ],
                 [
                     InlineKeyboardButton(
-                        text="Request", url="https://t.me/vexana_Support",
+                        text="𝗥𝗲𝗾𝘂𝗲𝘀𝘁", url="https://t.me/vexana_Support",
                     ),
                 ],
             ],
         ),
 
     log_message = f"""
-        **"Blacklist Successfully Completed\n"
-        **"<b>Traced From:</b> <code>{chat_origin}</code>\n"
-        **"<b>Enforcer:</b> {mention_html(user.id, user.first_name)}\n"
-        **"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-        **"<b>Banned User ID:</b> <code>{user_chat.id}</code>\n"
-        **"<b>Stamp:</b> <code>{current_time}</code>"
+        **"𝐁𝐥𝐚𝐜𝐤𝐥𝐢𝐬𝐭𝐢𝐧𝐠 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞𝐝\n"
+        **"<b>𝙏𝙧𝙖𝙘𝙚𝙙 𝙁𝙧𝙤𝙢:</b> <code>{chat_origin}</code>\n"
+        **"<b>𝐄𝐧𝐟𝐨𝐫𝐜𝐞𝐫:</b> {mention_html(user.id, user.first_name)}\n"
+        **"<b>𝐁𝐚𝐧𝐧𝐞𝐝 𝐔𝐬𝐞𝐫:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
+        **"<b>𝗕𝗮𝗻𝗻𝗲𝗱 𝗨𝘀𝗲𝗿 ID:</b> <code>{user_chat.id}</code>\n"
+        **"<b>𝐒𝐢𝐠𝐧:</b> <code>{current_time}</code>"
         )""",
     
 
@@ -207,12 +207,12 @@ def gban(update: Update, context: CallbackContext):
 
     if EVENT_LOGS:
         try:
-            log = bot.send_message(EVENT_LOGS, log_message, buttons, parse_mode=ParseMode.HTML)
+            log = bot.send_message(EVENT_LOGS, log_message, reply_markup=InlineKeyboardMarkup(buttons), parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             log = bot.send_message(
                 EVENT_LOGS,
                 log_message,
-                buttons
+                reply_markup=InlineKeyboardMarkup(buttons)
                 + "\n\nFormatting has been disabled due to an unexpected error.",
             )
 
@@ -264,7 +264,7 @@ def gban(update: Update, context: CallbackContext):
         send_to_list(
             bot,
             DRAGONS + DEMONS,
-            f"Enforced a remote scan! (User banned in <code>{gbanned_chats}</code> chats)",
+            f"𝗘𝗻𝗳𝗼𝗿𝗰𝗲𝗱 𝗮 𝗿𝗲𝗺𝗼𝘁𝗲 𝘀𝗰𝗮𝗻! (𝗨𝘀𝗲𝗿 𝗯𝗮𝗻𝗻𝗲𝗱 𝗶𝗻 <code>{gbanned_chats}</code> chats)",
             html=True,
         )
 
@@ -273,7 +273,7 @@ def gban(update: Update, context: CallbackContext):
 
     if gban_time > 60:
         gban_time = round((gban_time / 60), 2)
-    message.reply_text("Enforced a remote scan.",buttons, parse_mode=ParseMode.HTML)
+    message.reply_text("𝗘𝗻𝗳𝗼𝗿𝗰𝗲𝗱 𝗮 𝗿𝗲𝗺𝗼𝘁𝗲 𝘀𝗰𝗮𝗻.",reply_markup=InlineKeyboardMarkup(buttons), parse_mode=ParseMode.HTML)
     try:
         bot.send_message(
             user_id,
