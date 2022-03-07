@@ -211,7 +211,6 @@ def gban(update: Update, context: CallbackContext):
             log = bot.send_message(
                 EVENT_LOGS,
                 log_message,
-                reply_markup=InlineKeyboardMarkup(buttons)
                 + "\n\nFormatting has been disabled due to an unexpected error.",
             )
 
