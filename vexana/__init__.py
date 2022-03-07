@@ -257,7 +257,7 @@ tg.MessageHandler = CustomMessageHandler
 
 print("Starting Pyrogram Client")
 pbot.start()
-
+pgram.start()
 print("Aquiring BOT Client Info")
 
 logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
