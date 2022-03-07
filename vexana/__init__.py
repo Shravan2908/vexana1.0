@@ -18,7 +18,7 @@ from pyrogram.types import Message
 from pyrogram import Client, errors
 from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid, ChannelInvalid
 from pyrogram.types import Chat, User
-from ptbcontrib.postgres_persistence import PostgresPersistence
+
 
 StartTime = time.time()
 CMD_HELP = {}
@@ -36,10 +36,9 @@ logging.basicConfig(
     datefmt="[%X]",
 )
 logging.getLogger("pyrogram").setLevel(logging.INFO)
-logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger('[VexanaRobot]')
-LOGGER.info("Emiko is starting. | An VexanaFAnClub Project Parts. | Licensed under GPLv3.")
+LOGGER.info("Vexana is starting. | An VexanaFAnClub Project Parts. | Licensed under GPLv3.")
 LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
 LOGGER.info("Project maintained by: github.com/aksr-aashish (t.me/itzz_Axel)")
 
