@@ -164,7 +164,9 @@ def gban(update, context):
         owner_id = OWNER_ID
         if not reason:
             noreason = "No Reason Given"
-            owner_id, "<b>New GBAN Request\nUser</b>: {}\nReason: <code>{}</code> \nRequest By Enforcer: {}".format(mention_html(user_id, user_chat.first_name), noreason, mention_html(banner.id, banner.first_name)), parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Accept✅", callback_data="gbanbtn".format(user_id, noreason)), InlineKeyboardButton(text="Decline❌", callback_data="gbancancel")]]))
+            bot.send_message(
+
+            GBAN_LOGS,"<b>New GBAN Request\nUser</b>: {}\nReason: <code>{}</code> \nRequest By Enforcer: {}".format(mention_html(user_id, user_chat.first_name), noreason, mention_html(banner.id, banner.first_name)), parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Accept✅", callback_data="gbanbtn".format(user_id, noreason)), InlineKeyboardButton(text="Decline❌", callback_data="gbancancel")]]))
             
         else:
             bot.send_message(
