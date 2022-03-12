@@ -225,26 +225,21 @@ print("[INFO]: INITIALIZING DATABASE")
 mongo_client = MongoClient(MONGO_DB_URI)
 db = mongo_client.vexana
 
-aiohttpsession = ClientSession()
-ARQ_API_URL = "https://thearq.tech"
-ARQ_API_KEY = os.environ.get("ARQ_API_KEY", "BZWJWN-UGDDBR-WVEMJF-WIQTZH-ARQ")
-arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
-telethn = TelegramClient("Vexana", API_ID, API_HASH)
-print("[VEXANA]: PYROGRAM CLIENT STARTING")
-pbot = Client("VexanaRobot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-pgram = Client("VexanaBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
-defaults = tg.Defaults(run_async=True)
+session_name = TOKEN.split(":")[0]
+pgram = Client(
+    session_name,
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=TOKEN,
+)
+telethn  = TelegramClient("Vexana", API_ID, API_HASH)
+aiohttpsession = ClientSession()
+# ARQ Client
+print("[INFO]: INITIALIZING ARQ CLIENT")
+arq = ARQ("https://thearq.tech", "YIECCC-NAJARO-OLLREW-SJSRIP-ARQ", aiohttpsession)
+pbot = Client("robot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
-print("[VEXANA]: PGram CLIENT STARTING")
-#session_name = TOKEN.split(":")[0]
-
-
-print("Starting Pyrogram Client")
-pgram.start()
-print("Aquiring BOT Client Info")
-
-logging.getLogger("pyrogram").setLevel(level=logging.ERROR)
 
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
@@ -262,4 +257,4 @@ from vexana.modules.helper_funcs.handlers import (
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
-tg.MessageHandler = CustomMessageHandler
+tg.MessageHandler = 
