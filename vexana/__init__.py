@@ -122,7 +122,7 @@ if ENV:
     SPAMWATCH_SUPPORT_CHAT = os.environ.get("SPAMWATCH_SUPPORT_CHAT", None)
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     ARQ_API_KEY = os.environ.get('ARQ_API_KEY', None)
-
+    GBAN_LOGS = -1001744920557
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
 
     try:
