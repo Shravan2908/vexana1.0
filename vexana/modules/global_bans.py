@@ -7,7 +7,7 @@ from datetime import datetime
 from io import BytesIO
 from typing import List, Optional
 
-import YoneRobot.modules.sql.global_bans_sql as sql
+import vexana.modules.sql.global_bans_sql as sql
 from vexana import (DEV_USERS, GBAN_LOGS, OWNER_ID, STRICT_GBAN, dispatcher)
 from vexana import DRAGONS as SUDO_USERS
 from vexana import DEMONS as SUPPORT_USERS
