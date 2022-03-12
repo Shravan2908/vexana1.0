@@ -91,8 +91,8 @@ def get_readable_time(seconds: int) -> str:
 PM_START_TEXT = """
 ʜɪ  ᴍʏ ɴᴀᴍᴇ ɪꜱ Vexana [🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)!
    ɪ ᴀᴍ ᴀ  ᴘᴏᴡᴇʀꜰᴜʟʟ  ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ, ᴡɪᴛʜ ꜱᴏᴍᴇ ꜰᴜɴ ᴇxᴛʀᴀꜱ ;)
-   💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ᴜᴘᴅᴀᴛᴇꜱ) 💙.
-   💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](ᴛ.ᴍᴇ/ᴠᴇxᴀɴᴀ_ꜱᴜᴘᴘᴏʀᴛ)💙.
+   💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](https//t.me/vexana_Updates) 💙.
+   💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](https//t.me/vexana_support)💙.
 ✗ Type /help To Check the available Cmds.. ✗
 """
 
