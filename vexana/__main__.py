@@ -7,39 +7,35 @@ import re
 import sys
 import traceback
 import vexana.modules.sql.users_sql as sql
-
-
 from sys import argv
 from typing import Optional
-from vexana import (
+from telegram import __version__ as peler
+from platform import python_version as memek
+from EmikoRobot import (
     ALLOW_EXCL,
     CERT_PATH,
     DONATION_LINK,
+    BOT_USERNAME as bu,
     LOGGER,
     OWNER_ID,
     PORT,
+    SUPPORT_CHAT,
     TOKEN,
     URL,
     WEBHOOK,
     SUPPORT_CHAT,
-    BOT_USERNAME,
-    BOT_NAME,
-    EVENT_LOGS,
     dispatcher,
+    StartTime,
     telethn,
+    pbot,
     updater,
-    pgram,
 )
-StartTime = time.time()
+
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from vexana.events import register
 from vexana.modules import ALL_MODULES
 from vexana.modules.helper_funcs.chat_status import is_user_admin
-from vexana.modules.helper_funcs.alternate import typing_action
-from vexana.modules.helper_funcs.readable_time  import get_readable_time
 from vexana.modules.helper_funcs.misc import paginate_modules
-from vexana.modules.disable import DisableAbleCommandHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -56,11 +52,8 @@ from telegram.ext import (
     Filters,
     MessageHandler,
 )
-
 from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
-from pyrogram import Client, idle
-from telethon import Button
 
 
 def get_readable_time(seconds: int) -> str:
@@ -93,6 +86,12 @@ PM_START_TEXT = """
    ɪ ᴀᴍ ᴀ  ᴘᴏᴡᴇʀꜰᴜʟʟ  ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ, ᴡɪᴛʜ ꜱᴏᴍᴇ ꜰᴜɴ ᴇxᴛʀᴀꜱ ;)
    💍✗ 💍[ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ](https//t.me/vexana_Updates) 💙.
    💍✗ 💍[ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ](https//t.me/vexana_support)💙.
+   
+   ────────────────────────
+× *Uptime:* `{}`
+× `{}` *users, across* `{}` *chats.*
+────────────────────────
+
 ✗ Type /help To Check the available Cmds.. ✗
 """
 
@@ -112,18 +111,13 @@ buttons = [
     ],
 ]
 
+
 HELP_STRINGS = "\x1f*Main Commands :* [🤖](https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg)\x1f\x1f \n• /help <module name>: PM's you info about that module.\x1f\n • /hack: To hack any telegram account.\x1f\n • /donate: information on how to donate!\x1f \n• /settings:\x1f   • in PM: will send you your settings for all supported modules.\x1f\n• in a group: will redirect you to pm, with all that chat's settings.\x1f".format(
     dispatcher.bot.first_name,
     ""
     if not ALLOW_EXCL
     else "\nAll commands can either be used with / or !.\n",
 )
-
-
-VEXANA_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
-HELP_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
-START_IMG = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
-MIZUHARA_PHOTO = "https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg"
 
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
@@ -139,7 +133,6 @@ DATA_IMPORT = []
 DATA_EXPORT = []
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
-
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("vexana.modules." + module_name)
@@ -212,13 +205,7 @@ def start(update: Update, context: CallbackContext):
                     update.effective_chat.id,
                     HELPABLE[mod].__help__,
                     InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton(
-                                    text="🔙 ʙᴀᴄᴋ", callback_data="help_back"
-                                )
-                            ]
-                        ]
+                        [[InlineKeyboardButton(text="Go Back", callback_data="help_back")]]
                     ),
                 )
 
@@ -235,16 +222,17 @@ def start(update: Update, context: CallbackContext):
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
 
         else:
-            update.effective_user.first_name
-            update.effective_message.reply_photo(
-                VEXANA_IMG,PM_START_TEXT,(
+            first_name = update.effective_user.first_name
+            update.effective_message.reply_text(
+                PM_START_TEXT.format(
+                    escape_markdown(first_name),
                     escape_markdown(uptime),
                     sql.num_users(),
-                    sql.num_chats(),
-                ),
+                    sql.num_chats()),                        
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
+                disable_web_page_preview=False,
             )
     else:
         update.effective_message.reply_photo(
@@ -253,7 +241,6 @@ def start(update: Update, context: CallbackContext):
             ),
             parse_mode=ParseMode.HTML,
         )
-
 
 
 def error_handler(update, context):
@@ -337,7 +324,7 @@ def help_button(update, context):
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="Back", callback_data="help_back")]]
+                    [[InlineKeyboardButton(text="Go Back", callback_data="help_back")]]
                 ),
             )
 
@@ -378,60 +365,158 @@ def help_button(update, context):
         pass
 
 
-def mizuhara_about_callback(update, context):
+def emiko_about_callback(update, context):
     query = update.callback_query
-    if query.data == "mizuhara_":
+    if query.data == "emiko_":
         query.message.edit_text(
-            text=""" Hey myself iz Vexana*, a powerful Anime Based  group management bot built to help you manage your group easily.
-                 \n➥ I can restrict users.
-                 \n➥ I can greet users with customizable welcome messages and even set a group's rules.
-                 \n➥ I have an advanced anti-flood system.
-                 \n➥ I can warn users until they reach max warns, with each predefined actions such as ban, mute, kick, etc.
-                 \n➥ I have a note keeping system, blacklists, and even predetermined replies on certain keywords.
-                 \n➥ I check for admins' permissions before executing any command and more stuffs
-                 \n\n_Vexana's licensed under the GNU General Public License v3.0_
-                 \n➥ My Network  @Skytech_Support
-                 \n➥ Support Group @Vexana_Support
-                 \n➥ Special Thanks To @vexana_Devs.
-                 \n➥ Here is the [Fanclub](https://t.me/feelingZones) Where I am From.
-                 \n➥ If you have any question about Mizuhara, let us know at @Chizuru_Support .""",
+            text="๏ I'm *Vexana*, a powerful group management bot built to help you manage your group easily."
+            "\n• I can restrict users."
+            "\n• I can greet users with customizable welcome messages and even set a group's rules."
+            "\n• I have an advanced anti-flood system."
+            "\n• I can warn users until they reach max warns, with each predefined actions such as ban, mute, kick, etc."
+            "\n• I have a note keeping system, blacklists, and even predetermined replies on certain keywords."
+            "\n• I check for admins' permissions before executing any command and more stuffs"
+            "\n\n_Emiko's licensed under the GNU General Public License v3.0_"
+            "\n\n Click on button bellow to get basic help for VexanaRobot.",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="mizuhara_back")]]
+                [
+                 [
+                    InlineKeyboardButton(text="Setting", callback_data="emiko_admin"),
+                    InlineKeyboardButton(text="Notes", callback_data="emiko_notes"),
+                 ],
+                 [
+                    InlineKeyboardButton(text="Credits", callback_data="emiko_credit"),
+                 ],
+                 [
+                    InlineKeyboardButton(text="Go Back", callback_data="emiko_back"),
+                 ]
+                ]
             ),
         )
-    elif query.data == "mizuhara_back":
+    elif query.data == "emiko_back":
+        first_name = update.effective_user.first_name
+        uptime = get_readable_time((time.time() - StartTime))
         query.message.edit_text(
-            PM_START_TEXT,
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
-            disable_web_page_preview=False,
+                PM_START_TEXT.format(
+                    escape_markdown(first_name),
+                    escape_markdown(uptime),
+                    sql.num_users(),
+                    sql.num_chats()),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=ParseMode.MARKDOWN,
+                timeout=60,
+                disable_web_page_preview=False,
         )
 
+    elif query.data == "emiko_admin":
+        query.message.edit_text(
+            text=f"*๏ Let's make your group bit effective now*"
+            "\nCongragulations, Vexana now ready to manage your group."
+            "\n\n*Admin Tools*"
+            "\nBasic Admin tools help you to protect and powerup your group."
+            "\nYou can ban members, Kick members, Promote someone as admin through commands of bot."
+            "\n\n*Greetings*"
+            "\nLets set a welcome message to welcome new users coming to your group."
+            "\nsend `/setwelcome [message]` to set a welcome message!",
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="Go Back", callback_data="emiko_")]]
+            ),
+        )
+
+    elif query.data == "emiko_notes":
+        query.message.edit_text(
+            text=f"<b>๏ Setting up notes</b>"
+            f"\nYou can save message/media/audio or anything as notes"
+            f"\nto get a note simply use # at the beginning of a word"
+            f"\n\nYou can also set buttons for notes and filters (refer help menu)",
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="Go Back", callback_data="emiko_")]]
+            ),
+        )
+    elif query.data == "emiko_support":
+        query.message.edit_text(
+            text="*Vexana Help Group *"
+            "\nJoin My Support Group/Channel for see or report a problem on Vexana.",
+            parse_mode=ParseMode.MARKDOWN,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                 [
+                    InlineKeyboardButton(text="Support", url="t.me/Vexana_support"),
+                    InlineKeyboardButton(text="Updates", url="https://t.me/Vexana_Updates"),
+                 ],
+                 [
+                    InlineKeyboardButton(text="Go Back", callback_data="emiko_"),
+                 
+                 ]
+                ]
+            ),
+        )
+
+
+    elif query.data == "emiko_credit":
+        query.message.edit_text(
+            text=f"๏ Credis for Vexana\n"
+            "\nHere Developers Making And Give Inspiration For Made The Vexana",
+            parse_mode=ParseMode.MARKDOWN,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                 [
+                    InlineKeyboardButton(text="Anime Kaizoku", url="https://github.com/animekaizoku"),
+                    InlineKeyboardButton(text="TheHamkerCat", url="https://github.com/TheHamkerCat"),
+                 ],
+                 [
+                    InlineKeyboardButton(text="Paul Larsen", url="https://github.com/PaulSonOfLars"),
+                    InlineKeyboardButton(text="Vexu Dev", url="https://t.me/VexanaDev"),
+                 ],
+                 [
+                    InlineKeyboardButton(text="Go Back", callback_data="emiko_"),
+                 ]
+                ]
+            ),
+        )
 
 def Source_about_callback(update, context):
     query = update.callback_query
     if query.data == "source_":
         query.message.edit_text(
-            text="""  Hi, I'm *Vexana*
-                 \nOwner and developed by [My Devs](https://t.me/axel_0p) .""",
+            text="๏›› This advance command for Musicplayer."
+            "\n\n๏ Command for admins only."
+            "\n • `/reload` - For refreshing the adminlist."
+            "\n • `/pause` - To pause the playback."
+            "\n • `/resume` - To resuming the playback You've paused."
+            "\n • `/skip` - To skipping the player."
+            "\n • `/end` - For end the playback."
+            "\n\n๏ Command for all members."
+            "\n • `/play` <query /reply audio> - Playing music via YouTube."
+            "\n • `/playlist` - To playing a playlist of groups or your personal playlist",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Go Back", callback_data="source_back")]]
+                [
+                 [
+                    InlineKeyboardButton(text="Go Back", callback_data="emiko_")
+                 ]
+                ]
             ),
         )
     elif query.data == "source_back":
+        first_name = update.effective_user.first_name
         query.message.edit_text(
-            PM_START_TEXT,
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
-            disable_web_page_preview=False,
+                PM_START_TEXT.format(
+                    escape_markdown(first_name),
+                    escape_markdown(uptime),
+                    sql.num_users(),
+                    sql.num_chats()),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=ParseMode.MARKDOWN,
+                timeout=60,
+                disable_web_page_preview=False,
         )
-
 
 def get_help(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
@@ -458,7 +543,7 @@ def get_help(update: Update, context: CallbackContext):
             )
             return
         update.effective_message.reply_text(
-            "Contact Me In PM To Get The List Of Possible Commands.",
+            "Contact me in PM to get the list of possible commands.",
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -656,13 +741,12 @@ def donate(update: Update, context: CallbackContext):
             DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
         )
 
-        if OWNER_ID != 5001573230 and DONATION_LINK:
+        if OWNER_ID != 5001573230:
             update.effective_message.reply_text(
-                "You can also donate to the person currently running me "
-                "[here]({})".format(DONATION_LINK),
+                "I'm free for everyone ❤️ If you wanna make me smile, just join"
+                "[My Channel]({})".format(DONATION_LINK),
                 parse_mode=ParseMode.MARKDOWN,
             )
-
     else:
         try:
             bot.send_message(
@@ -672,10 +756,12 @@ def donate(update: Update, context: CallbackContext):
                 disable_web_page_preview=True,
             )
 
-            update.effective_message.reply_text("I've PM'ed you about my creator!")
+            update.effective_message.reply_text(
+                "I've PM'ed you about donating to my creator!"
+            )
         except Unauthorized:
             update.effective_message.reply_text(
-                "Contact me in PM first to get information."
+                "Contact me in PM first to get donation information."
             )
 
 
@@ -690,13 +776,11 @@ def migrate_chats(update: Update, context: CallbackContext):
     else:
         return
 
-    LOGGER.info(
-        "Vexana is started migrating from %s, to %s", str(old_chat), str(new_chat)
-    )
+    LOGGER.info("Migrating from %s, to %s", str(old_chat), str(new_chat))
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Vexana Successfully migrated!")
+    LOGGER.info("Successfully migrated!")
     raise DispatcherHandlerStop
 
 
@@ -704,7 +788,11 @@ def main():
 
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
-            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "ᴠᴇxᴀɴᴀ ɴᴏᴡ ʙᴀᴄᴋ ᴛᴏ ꜱᴇʀᴠᴇʀ  (ʀᴇꜱᴛᴀʀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ)!")
+            dispatcher.bot.sendMessage(
+                f"@{SUPPORT_CHAT}", 
+                "ᴠᴇxᴀɴᴀ ɴᴏᴡ ʙᴀᴄᴋ ᴛᴏ ꜱᴇʀᴠᴇʀ  (ʀᴇꜱᴛᴀʀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ)!")",
+                parse_mode=ParseMode.MARKDOWN
+            )
         except Unauthorized:
             LOGGER.warning(
                 "Bot isnt able to send message to support_chat, go and check!"
@@ -726,8 +814,9 @@ def main():
     )
 
     about_callback_handler = CallbackQueryHandler(
-        mizuhara_about_callback, pattern=r"mizuhara_", run_async=True
+        emiko_about_callback, pattern=r"emiko_", run_async=True
     )
+
     source_callback_handler = CallbackQueryHandler(
         Source_about_callback, pattern=r"source_", run_async=True
     )
@@ -737,7 +826,7 @@ def main():
         Filters.status_update.migrate, migrate_chats, run_async=True
     )
 
-    # dispatcher.add_handler(test_handler)
+    dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(about_callback_handler)
@@ -760,7 +849,7 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN)
 
     else:
-        LOGGER.info("Vexana Started Using long polling.")
+        LOGGER.info("Using long polling.")
         updater.start_polling(timeout=15, read_latency=4, drop_pending_updates=True)
 
     if len(argv) not in (1, 3, 4):
@@ -774,4 +863,5 @@ def main():
 if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     telethn.start(bot_token=TOKEN)
-    main()  # pbot is the mightiest shitt bruh
+    pbot.start()
+    main()
