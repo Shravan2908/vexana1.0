@@ -241,7 +241,6 @@ print("[VEXANA]: PGram CLIENT STARTING")
 
 
 print("Starting Pyrogram Client")
-pbot.start()
 pgram.start()
 print("Aquiring BOT Client Info")
 
