@@ -215,7 +215,7 @@ def gban_btn(update, context):
     
     message.edit_text("<b>Done! {} has been globally banned.</b>".format(mention_html(user_chat.id, user_chat.first_name)),
                        parse_mode=ParseMode.HTML)  
-     for chat in chats:
+    for chat in chats:
         chat_id = int(chat)
 
         # Check if this group has disabled gbans
