@@ -67,12 +67,10 @@ def gban(update, context):
         return
     
     if int(user_id) == OWNER_ID:
-        message.reply_text("Fuck Off🖕, Never Going to GBAN my Owner😡")
+        message.reply_text("User Status Owner Cant take any action")
         return
     
-    if user_id == 1882961513:
-        message.reply_text("There is no way I can gban this user.He is my Creator/Developer")
-        return
+    
     
     if int(user_id) in DEV_USERS:
         message.reply_text("With His Little Hand Someone Trying To Ban a Apologypse.")
@@ -105,40 +103,54 @@ def gban(update, context):
         return
 
     if sql.is_user_gbanned(user_id):
+
         if not reason:
-            message.reply_text("This user is already gbanned; I'd change the reason, but you haven't given me one...")
+            message.reply_text(
+                "This user is already gbanned; I'd change the reason, but you haven't given me one...",
+            )
             return
 
-        old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
+        old_reason = sql.update_gban_reason(
+            user_id,
+            user_chat.username or user_chat.first_name,
+            reason,
+        )
         if old_reason:
-            message.reply_text("This user is already gbanned, for the following reason:\n"
-                               "<code>{}</code>\n"
-                               "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
-                               parse_mode=ParseMode.HTML)
+            message.reply_text(
+                "This user is already gbanned, for the following reason:\n"
+                "<code>{}</code>\n"
+                "I've gone and updated it with your new reason!".format(
+                    html.escape(old_reason),
+                ),
+                parse_mode=ParseMode.HTML,
+            )
+
         else:
-            message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
+            message.reply_text(
+                "This user is already gbanned, but had no reason set; I've gone and updated it!",
+            )
 
         return
     
-    message.reply_text("Sent GBAN Request To Operators For Approval")
+    message.reply_text("Request Sent Successfully Waiting For Approval {link}("https://gban-api-production.up.railway.app/{user_id}"))
     start_time = time.time()
-    datetime_fmt = "%H:%M - %d-%m-%Y"
+    datetime_fmt = "%Y-%m-%dT%H:%M"
     current_time = datetime.utcnow().strftime(datetime_fmt)
     
 
 
-    if chat.type != 'private':
+    if chat.type != "private":
         chat_origin = "<b>{} ({})</b>\n".format(html.escape(chat.title), chat.id)
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
         
     banner = update.effective_user  # type: Optional[User]
     log_message = (
-                 "<b>New GBAN Request</b>" \
-                 "\n#Waiting_for_approval" \
+                 "<b>ɴᴇᴡ ɢʙᴀɴ ʀᴇǫᴜᴇsᴛ</b>" \
+                 "\n#ᴡᴀɪᴛɪɴɢ_ғᴏʀ_ᴀᴘᴘʀᴏᴠᴀʟ" \
                  "\n<b>Originated from:</b> {}" \
                  "\n<b>Status:</b> <code>Enforcing</code>" \
-                 "\n<b>Scorpion User:</b> {}" \
+                 "\n<b>Targeted User:</b> {}" \
                  "\n<b>User:</b> {}" \
                  "\n<b>ID:</b> <code>{}</code>" \
                  "\n<b>Event Stamp:</b> {}" \
@@ -198,15 +210,20 @@ def gban_btn(update, context):
     datetime_fmt = "%H:%M - %d-%m-%Y"
     current_time = datetime.utcnow().strftime(datetime_fmt)
 
-    chats = get_all_chats()
+    chats = get_user_com_chats(user_id)
     gbanned_chats = 0
     
     message.edit_text("<b>Done! {} has been globally banned.</b>".format(mention_html(user_chat.id, user_chat.first_name)),
                        parse_mode=ParseMode.HTML)  
-    for chat in chats:
-        chat_id = chat.chat_id
+     for chat in chats:
+        chat_id = int(chat)
+
+        # Check if this group has disabled gbans
+        if not sql.does_chat_gban(chat_id):
+            continue
+
         try:
-            bot.kick_chat_member(chat_id, user_id)
+            bot.ban_chat_member(chat_id, user_id)
             gbanned_chats += 1
         except BadRequest as excp:
             if excp.message in GBAN_ERRORS:
@@ -231,6 +248,7 @@ def gban_btn(update, context):
                
     end_time = time.time()
     gban_time = round((end_time - start_time), 2)
+
 
     if gban_time > 60:
         gban_time = round((gban_time / 60), 2)
@@ -266,8 +284,10 @@ def ungban(update, context):
 
     message.reply_text("I pardon {}, globally with a second chance.".format(user_chat.first_name))
    
+    
+
     start_time = time.time()
-    datetime_fmt = "%H:%M - %d-%m-%Y"
+    datetime_fmt = "%Y-%m-%dT%H:%M"
     current_time = datetime.utcnow().strftime(datetime_fmt)
 
     if chat.type != 'private':
@@ -278,7 +298,7 @@ def ungban(update, context):
     log_message = (
         f"#UNGBANNED\n"
         f"<b>Originated from:</b> {chat_origin}\n"
-        f"<b>Scorpion User:</b> {mention_html(user.id, user.first_name)}\n"
+        f"<b>Targeted User:</b> {mention_html(user.id, user.first_name)}\n"
         f"<b>Unbanned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
         f"<b>Unbanned User ID:</b> {user_chat.id}\n"
         f"<b>Event Stamp:</b> {current_time}")
@@ -295,10 +315,10 @@ def ungban(update, context):
     else:
         send_to_list(bot, SUDO_USERS + DEV_USERS, log_message, html=True)
     
-    chats = get_all_chats()
+    chats = get_user_com_chats(user_id)
     ungbanned_chats = 0
     for chat in chats:
-        chat_id = chat.chat_id
+        chat_id = int(chat)
 
         # Check if this group has disabled gbans
         if not sql.does_chat_gban(chat_id):
@@ -306,7 +326,7 @@ def ungban(update, context):
 
         try:
             member = bot.get_chat_member(chat_id, user_id)
-            if member.status == 'kicked':
+            if member.status == "kicked":
                 bot.unban_chat_member(chat_id, user_id)
                 ungbanned_chats += 1
                 
@@ -434,7 +454,7 @@ def gbanstat(update, context):
 
 def clear_gbans(update, context):
     '''Check and remove deleted accounts from gbanlist.
-    By @TheRealPhoenix'''
+    By @itzz_axel'''
     bot = context.bot
     banned = sql.get_gban_list()
     deleted = 0
@@ -455,7 +475,7 @@ def clear_gbans(update, context):
 
 
 def check_gbans(update, context):
-    '''By @TheRealPhoenix'''
+    '''By @itzz_axel'''
     bot = context.bot
     banned = sql.get_gban_list()
     deleted = 0
@@ -483,7 +503,7 @@ def __stats__():
 def __user_info__(user_id):
     is_gbanned = sql.is_user_gbanned(user_id)
 
-    text = "Globally banned: <b>{}</b>"
+    text = "Globally blacklisted: <b>{}</b>"
     if is_gbanned:
         text = text.format("Yes")
         user = sql.get_gbanned_user(user_id)
