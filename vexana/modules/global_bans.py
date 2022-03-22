@@ -132,7 +132,7 @@ def gban(update, context):
 
         return
     
-    message.reply_text("Request Sent Successfully Waiting For Approval {link}("https://gban-api-production.up.railway.app/{user_id}")")
+    message.reply_text("Request Sent Successfully Waiting For Approval {link}(https://gban-api-production.up.railway.app/{user_id})")
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
     current_time = datetime.utcnow().strftime(datetime_fmt)
