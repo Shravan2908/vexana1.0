@@ -13,7 +13,7 @@
 
 ### Click Below Image To Deploy On
 ### 💙 Heroku 💙
-<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/aksr-aashish/vexana1.0.git"><img src="https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg" width="50"></a></p>
+<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/Shravan2908/vexana1.0.git"><img src="https://telegra.ph/file/4a7d5037bcdd1e74a517a.jpg" width="50"></a></p>
 <p align="center">
 <a href="https://app.codacy.com/manual/aksr-aashish/aksr-aashish/vexana1.0/dashboard"> <img src="https://img.shields.io/codacy/grade/4d58f2a402b54aed8a7d95f7add45a81?color=brightgreen&logo=codacy&logoColor=green&style=for-the-badge" alt="Codacy" /></a>
     <a href="https://github.com/aksr-aashish/vexana1.0"> <img src="https://img.shields.io/github/repo-size/aksr-aashish/vexana1.0?color=orange&logo=github&logoColor=green&style=for-the-badge" /></a>
@@ -43,7 +43,7 @@ Turn on worker dyno (Don't worry It's free :D) & Webhook
 Now send the bot /start, If it doesn't respond go to https://dashboard.heroku.com/apps/(app-name)/settings and remove webhook and port.
 ```
 
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Faksr-aashish%2Fvexana&template=https%3A%2F%2Fgithub.com%2FAnuragSharma080%2Fvexana1.0)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Faksr-aashish%2Fvexana&template=https%3A%2F%2Fgithub.com%2FShravan2908%2Fvexana1.0)
 
 
 
